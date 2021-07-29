@@ -146,8 +146,8 @@
                                                     <div>Donatur</div>
                                                 </div>
                                                 <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left"><b>Rp. <?= $row["dana_terkumpul"]; ?></b></div>
-                                                    <div><b><?= $row["jumlah_donatur"]; ?></b></div>
+                                                    <div class="float-left"><b>Rp.</b></div>
+                                                    <div><b></b></div>
                                                 </div>
                                                 <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
                                                 href="view-donasi-dashboard.php?id=<?php echo $row['id_program_donasi'];?>">Lihat Program</a>

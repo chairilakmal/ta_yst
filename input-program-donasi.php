@@ -69,7 +69,7 @@
        
         $query = "INSERT INTO t_program_donasi
                     VALUES 
-                  ('','$nama_program_donasi','$deskripsi_singkat_donasi','$target_dana','',' $deskripsi_lengkap_donasi','$gambar','$tgl_pdonasi','$tgl_selesai','$status_program_donasi','')  
+                  ('','$nama_program_donasi','$deskripsi_singkat_donasi','$target_dana',' $deskripsi_lengkap_donasi','$gambar','$tgl_pdonasi','$tgl_selesai','$status_program_donasi')  
                     ";
      
         mysqli_query($conn,$query);

@@ -23,7 +23,7 @@
         $tgl_donasi               = date ('Y-m-d', time());
         $nominal1                 = $_POST["nominal1"]; 
         $nominal2                 = $_POST["nominal2"]; 
-        $totalNominal             = $nominal1 + $nominal2;
+        $belum_dibayar             = $nominal1 + $nominal2;
         $nama_donatur             = $_POST["tb_nama_donatur"]; 
         $id_user                  = $_SESSION['id_user'];
         
@@ -32,7 +32,7 @@
         
         $query = "INSERT INTO t_donasi
                     VALUES 
-                  ('','$status_donasi','$nama_donatur','$totalNominal ','$id_user','$id_program_donasi',' $nama_program_donasi  ','$tgl_donasi')  
+                  ('','$status_donasi','$nama_donatur','','$id_user','$id_program_donasi',' $nama_program_donasi  ','$tgl_donasi','$belum_dibayar ')  
                     ";
      
         mysqli_query($conn,$query);

@@ -168,8 +168,8 @@ include "config/connection.php";
                                                     <div>Donatur</div>
                                                 </div>
                                                 <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left">Rp. <?= $row["dana_terkumpul"]; ?></div>
-                                                    <div><?= $row["jumlah_donatur"]; ?></div>
+                                                    <div class="float-left">Rp. </div>
+                                                    <div></div>
                                                 </div>
                                                 <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" href="view-donasi.php?id=<?php echo $row['id_program_donasi'];?>">Lihat Program</a>
                                             </div>

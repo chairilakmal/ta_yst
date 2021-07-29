@@ -29,11 +29,29 @@
     if(isset($_POST["submit"])) {
 
         $status_donasi      = $_POST["status_donasi"];
+        $nominal_donasi     = '';
+
+        if($status_donasi = "Diterima"){
+            $nominal_donasi = $_POST["belum_dibayar"];
+        }
 
         $query = "UPDATE t_donasi SET
-                  status_donasi               = '$status_donasi'
+              
+                    status_donasi       = '$status_donasi',
+                    nominal_donasi      = '$nominal_donasi'
                   WHERE id_donasi             = $id_donasi
+
                 ";
+            // if($status_donasi = "Diterima"){
+            // $nominal_donasi = $_POST["belum_dibayar"];
+            // $query = "UPDATE t_donasi SET
+            //         status_donasi               = '$status_donasi'
+            //         nominal_donasi              = '$nominal_donasi'
+            //         WHERE id_donasi             = $id_donasi
+            //         ";
+       
+            // }
+        
 
         mysqli_query($conn, $query);
 
@@ -215,9 +233,9 @@
                                     value="<?php echo $result['nama_program_donasi']?>" readonly>
                                 </div>   
                                 <div class="form-group mt-2 mb-2" id="buatNominal">
-                                    <label for="nominal2" class="font-weight-bold" ><span class="label-form-span">Nominal Donasi</span></label><br>
-                                    <input type="number" id="nominal2" name="nominal2" class="form-control" 
-                                    value="<?php echo $result['nominal_donasi']?>" readonly>
+                                    <label for="belum_dibayar" class="font-weight-bold" ><span class="label-form-span">Nominal Donasi</span></label><br>
+                                    <input type="number" id="belum_dibayar" name="belum_dibayar" class="form-control" 
+                                    value="<?php echo $result['belum_dibayar']?>" readonly>
                                 </div>
                                 <div class="form-group mt-3 mb-2">
                                     <label for="nama_donatur" class="font-weight-bold" ><span class="label-form-span">Nama Donatur</span></label><br>

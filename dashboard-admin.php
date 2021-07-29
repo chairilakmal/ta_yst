@@ -11,12 +11,18 @@
         return $rows;
    }
 
-   $dana_terkumpul = query("SELECT SUM(nominal_donasi) as 'dana_terkumpul' FROM t_donasi
-                    GROUP BY id_program_donasi
-                        ");
+    // WHERE status_donasi = 'Diterima'
+    
+
     // var_dump($programDonasi);die;
-   $programDonasi = query("SELECT * FROM t_program_donasi
-                        ");
+   $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS nominal_total, 
+                    COUNT(id_user) 
+                    AS jumlah_donatur 
+                    FROM t_donasi 
+                    LEFT JOIN t_program_donasi 
+                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi                 
+                    GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
+                    ");
 
 //    function query($query){
 //        global $conn;
@@ -187,7 +193,7 @@
                                           Filter
                                         </a>
                                         <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="#">Terbaru</a>
+                                          <a class="dropdown-item" href="#">Tampilkan semua</a>
                                           <a class="dropdown-item" href="#">Pending</a>
                                           <a class="dropdown-item" href="#">Disetujui</a>
                                           <a class="dropdown-item" href="#">Ditolak</a>
@@ -217,7 +223,7 @@
                                             <tr>
                                                 <td><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
-                                                <td>Rp. <?= $row["dana_terkumpul"]; ?></td>
+                                                <td>Rp. <?= $row["nominal_total"]; ?></td>
                                                 <td>Rp. <?= $row["target_dana"]; ?></td>
                                                 <td><?= $row["jumlah_donatur"]; ?></td>
                                                 <td>

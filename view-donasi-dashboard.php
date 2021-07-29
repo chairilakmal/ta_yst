@@ -123,7 +123,7 @@
                                 <?php echo $result['deskripsi_singkat_donasi']?>
                             </p>
                             <div class="d-flex view-kumpulan  mb-3">
-                                <div class="float-left value-penting">Rp. <?php echo $result['dana_terkumpul']?></div>
+                                <div class="float-left value-penting">Rp. </div>
                                 <div class="ml-2">terkumpul dari</div>
                                 <div class="ml-2 value-penting">Rp. <?php echo $result['target_dana']?></div>
                             </div>
