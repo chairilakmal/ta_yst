@@ -1,24 +1,18 @@
 <?php
     include "config/connection.php";
 
+    session_start();
+    include 'config/connection.php';
 
 
-    // WHERE status_donasi = 'Diterima'
-    
+    if(!isset($_SESSION["username"])) {
+        header('Location: login.php?status=restrictedaccess');
+        exit;
+    }
 
-    // var_dump($programDonasi);die;
-//    $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS nominal_total, 
-//                     COUNT(id_user) 
-//                     AS jumlah_donatur 
-//                     FROM t_donasi 
-//                     LEFT JOIN t_program_donasi 
-//                     ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi                 
-//                     GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
-//                     ");
-
-    function query($query){
+   function query($query){
        global $conn;
-        $result = mysqli_query($conn, "SELECT * FROM t_program_donasi ORDER BY id_program_donasi "); 
+        $result = mysqli_query($conn,$query); 
         $rows = [];
         while($row = mysqli_fetch_assoc($result)){
             $rows[] = $row;
@@ -26,8 +20,30 @@
         return $rows;
    }
 
+    // WHERE status_donasi = 'Diterima'
 
-   $programDonasi = query("SELECT * FROM t_program_donasi ");
+    // var_dump($programDonasi);die;
+   $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS dana_terkumpul_total, 
+                    COUNT(id_user) 
+                    AS jumlah_donatur 
+                    FROM t_donasi 
+                    RIGHT JOIN t_program_donasi 
+                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi                 
+                    GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
+                    ");
+
+//    function query($query){
+//        global $conn;
+//         $result = mysqli_query($conn, "SELECT * FROM t_program_donasi"); 
+//         $rows = [];
+//         while($row = mysqli_fetch_assoc($result)){
+//             $rows[] = $row;
+//         }
+//         return $rows;
+//    }
+
+
+//    $programDonasi = query("SELECT * FROM t_program_donasi");
     
 ?>
 
@@ -71,10 +87,9 @@
                 <li class="nav-item dropdown user-dropdown">  
                     <a class="nav-link dropdown-toggle pr-4" href="#" id="navbarDropdownMenuLink" 
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Username
+                    <?php echo("{$_SESSION['username']}");?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="profil-saya.php">Edit Profil</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
                         <a class="dropdown-item" href="login.php">Logout</a>
                     </div>                   
                 </li>
@@ -178,14 +193,14 @@
 
                         <div class="card card-request-data">
                             <div class="card-header-req">
-                                <div class="row ml-1 ">
+                                 <div class="row ml-1 ">
                                     <div class="col ">
                                       <div class="dropdown show ">
                                         <a class="btn btn-info  filter-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Tampilkan Semua
+                                          Filter
                                         </a>
                                         <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                          <a class="dropdown-item" href="program-donasi-berjalan.php">Mengumpulkan Donasi</a>
+                                          <a class="dropdown-item" href="dashboard-admin.php">Tampilkan Semua</a>
                                       </div>
                                     </div>
                                     </div>
@@ -198,24 +213,24 @@
                                     <table width="100%">
                                         <thead>
                                             <tr>
-                                                <td>ID</td>
+                                                <td class="text-center">Kode <br> Program</td>
                                                 <td>Nama Program</td>
-                                               
+                                                <td>Dana Terkumpul</td>
                                                 <td>Target Dana</td>
-                                               
-                                                <td>Status Program</td>
+                                                <td class="text-center">Jumlah <br> Donatur</td>
+                                                <td class="text-center">Status<br>  Program</td>
                                                 <td class="justify-content-center" >Aksi</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php foreach($programDonasi as $row):?>
                                             <tr>
-                                                <td><?= $row["id_program_donasi"]; ?></td>
+                                                <td class="text-center"><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
-                                                
+                                                <td>Rp. <?= $row['dana_terkumpul_total'] == 0 ? '0' : $row['dana_terkumpul_total']; ?></td>
                                                 <td>Rp. <?= $row["target_dana"]; ?></td>
-                                               
-                                                <td>
+                                                <td class="text-center"><?= $row["jumlah_donatur"]; ?></td>
+                                                <td class="text-center">
                                                     <?= $row["status_program_donasi"]; ?>
                                                 </td>
                                                 <td class="justify-content-center">

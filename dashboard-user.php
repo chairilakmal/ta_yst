@@ -69,11 +69,10 @@
                 <li class="nav-item dropdown user-dropdown">  
                     <a class="nav-link dropdown-toggle pr-4" href="#" id="navbarDropdownMenuLink" 
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Username
+                    <?php echo("{$_SESSION['username']}");?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="profil-saya.php">Edit Profil</a>
-                        <a class="dropdown-item" href="logout.php">Logout</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
+                        <a class="dropdown-item" href="login.php">Logout</a>
                     </div>                   
                 </li>
             </ul>
@@ -155,23 +154,25 @@
                                 <div class="table-responsive">
                                     <table width="100%">
                                         <thead>
-                                            <tr>
-                                                <td>ID Donasi</td>
+                                            <tr class="text-center">
+                                                <td>Kode<br>Donasi</td>
+                                                <td>Program Pilihan</td>
                                                 <td>Tgl Donasi</td>
                                                 <td>Nominal</td>
-                                                <td>Program Pilihan</td>
+                                                <td>a/n</td>
                                                 <td>Status</td>
-                                                <td class="justify-content-center" >Aksi</td>
+                                                <td class="justify-content-center mt-2" >Aksi</td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php foreach($donasiSaya as $row):?>
                                             <tr>
-                                                <td><?= $row["id_donasi"]; ?></td>
-                                                <td><?= $row["tgl_donasi"]; ?></td>
-                                                <td class="table-snipet2">Rp. <?= $row["belum_dibayar"]; ?></td>
-                                                <td><?= $row["nama_program_donasi"]; ?></td>
-                                                <td><?= $row["status_donasi"]; ?></td>
+                                                <td class="text-center"><?= $row["id_donasi"]; ?></td>
+                                                <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
+                                                <td class="text-center"><?= $row["tgl_donasi"]; ?></td>
+                                                <td class="text-center table-snipet2">Rp. <?= $row["belum_dibayar"]; ?></td>
+                                                <td><?= $row["nama_donatur"]; ?></td>
+                                                <td class="text-center"><?= $row["status_donasi"]; ?></td>
                                                 <td class="justify-content-center">
                                                     <button type="button" class="btn btn-edit">
                                                         <a href="detail-donasi-saya.php?id_donasi=<?= $row["id_donasi"]; ?>" 

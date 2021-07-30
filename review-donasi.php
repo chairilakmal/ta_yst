@@ -50,11 +50,10 @@
                 <li class="nav-item dropdown user-dropdown">  
                     <a class="nav-link dropdown-toggle pr-4" href="#" id="navbarDropdownMenuLink" 
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Username
+                    <?php echo("{$_SESSION['username']}");?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="profil-saya.php">Edit Profil</a>
-                        <a class="dropdown-item" href="logout.php">Logout</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
+                        <a class="dropdown-item" href="login.php">Logout</a>
                     </div>                   
                 </li>
             </ul>
@@ -135,9 +134,8 @@
                                     <b>BANK MANDIRI 131-00-0458589-1  a/n YAYASAN SEKAR TELKOM</b>
                                 </p>
                             </div>
-                            <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
-                                <span class="yst-login-btn-fs">OK</span>
-                            </button>                            
+                             <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
+                             href="dashboard-user.php?status=donasisukses">Lihat Program</a>                          
                         </form>
                         <div>
                             

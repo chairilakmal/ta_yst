@@ -75,11 +75,10 @@
                 <li class="nav-item dropdown user-dropdown">  
                     <a class="nav-link dropdown-toggle pr-4" href="#" id="navbarDropdownMenuLink" 
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Username
+                    <?php echo("{$_SESSION['username']}");?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="profil-saya.php">Edit Profil</a>
-                        <a class="dropdown-item" href="logout.php">Logout</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
+                        <a class="dropdown-item" href="login.php">Logout</a>
                     </div>                   
                 </li>
             </ul>

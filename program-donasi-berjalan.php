@@ -1,9 +1,24 @@
 <?php
     include "config/connection.php";
 
-   function query($query){
+
+
+    // WHERE status_donasi = 'Diterima'
+    
+
+    // var_dump($programDonasi);die;
+//    $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS nominal_total, 
+//                     COUNT(id_user) 
+//                     AS jumlah_donatur 
+//                     FROM t_donasi 
+//                     LEFT JOIN t_program_donasi 
+//                     ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi                 
+//                     GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
+//                     ");
+
+    function query($query){
        global $conn;
-        $result = mysqli_query($conn,$query); 
+        $result = mysqli_query($conn, "SELECT * FROM t_program_donasi ORDER BY id_program_donasi "); 
         $rows = [];
         while($row = mysqli_fetch_assoc($result)){
             $rows[] = $row;
@@ -11,30 +26,8 @@
         return $rows;
    }
 
-    // WHERE status_donasi = 'Diterima'
 
-    // var_dump($programDonasi);die;
-   $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS nominal_total, 
-                    COUNT(id_user) 
-                    AS jumlah_donatur 
-                    FROM t_donasi 
-                    RIGHT JOIN t_program_donasi 
-                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi                 
-                    GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
-                    ");
-
-//    function query($query){
-//        global $conn;
-//         $result = mysqli_query($conn, "SELECT * FROM t_program_donasi"); 
-//         $rows = [];
-//         while($row = mysqli_fetch_assoc($result)){
-//             $rows[] = $row;
-//         }
-//         return $rows;
-//    }
-
-
-//    $programDonasi = query("SELECT * FROM t_program_donasi");
+   $programDonasi = query("SELECT * FROM t_program_donasi ");
     
 ?>
 
@@ -185,14 +178,14 @@
 
                         <div class="card card-request-data">
                             <div class="card-header-req">
-                                 <div class="row ml-1 ">
+                                <div class="row ml-1 ">
                                     <div class="col ">
                                       <div class="dropdown show ">
                                         <a class="btn btn-info  filter-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Mengumpulkan Donasi
+                                          Tampilkan Semua
                                         </a>
                                         <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                          <a class="dropdown-item" href="dashboard-admin.php">Tampilkan Semua</a>
+                                          <a class="dropdown-item" href="program-donasi-berjalan.php">Mengumpulkan Donasi</a>
                                       </div>
                                     </div>
                                     </div>
@@ -207,9 +200,9 @@
                                             <tr>
                                                 <td>ID</td>
                                                 <td>Nama Program</td>
-                                                <td>Dana Terkumpul</td>
+                                               
                                                 <td>Target Dana</td>
-                                                <td>Jumlah Donatur</td>
+                                               
                                                 <td>Status Program</td>
                                                 <td class="justify-content-center" >Aksi</td>
                                             </tr>
@@ -219,9 +212,9 @@
                                             <tr>
                                                 <td><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
-                                                <td>Rp. <?= $row["nominal_total"]; ?></td>
+                                                
                                                 <td>Rp. <?= $row["target_dana"]; ?></td>
-                                                <td><?= $row["jumlah_donatur"]; ?></td>
+                                               
                                                 <td>
                                                     <?= $row["status_program_donasi"]; ?>
                                                 </td>

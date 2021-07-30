@@ -132,15 +132,14 @@
                 </li>
             </ul>
             <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto user-wrapper"> 
+           <ul class="navbar-nav ml-auto user-wrapper"> 
                 <img src="img/user-default.jpg" width="30px" height="30px" alt="">
                 <li class="nav-item dropdown user-dropdown">  
                     <a class="nav-link dropdown-toggle pr-4" href="#" id="navbarDropdownMenuLink" 
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Username
+                    <?php echo("{$_SESSION['username']}");?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="profil-saya.php">Edit Profil</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
                         <a class="dropdown-item" href="login.php">Logout</a>
                     </div>                   
                 </li>

@@ -106,7 +106,6 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
-            <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto user-wrapper"> 
                 <img src="img/user-default.jpg" width="30px" height="30px" alt="">
                 <li class="nav-item dropdown user-dropdown">  
@@ -114,9 +113,8 @@
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?php echo("{$_SESSION['username']}");?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="profil-saya.php">Edit Profil</a>
-                        <a class="dropdown-item" href="logout.php">Logout</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
+                        <a class="dropdown-item" href="login.php">Logout</a>
                     </div>                   
                 </li>
             </ul>

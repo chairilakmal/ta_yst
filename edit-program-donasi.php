@@ -1,5 +1,12 @@
 <?php
+    session_start();
     include 'config/connection.php';
+
+
+    if(!isset($_SESSION["username"])) {
+        header('Location: login.php?status=restrictedaccess');
+        exit;
+    }
 
     //ambil id program di URL
     $id_program_donasi = $_GET["id_program_donasi"];
@@ -161,10 +168,9 @@
                 <li class="nav-item dropdown user-dropdown">  
                     <a class="nav-link dropdown-toggle pr-4" href="#" id="navbarDropdownMenuLink" 
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Username
+                    <?php echo("{$_SESSION['username']}");?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="profil-saya.php">Edit Profil</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
                         <a class="dropdown-item" href="login.php">Logout</a>
                     </div>                   
                 </li>
