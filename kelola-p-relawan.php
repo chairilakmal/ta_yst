@@ -20,9 +20,9 @@
    }
 
     // WHERE status_donasi = 'Diterima'
-
+    //    COUNT(id_user) AS jumlah_relawan
     // var_dump($programDonasi);die;
-   $programRelawan = query("SELECT *, COUNT(id_user) AS jumlah_relawan
+   $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                     FROM t_relawan
                     RIGHT JOIN t_program_relawan
                     ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan                 
@@ -240,7 +240,7 @@
                                                 <td class="table-snipet2"><?= $row["lokasi_program"]; ?></td>
 
                                                 <td><?= $row["tgl_pelaksanaan"]; ?></td>
-                                                <td><?= $row["jumlah_relawan"]; ?></td>
+                                                <td><?= $row['jumlah_relawan'] == 0 ? '0' : $row['jumlah_relawan']; ?></td>
                                                 <td><?= $row["target_relawan"]; ?></td>
                                                 <td>
                                                 <?= $row["status_program_relawan"]; ?>

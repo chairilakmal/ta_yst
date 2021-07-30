@@ -9,21 +9,64 @@
         exit;
     }
 
+    $id_relawan = $_GET["id_relawan"];
+    // var_dump($id_donasi);die;
+
+    //fungsi GET Array
     function query($query){
-       global $conn;
-        $result = mysqli_query($conn, "SELECT * FROM t_relawan
-                      LEFT JOIN t_program_relawan ON t_relawan.id_program_relawan = t_program_relawan.id_program_relawan
-                      ORDER BY id_relawan DESC
-                        "); 
-        $rows = [];
-        while($row = mysqli_fetch_assoc($result)){
-            $rows[] = $row;
-        }
-        return $rows;
+        global $conn;
+         $result = mysqli_query($conn, $query); 
+         $rows = [];
+         while($row = mysqli_fetch_assoc($result)){
+             $rows[] = $row;
+         }
+         return $rows;
     }
 
+                        
+    $result = query("SELECT * FROM t_relawan
+                      LEFT JOIN t_program_relawan ON t_relawan.id_program_relawan = t_program_relawan.id_program_relawan
+                      WHERE id_relawan = $id_relawan ")[0];
+    // $result = query("SELECT * FROM t_relawan WHERE id_relawan = $id_relawan")[0];
 
-   $result = query("SELECT * FROM t_relawan");
+    //UPDATE
+    if(isset($_POST["submit"])) {
+
+        $status_relawan      = $_POST["status_relawan"];
+        $relawan_jadi        = '';
+
+        if($status_donasi = "Segera Berjalan"){
+            $relawan_jadi = 1;
+        }
+
+        $query = "UPDATE t_relawan SET
+              
+                    status_relawan      = '$status_relawan',
+                    relawan_jadi        = '$relawan_jadi'
+                  WHERE id_relawan      = $id_relawan
+
+                ";
+    
+        mysqli_query($conn, $query);
+
+        //cek keberhasilan
+        if(mysqli_affected_rows($conn) > 0 ){
+            echo "
+            <script>
+                alert('Data berhasil diubah!');
+                window.location.href = 'kelola-donasi.php'; 
+            </script>
+        ";
+        }else{
+            echo "
+                <script>
+                    alert('Data gagal diubah!');
+                </script>
+            ";
+        }
+
+    }
+
 ?>
 
 
@@ -178,61 +221,71 @@
                                 <i class="nav-icon fas fa-user-cog mr-1"></i>Kelola relawan</a>
                         </div>
 
-                        <div class="card card-request-data">
-                            <div class="card-header-req">
-                                <div class="row ml-1 ">
-                                    <div class="col ">
-                                      <div class="dropdown show ">
-                                        <a class="btn btn-info  filter-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Filter
-                                        </a>
-                                        <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                          <a class="dropdown-item" href="#">Terbaru</a>
-                                          <a class="dropdown-item" href="#">Perlu Verifikasi</a>
-                                          <a class="dropdown-item" href="#">Selesai</a>
-                                          <a class="dropdown-item" href="#">Bermasalah</a>
-                                      </div>
-                                    </div>
-                                    </div>
-                              </div>
-                        
-                            </div>
-                            <div class="card-body card-body-req">
-                                <div class="table-responsive">
-                                    <table width="100%">
-                                        <thead>
-                                            <tr>
-                                                <td>ID</td>
-                                                <td>Nama Relawan</td>
-                                                <td>Program Relawan</td>
-                                                <td>Tgl Pelaksanaan</td>
-                                                <td>Status Relawan</td>
-                                                <td class="justify-content-center" >Aksi</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php foreach($result as $row):?>
-                                            <tr>
-                                                <td><?= $row["id_relawan"]; ?></td>
-                                                <td class="table-snipet2"><?= $row["nama_lengkap"]; ?></td>
-                                                <td class="table-snipet2"><?= $row["id_program_relawan"]; ?></td>
-                                                <td ><?= $row["tgl_pelaksanaan"]; ?></td>
-                                                <td><?= $row["status_relawan"]; ?></td>
-                                                <td class="justify-content-center">
-                                                    <button type="button" class="btn btn-edit">
-                                                        <a href="edit-relawan.php?id_relawan=<?= $row["id_relawan"]; ?>" class="fas fa-edit"></a>
-                                                    </button>
-                                                    <button type="button" class="btn btn-delete ml-1">
-                                                        <a href="#" class="far fa-trash-alt"></a>
-                                                    </button>
-                                                  </td>
-                                            </tr>
-                                        <?php endforeach;?>       
-                                        </tbody>
-                                    </table>
+                        <div class="form-profil halaman-view">
+                    <div class="mt-2 regis-title"><h3>Kelola Relawan</h3></div>    
+                        <form action="" enctype="multipart/form-data" method="POST">
+                            <div class="form-group label-txt">
+                                <input type="hidden" id="tb_relawan_pending" name="tb_relawan_pending" class="form-control" value="1">
+                                <div class="form-group mt-4 mb-2">
+                                    <label for="tb_nama_program_relawan" class="font-weight-bold" ><span class="label-form-span">Program Pilihan</span></label><br>
+                                    <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" value="<?php echo $result['nama_program_relawan']?>" readonly>
                                 </div>
+                                <div class="form-group mt-4 mb-3">
+                                <label for="tb_tgl_pelaksanaan" class="font-weight-bold" ><span class="label-form-span">Tanggal Pelaksanaan</span></label><br>
+                                    <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" value="<?= $result["tgl_pelaksanaan"]; ?>" readonly>
+                                </div>
+                                 <div class="form-group mt-4 mb-2">
+                                    <label for="tb_lokasi_program" class="font-weight-bold" ><span class="label-form-span">Lokasi Pelaksanaan</span></label><br>
+                                    <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" value="<?php echo $result['lokasi_program']?>" readonly>
+                                </div>
+                                 <div class="form-group mt-4 mb-2">
+                                    <label for="tb_lokasi_awal" class="font-weight-bold" ><span class="label-form-span">Titik Kumpul</span></label><br>
+                                    <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" value="<?php echo $result['lokasi_awal']?>" readonly>
+                                </div>
+                                <div class="form-group mt-4 mb-2">
+                                    <label for="tb_nama_lengkap" class="font-weight-bold" ><span class="label-form-span">Nama Relawan</span></label><br>
+                                    <input type="text" id="tb_nama_lengkap" name="tb_nama_lengkap" class="form-control" value="<?php echo $result['nama_lengkap']?>" readonly>
+                                </div>
+                                <div class="form-group mt-4 mb-2">
+                                    <label for="tb_no_hp" class="font-weight-bold" ><span class="label-form-span">Nomor Telepon</span></label><br>
+                                    <input type="text" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $result['no_hp']?>" readonly>
+                                </div>   
+                                <div class="form-group mt-4 mb-2">
+                                    <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Domisili</span></label><br>
+                                    <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" value="<?php echo $result['domisili']?>" readonly>
+                                </div> 
+                                 <div class="form-group mb-5 ">
+                                    <label for="status_relawan" class="font-weight-bold" ><span class="label-form-span">Status Relawan</span></label><br>
+                                    <div class="radio-wrapper mt-1">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="status_relawan" name="status_relawan" 
+                                            class="form-check-input" value="Menunggu Seleksi" <?php if($result['status_relawan']=='Menunggu Seleksi') echo 'checked'?>>
+                                            <label class="form-check-label" for="status_relawan">Menunggu Seleksi</label>
+                                        </div>
+                                    </div>
+                                    <div class="radio-wrapper mt-1">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="status_relawan" name="status_relawan" 
+                                            class="form-check-input" value="Segera Berjalan" <?php if($result['status_relawan']=='Segera Berjalan') echo 'checked'?>>
+                                            <label class="form-check-label" for="status_relawan">Segera Berjalan</label>
+                                        </div>
+                                    </div>
+                                    <div class="radio-wrapper2 mt-1">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="status_relawan" name="status_relawan" 
+                                            class="form-check-input" value="Selesai" <?php if($result['status_relawan']=='Selesai') echo 'checked'?>>
+                                            <label class="form-check-label" for="status_relawan">Selesai</label>
+                                        </div>
+                                    </div>
+                                </div>            
                             </div>
-                        </div>
+                            
+                            <button type="submit" name="submit" value="Simpan" 
+                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="handleSubmit()"> 
+                                <span class="yst-login-btn-fs">Daftar</span>
+                            </button>
+                        </form>
+                    </div>  
                     </div>
                     
                 </div>

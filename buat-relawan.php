@@ -15,44 +15,14 @@
     $queryUser      = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user=$id_user");
     $data_user      = mysqli_fetch_array($queryUser);
 
-     //User
-    // function queryUser($query){
-    //     global $conn;
-    //     $result = mysqli_query($conn,$query); 
-    //     $rows = [];
-    //     while($row = mysqli_fetch_assoc($result)){
-    //         $rows[] = $row;
-    //     }
-    //     return $rows;
-    // }
-
-    // $data_user = queryUser("SELECT * FROM t_user WHERE id_user=$id_user");
     
-
     $id_program_relawan = $_GET["id"];
 
     $id_user           = $_SESSION['id_user'];
 
     $queryProgram      = mysqli_query($conn, "SELECT * FROM t_program_relawan  WHERE id_program_relawan=$id_program_relawan");
     $data_program     = mysqli_fetch_array($queryProgram);
-    //Program Relawan
-    // function queryRelawan($query){
-    //     global $conn;
-    //     $result = mysqli_query($conn,$query); 
-    //     $rows = [];
-    //     while($row = mysqli_fetch_assoc($result)){
-    //         $rows[] = $row;
-    //     }
-    //     return $rows;
-    // }
 
-    // $programRelawan = queryRelawan("SELECT * FROM t_program_relawan  WHERE id_program_relawan=$id_program_relawan");
-    // $query      = mysqli_query($conn, "SELECT * FROM  t_program_relawan 
-    //                            INNER JOIN t_user
-    //                            WHERE id_program_relawan=$id_program_relawan");
-    // $result     = mysqli_fetch_array($query);
-
-    // var_dump($result);die;
 
      if(isset($_POST["submit"])) {
         
@@ -62,9 +32,11 @@
         $nama_program_relawan     = $_POST["tb_nama_program_relawan"]; 
         $tgl_pelaksanaan          = $_POST["tb_tgl_pelaksanaan"];
         $domisili                 = $_POST["tb_domisili"];
-        $nama_lengkap              = $_POST["tb_nama_lengkap"];
+        $nama_lengkap             = $_POST["tb_nama_lengkap"];
         $no_hp                    = $_POST["tb_no_hp"];
         $tgl_daftar               = date ('Y-m-d', time());
+        $relawan_pending          = $_POST["tb_relawan_pending"];
+
         
         
         
@@ -73,7 +45,7 @@
         
         $query = "INSERT INTO t_relawan
                     VALUES 
-                  ('','$status_relawan','$id_user','$id_program_relawan ','$nama_program_relawan','$tgl_pelaksanaan','$domisili','$nama_lengkap','$no_hp ','$tgl_daftar ')  
+                  ('','$status_relawan','$id_user','$id_program_relawan ','$nama_program_relawan','$tgl_pelaksanaan','$domisili','$nama_lengkap','$no_hp ','$tgl_daftar','$relawan_pending','')  
                     ";
      
         mysqli_query($conn,$query);
@@ -207,6 +179,7 @@
                     <div class="mt-2 regis-title"><h3>Daftar Relawan</h3></div>    
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
+                                <input type="hidden" id="tb_relawan_pending" name="tb_relawan_pending" class="form-control" value="1">
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_nama_program_relawan" class="font-weight-bold" ><span class="label-form-span">Program Pilihan</span></label><br>
                                     <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" value="<?php echo $data_program['nama_program_relawan']?>" readonly>
@@ -229,7 +202,7 @@
                                 </div>
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_no_hp" class="font-weight-bold" ><span class="label-form-span">Nomor Telepon</span></label><br>
-                                    <input type="number" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $data_user['no_hp']?>" readonly>
+                                    <input type="text" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $data_user['no_hp']?>" readonly>
                                 </div>      
                                 <div class="form-group mt-3 mb-2">
                                     <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Kota Domisili</span></label><br>
