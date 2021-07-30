@@ -204,11 +204,7 @@
                                     value="<?php echo $result['status_donasi']?>" readonly>
                                 </div>           
                             </div>
-                            
-                            <button type="submit" name="submit" value="Simpan" 
-                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="return confirm('Anda yakin ingin melanjutkan ?');"> 
-                                <span class="yst-login-btn-fs">Lanjut</span>
-                            </button>
+
                         </form>
                     </div>  
         </main>

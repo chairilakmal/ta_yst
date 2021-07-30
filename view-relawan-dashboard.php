@@ -9,9 +9,15 @@
     }
     $id_program_relawan = $_GET["id"];
 
-    $query      = mysqli_query($conn, "SELECT * FROM t_program_relawan
+    $query      = mysqli_query($conn, "SELECT *, (SELECT SUM(relawan_jadi) 
+                FROM t_relawan WHERE id_program_relawan = $id_program_relawan) 
+                AS jumlah_relawan FROM t_program_relawan
                 WHERE id_program_relawan = $id_program_relawan");
     $result     = mysqli_fetch_array($query);
+
+    // $query      = mysqli_query($conn, "SELECT * FROM t_program_relawan
+    //             WHERE id_program_relawan = $id_program_relawan");
+    // $result     = mysqli_fetch_array($query);
 
 
 
@@ -127,9 +133,14 @@
                                 <?php echo $result['deskripsi_singkat_relawan']?>
                             </p>
                             <div class="d-flex view-kumpulan  mb-3">
-                                <div class="float-left value-penting"></div>
-                                <div class="ml-2">terkumpul dari</div>
+                                <div class="float-left value-penting"><?php echo $result['jumlah_relawan'] == 0 ? '0' : $result['jumlah_relawan']?> Relawan</div>
+                                <div class="ml-2">telah mendaftar dari total kebutuhan</div>
                                 <div class="ml-2 value-penting"><?php echo $result['target_relawan']?> Relawan</div>
+                            </div>
+                            <div class="d-flex view-kumpulan  mb-3">
+                                <div class="float-left">Kegiatan relawan akan dilaksanakan di <b><?php echo $result['lokasi_program']?></b></div>
+                                <div class="ml-2">pada tanggal</div>
+                                <div class="ml-2"><b><?php echo $result['tgl_pelaksanaan']?></b></div>
                             </div>
                         </div>
                         <div class="view-desc-lengkap mt-4">

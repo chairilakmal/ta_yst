@@ -344,11 +344,18 @@
                                             <label class="form-check-label" for="status_program_relawan">Pending</label>
                                         </div>
                                     </div>
-                                    <div class="radio-wrapper2 mt-1">
+                                    <div class="radio-wrapper mt-1">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" id="status_program_relawan" name="status_program_relawan" 
                                             class="form-check-input" value="Disetujui" <?php if($programRelawan['status_program_relawan']=='Disetujui') echo 'checked'?>>
                                             <label class="form-check-label" for="status_program_relawan">Disetujui</label>
+                                        </div>
+                                    </div>
+                                    <div class="radio-wrapper mt-1">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="status_program_relawan" name="status_program_relawan" 
+                                            class="form-check-input" value="Selesai" <?php if($programRelawan['status_program_relawan']=='Selesai') echo 'checked'?>>
+                                            <label class="form-check-label" for="status_program_relawan">Selesai</label>
                                         </div>
                                     </div>
                          </div>

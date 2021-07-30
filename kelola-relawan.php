@@ -223,7 +223,8 @@
                                                         <a href="edit-relawan.php?id_relawan=<?= $row["id_relawan"]; ?>" class="fas fa-edit"></a>
                                                     </button>
                                                     <button type="button" class="btn btn-delete ml-1">
-                                                        <a href="#" class="far fa-trash-alt"></a>
+                                                        <a href="hapus.php?type=relawan&id_relawan=<?=$row["id_relawan"];?>" 
+                                                        class="far fa-trash-alt" onclick="return confirm('Anda yakin ingin menghapus relawan ini ?');"></a>
                                                     </button>
                                                   </td>
                                             </tr>

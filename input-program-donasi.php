@@ -72,11 +72,12 @@
         $tgl_pdonasi                = date ('Y-m-d', time());
 
         $tgl_selesai              = $_POST["tb_tgl_selesai"];
+        $penerima_donasi                = $_POST["tb_penerima_donasi"];
 
        
         $query = "INSERT INTO t_program_donasi
                     VALUES 
-                  ('','$nama_program_donasi','$deskripsi_singkat_donasi','$target_dana',' $deskripsi_lengkap_donasi','$gambar','$tgl_pdonasi','$tgl_selesai','$status_program_donasi')  
+                  ('','$nama_program_donasi','$deskripsi_singkat_donasi','$target_dana',' $deskripsi_lengkap_donasi','$gambar','$tgl_pdonasi','$tgl_selesai','$status_program_donasi','$penerima_donasi')  
                     ";
      
         mysqli_query($conn,$query);
@@ -261,7 +262,10 @@
                                     <label for="tb_nama_program_donasi" class="label-txt">Nama Program</label>
                                     <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" placeholder="Nama program donasi">
                                 </div>
-                                
+                                <div class="form-group mt-4 mb-3">
+                                    <label for="tb_penerima_donasi" class="label-txt">Penerima Donasi</label>
+                                    <input type="text" id="tb_penerima_donasi" name="tb_penerima_donasi" class="form-control" placeholder="Penerima Donasi">
+                                </div>                            
                                 <div class="form-group mb-3">
                                     <label for="tb_target_dana" class="label-txt">Target Dana</label>
                                     <input type="number" id="tb_target_dana" name="tb_target_dana" class="form-control" placeholder="Target dana dikumpulkan">

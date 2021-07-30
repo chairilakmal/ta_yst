@@ -230,7 +230,7 @@
                                                     </button>
                                                     <button type="button" class="btn btn-delete ml-1">
                                                         <a href="hapus.php?type=donasi&id_donasi=<?=$row["id_donasi"];?>" 
-                                                        class="far fa-trash-alt" onclick="return confirm('Anda yakin ingin menghapus program ini ?');"></a>
+                                                        class="far fa-trash-alt" onclick="return confirm('Anda yakin ingin menghapus donasi ini ?');"></a>
                                                     </button>
                                                   </td>
                                             </tr> 

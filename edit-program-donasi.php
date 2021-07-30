@@ -89,6 +89,9 @@
 
         $tgl_selesai                = $_POST["tb_tgl_selesai"];
 
+        $penerima_donasi            = $_POST["tb_penerima_donasi"];
+        
+
         if($_FILES['image_uploads']['error'] === 4){
             $gambar = $gambarLama;
         } else {
@@ -101,7 +104,8 @@
                     target_dana                 = '$target_dana',
                     deskripsi_lengkap_donasi    = '$deskripsi_lengkap_donasi',
                     status_program_donasi       = '$status_program_donasi',
-                    foto_p_donasi               = '$gambar'
+                    foto_p_donasi               = '$gambar',
+                    penerima_donasi             = '$penerima_donasi'
                   WHERE id_program_donasi       = $id_program_donasi
                 ";
 
@@ -294,6 +298,11 @@
                                     <label for="tb_target_dana" class="label-txt">Target Dana</label>
                                     <input type="number" id="tb_target_dana" name="tb_target_dana" 
                                     class="form-control" placeholder="Target dana dikumpulkan" value="<?= $programDonasi["target_dana"]; ?>">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="tb_penerima_donasi" class="label-txt">Penerima Donasi</label>
+                                    <input type="text" id="tb_penerima_donasi" name="tb_penerima_donasi" 
+                                    class="form-control" placeholder="Penerima donasi" value="<?= $programDonasi["penerima_donasi"]; ?>">
                                 </div>
                                 <div class="form-group mt-4 mb-3">
                                 <label for="tb_tgl_selesai" class="label-txt">Tanggal Berakhir</label>

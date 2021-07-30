@@ -9,7 +9,10 @@
     }
     $id_program_donasi = $_GET["id"];
 
-    $query      = mysqli_query($conn, "SELECT *, (SELECT SUM(nominal_donasi) FROM t_donasi WHERE id_program_donasi = $id_program_donasi) AS dana_terkumpul_total FROM t_program_donasi 
+    $query      = mysqli_query($conn, "SELECT *, (SELECT SUM(nominal_donasi) 
+                FROM t_donasi WHERE id_program_donasi = $id_program_donasi) 
+                AS dana_terkumpul_total 
+                FROM t_program_donasi 
                 WHERE id_program_donasi = $id_program_donasi");
     $result     = mysqli_fetch_array($query);
 
@@ -140,6 +143,11 @@
                                 <div class="float-left value-penting">Rp.<?php echo $result['dana_terkumpul_total'] == 0 ? '0' : $result['dana_terkumpul_total']?> </div>
                                 <div class="ml-2">terkumpul dari</div>
                                 <div class="ml-2 value-penting">Rp. <?php echo $result['target_dana']?></div>
+                            </div>
+                            <div class="d-flex view-kumpulan  mb-3">
+                                <div class="float-left">Akan disalurkan kepada <b><?php echo $result['penerima_donasi']?></b></div>
+                                <div class="ml-2">pada tanggal</div>
+                                <div class="ml-2"><b><?php echo $result['tgl_selesai']?></b></div>
                             </div>
                         </div>
                         <div class="view-desc-lengkap mt-4">
