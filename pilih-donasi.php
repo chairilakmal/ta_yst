@@ -12,7 +12,7 @@
     //Program Donasi
     function queryDonasi($query){
         global $conn;
-        $result = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE status_program_donasi='Berjalan'"); 
+        $result = mysqli_query($conn, $query); 
         $rows = [];
         while($row = mysqli_fetch_assoc($result)){
             $rows[] = $row;
@@ -20,8 +20,15 @@
         return $rows;
     }
 
-    $programDonasi = queryDonasi("SELECT * FROM t_program_donasi WHERE status_program_donasi='Berjalan'");
-    rsort($programDonasi);
+    $programDonasi = queryDonasi("SELECT *, SUM(t_donasi.nominal_donasi) AS dana_terkumpul_total, 
+                    COUNT(id_user) 
+                    AS jumlah_donatur 
+                    FROM t_donasi 
+                    RIGHT JOIN t_program_donasi 
+                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi    
+                    WHERE status_program_donasi = 'Berjalan'             
+                    GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
+                    ");
 
     //Hanya tampilkan total
     
@@ -135,7 +142,7 @@
                     <div class="mt-2 regis-title"><h3>Pilih Donasi</h3></div>    
                         <div class="row card-deck">
                                     <?php foreach($programDonasi as $row):?>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="card card-pilihan mb-4 shadow-sm">
                                         <a href="">
                                             <img class="card-img-top berita-img" width="100%" src="img/<?= $row['foto_p_donasi']; ?>">
@@ -149,8 +156,8 @@
                                                     <div>Donatur</div>
                                                 </div>
                                                 <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left"><b>Rp.</b></div>
-                                                    <div><b></b></div>
+                                                    <div class="float-left"><b>Rp. <?= $row['dana_terkumpul_total'] == 0 ? '0' : $row['dana_terkumpul_total']; ?></b></div>
+                                                    <div><b><?= $row["jumlah_donatur"]; ?></b></div>
                                                 </div>
                                                 <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
                                                 href="view-donasi-dashboard.php?id=<?php echo $row['id_program_donasi'];?>">Lihat Program</a>

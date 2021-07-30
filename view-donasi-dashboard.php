@@ -3,7 +3,8 @@
     include "config/connection.php";
     $id_program_donasi = $_GET["id"];
 
-    $query      = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE id_program_donasi = $id_program_donasi");
+    $query      = mysqli_query($conn, "SELECT *, (SELECT SUM(nominal_donasi) FROM t_donasi WHERE id_program_donasi = $id_program_donasi) AS dana_terkumpul_total FROM t_program_donasi 
+                WHERE id_program_donasi = $id_program_donasi");
     $result     = mysqli_fetch_array($query);
 
     //  $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS nominal_total, 
@@ -122,8 +123,8 @@
                 </div>
             </div>               
             <div class="form-profil halaman-view"> 
-                <div class="row card-deck">                             
-                    <div class="halaman-view mt-5 ">
+                <div class="row card-deck ">                             
+                    <div class="halaman-view mt-5 w-100">
                         <img class="card-img-top halaman-view-img" width="100%" src="img/<?= $result['foto_p_donasi']; ?>">
                         <div class="view-desc-singkat mt-2">
                             <h2 class="mt-4"><?php echo $result['nama_program_donasi']?></h2>
@@ -131,7 +132,7 @@
                                 <?php echo $result['deskripsi_singkat_donasi']?>
                             </p>
                             <div class="d-flex view-kumpulan  mb-3">
-                                <div class="float-left value-penting">Rp. </div>
+                                <div class="float-left value-penting">Rp.<?php echo $result['dana_terkumpul_total'] == 0 ? '0' : $result['dana_terkumpul_total']?> </div>
                                 <div class="ml-2">terkumpul dari</div>
                                 <div class="ml-2 value-penting">Rp. <?php echo $result['target_dana']?></div>
                             </div>
