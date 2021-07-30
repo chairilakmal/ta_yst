@@ -9,15 +9,48 @@
         exit;
     }
 
+     
+    $id_user           = $_SESSION['id_user'];
 
+    $queryUser      = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user=$id_user");
+    $data_user      = mysqli_fetch_array($queryUser);
+
+     //User
+    // function queryUser($query){
+    //     global $conn;
+    //     $result = mysqli_query($conn,$query); 
+    //     $rows = [];
+    //     while($row = mysqli_fetch_assoc($result)){
+    //         $rows[] = $row;
+    //     }
+    //     return $rows;
+    // }
+
+    // $data_user = queryUser("SELECT * FROM t_user WHERE id_user=$id_user");
     
+
     $id_program_relawan = $_GET["id"];
 
-    
-    $query      = mysqli_query($conn, "SELECT * FROM t_user 
-                               CROSS JOIN t_program_relawan 
-                               WHERE id_program_relawan=$id_program_relawan");
-    $result     = mysqli_fetch_array($query);
+    $id_user           = $_SESSION['id_user'];
+
+    $queryProgram      = mysqli_query($conn, "SELECT * FROM t_program_relawan  WHERE id_program_relawan=$id_program_relawan");
+    $data_program     = mysqli_fetch_array($queryProgram);
+    //Program Relawan
+    // function queryRelawan($query){
+    //     global $conn;
+    //     $result = mysqli_query($conn,$query); 
+    //     $rows = [];
+    //     while($row = mysqli_fetch_assoc($result)){
+    //         $rows[] = $row;
+    //     }
+    //     return $rows;
+    // }
+
+    // $programRelawan = queryRelawan("SELECT * FROM t_program_relawan  WHERE id_program_relawan=$id_program_relawan");
+    // $query      = mysqli_query($conn, "SELECT * FROM  t_program_relawan 
+    //                            INNER JOIN t_user
+    //                            WHERE id_program_relawan=$id_program_relawan");
+    // $result     = mysqli_fetch_array($query);
 
     // var_dump($result);die;
 
@@ -29,7 +62,7 @@
         $nama_program_relawan     = $_POST["tb_nama_program_relawan"]; 
         $tgl_pelaksanaan          = $_POST["tb_tgl_pelaksanaan"];
         $domisili                 = $_POST["tb_domisili"];
-        $nama_user                = $_POST["tb_nama_lengkap"];
+        $nama_lengkap              = $_POST["tb_nama_lengkap"];
         $no_hp                    = $_POST["tb_no_hp"];
         $tgl_daftar               = date ('Y-m-d', time());
         
@@ -40,7 +73,7 @@
         
         $query = "INSERT INTO t_relawan
                     VALUES 
-                  ('','$status_relawan','$id_user','$id_program_relawan ','$nama_program_relawan','$tgl_pelaksanaan','$domisili','$nama_user','$no_hp ','$tgl_daftar ')  
+                  ('','$status_relawan','$id_user','$id_program_relawan ','$nama_program_relawan','$tgl_pelaksanaan','$domisili','$nama_lengkap','$no_hp ','$tgl_daftar ')  
                     ";
      
         mysqli_query($conn,$query);
@@ -176,27 +209,27 @@
                             <div class="form-group label-txt">
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_nama_program_relawan" class="font-weight-bold" ><span class="label-form-span">Program Pilihan</span></label><br>
-                                    <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" value="<?php echo $result['nama_program_relawan']?>" readonly>
+                                    <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" value="<?php echo $data_program['nama_program_relawan']?>" readonly>
                                 </div>
                                 <div class="form-group mt-4 mb-3">
                                 <label for="tb_tgl_pelaksanaan" class="font-weight-bold" ><span class="label-form-span">Tanggal Pelaksanaan</span></label><br>
-                                    <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" value="<?= $result["tgl_pelaksanaan"]; ?>" readonly>
+                                    <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" value="<?= $data_program["tgl_pelaksanaan"]; ?>" readonly>
                                 </div>
                                  <div class="form-group mt-4 mb-2">
                                     <label for="tb_lokasi_program" class="font-weight-bold" ><span class="label-form-span">Lokasi Pelaksanaan</span></label><br>
-                                    <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" value="<?php echo $result['lokasi_program']?>" readonly>
+                                    <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" value="<?php echo $data_program['lokasi_program']?>" readonly>
                                 </div>
                                  <div class="form-group mt-4 mb-2">
                                     <label for="tb_lokasi_awal" class="font-weight-bold" ><span class="label-form-span">Titik Kumpul</span></label><br>
-                                    <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" value="<?php echo $result['lokasi_awal']?>" readonly>
+                                    <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" value="<?php echo $data_program['lokasi_awal']?>" readonly>
                                 </div>
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_nama_lengkap" class="font-weight-bold" ><span class="label-form-span">Nama Relawan</span></label><br>
-                                    <input type="text" id="tb_nama_lengkap" name="tb_nama_lengkap" class="form-control" value="<?php echo $result['nama_lengkap']?>" readonly>
+                                    <input type="text" id="tb_nama_lengkap" name="tb_nama_lengkap" class="form-control" value="<?php echo $data_user['nama_lengkap']?>" readonly>
                                 </div>
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_no_hp" class="font-weight-bold" ><span class="label-form-span">Nomor Telepon</span></label><br>
-                                    <input type="number" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $result['no_hp']?>" readonly>
+                                    <input type="number" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $data_user['no_hp']?>" readonly>
                                 </div>      
                                 <div class="form-group mt-3 mb-2">
                                     <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Kota Domisili</span></label><br>

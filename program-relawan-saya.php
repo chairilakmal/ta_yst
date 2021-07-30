@@ -1,11 +1,30 @@
 <?php
-    session_start();
+     session_start();
     include 'config/connection.php';
+
 
     if(!isset($_SESSION["username"])) {
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
+
+    function query($query){
+       global $conn;
+       $id_user       = $_SESSION['id_user'];
+        $result       = mysqli_query($conn, "SELECT * FROM t_relawan
+                      RIGHT JOIN t_program_relawan ON t_relawan.id_program_relawan = t_program_relawan.id_program_relawan
+                      WHERE id_user = $id_user
+                      ORDER BY id_relawan DESC
+                        "); 
+        $rows = [];
+        while($row = mysqli_fetch_assoc($result)){
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+
+   $relawanSaya = query("SELECT * FROM t_relawan");
 
 ?>
 <!DOCTYPE html>
@@ -137,27 +156,25 @@
                                                 <td>Program Pilihan</td>
                                                 <td>Lokasi Program</td>
                                                 <td>Tgl Pelaksanaan</td>
-                                                <td>Kehadiran</td>
                                                 <td>Status Relawan</td>
                                                 <td class="justify-content-center" >Aksi</td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            <?php foreach($relawanSaya as $row):?>
                                             <tr>
-                                                <td>109819239</td>
-                                                <td class="table-snipet2">wodokwdaokwdoak</td>
-                                                <td class="table-snipet2">Bandung</td>
-                                                <td >12/12/20</td>
-                                                <td>Belum diisi</td>
-                                                <td>Status</td>
+                                                <td><?= $row["id_relawan"]; ?></td>
+                                                <td class="table-snipet2"><?= $row["nama_program_relawan"]; ?></td>
+                                                <td class="table-snipet2"><?= $row["lokasi_program"]; ?></td>
+                                                <td ><?= $row["tgl_pelaksanaan"]; ?></td>
+                                                <td><?= $row["status_relawan"]; ?></td>
                                                 <td class="justify-content-center">
                                                     <button type="button" class="btn btn-edit">
                                                         <a href="#" class="fas fa-edit"></a>
                                                     </button>
                                                   </td>
                                             </tr>
-                                            
+                                            <?php endforeach;?>   
                                         </tbody>
                                     </table>
                                 </div>

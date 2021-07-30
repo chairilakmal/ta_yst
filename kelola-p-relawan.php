@@ -9,9 +9,9 @@
     }
 
 
-   function query($query){
+    function query($query){
        global $conn;
-        $result = mysqli_query($conn, "SELECT * FROM t_program_relawan"); 
+        $result = mysqli_query($conn,$query); 
         $rows = [];
         while($row = mysqli_fetch_assoc($result)){
             $rows[] = $row;
@@ -19,9 +19,29 @@
         return $rows;
    }
 
+    // WHERE status_donasi = 'Diterima'
+
+    // var_dump($programDonasi);die;
+   $programRelawan = query("SELECT *, COUNT(id_user) AS jumlah_relawan
+                    FROM t_relawan
+                    RIGHT JOIN t_program_relawan
+                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan                 
+                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
+                    ");
+
+//    function query($query){
+//        global $conn;
+//         $result = mysqli_query($conn, "SELECT * FROM t_program_relawan"); 
+//         $rows = [];
+//         while($row = mysqli_fetch_assoc($result)){
+//             $rows[] = $row;
+//         }
+//         return $rows;
+//    }
+
    
 
-   $programRelawan = query("SELECT * FROM t_program_relawan");
+//    $programRelawan = query("SELECT * FROM t_program_relawan");
     
 ?>
 
@@ -204,9 +224,9 @@
                                                 <td>ID</td>
                                                 <td>Nama Program</td>
                                                 <td>Lokasi Pelaksanaan </td>
-                                                <td>Titik Kumpul</td>
+                                                
                                                 <td>Tgl Pelaksanaan </td>
-            
+                                                <td>Relawan Terkumpul</td>
                                                 <td>Jumlah Target Relawan</td>    
                                                 <td>Status Program</td>
                                                 <td class="justify-content-center" >Aksi</td>
@@ -218,9 +238,9 @@
                                                 <td><?= $row["id_program_relawan"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_relawan"]; ?></td>
                                                 <td class="table-snipet2"><?= $row["lokasi_program"]; ?></td>
-                                                <td class="table-snipet2"><?= $row["lokasi_awal"]; ?></td>
+
                                                 <td><?= $row["tgl_pelaksanaan"]; ?></td>
-                                            
+                                                <td><?= $row["jumlah_relawan"]; ?></td>
                                                 <td><?= $row["target_relawan"]; ?></td>
                                                 <td>
                                                 <?= $row["status_program_relawan"]; ?>
