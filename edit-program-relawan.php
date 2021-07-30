@@ -1,5 +1,12 @@
 <?php
+    session_start();
     include 'config/connection.php';
+
+
+    if(!isset($_SESSION["username"])) {
+        header('Location: login.php?status=restrictedaccess');
+        exit;
+    }
 
     //ambil id program di URL
     $id_program_relawan = $_GET["id_program_relawan"];

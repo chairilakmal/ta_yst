@@ -1,6 +1,13 @@
 <?php
 
-    include "config/connection.php";
+    session_start();
+    include 'config/connection.php';
+
+
+    if(!isset($_SESSION["username"])) {
+        header('Location: login.php?status=restrictedaccess');
+        exit;
+    }
     $id_program_donasi = $_GET["id"];
 
     $query      = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE id_program_donasi = $id_program_donasi");
