@@ -193,7 +193,7 @@
                                 <div class="form-group mt-2 mb-2" id="buatNominal">
                                     <label for="nominal2" class="font-weight-bold" ><span class="label-form-span">Nominal Donasi</span></label><br>
                                     <input type="number" id="nominal2" name="nominal2" class="form-control" 
-                                    value="<?php echo $result['nominal_donasi']?>" readonly>
+                                    value="<?php echo $result['belum_dibayar']?>" readonly>
                                 </div>
                                 <div class="form-group mt-3 mb-2">
                                     <label for="nama_donatur" class="font-weight-bold" ><span class="label-form-span">Nama Donatur</span></label><br>

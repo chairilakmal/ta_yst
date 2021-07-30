@@ -169,7 +169,7 @@
                                             <tr>
                                                 <td><?= $row["id_donasi"]; ?></td>
                                                 <td><?= $row["tgl_donasi"]; ?></td>
-                                                <td class="table-snipet2">Rp. <?= $row["nominal_donasi"]; ?></td>
+                                                <td class="table-snipet2">Rp. <?= $row["belum_dibayar"]; ?></td>
                                                 <td><?= $row["nama_program_donasi"]; ?></td>
                                                 <td><?= $row["status_donasi"]; ?></td>
                                                 <td class="justify-content-center">

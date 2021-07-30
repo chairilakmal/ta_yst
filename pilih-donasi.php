@@ -9,7 +9,7 @@
         exit;
     }
 
-    //Donasi
+    //Program Donasi
     function queryDonasi($query){
         global $conn;
         $result = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE status_program_donasi='Berjalan'"); 
@@ -22,6 +22,9 @@
 
     $programDonasi = queryDonasi("SELECT * FROM t_program_donasi WHERE status_program_donasi='Berjalan'");
     rsort($programDonasi);
+
+    //Hanya tampilkan total
+    
     // var_dump($programDonasi);die;
 
 ?>

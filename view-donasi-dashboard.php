@@ -6,6 +6,14 @@
     $query      = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE id_program_donasi = $id_program_donasi");
     $result     = mysqli_fetch_array($query);
 
+    //  $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS nominal_total, 
+    //                 COUNT(konstan) 
+    //                 AS jumlah_donatur 
+    //                 FROM t_donasi 
+    //                 LEFT JOIN t_program_donasi 
+    //                 ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi                 
+    //                 GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
+    //                 ");
 
 ?>
 
