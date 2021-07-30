@@ -8,10 +8,6 @@
         exit;
     }
 
-    $id_program_donasi = $_GET["id"];
-
-    $query      = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE id_program_donasi = $id_program_donasi");
-    $result     = mysqli_fetch_array($query);
     
 ?>
 
@@ -122,16 +118,13 @@
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
                                 <div class="form-group mt-4 mb-2">
-                                    <label for="gender" class="font-weight-bold" ><span class="label-form-span">Nama Program Donasi</span></label><br>
-                                    <input type="text" id="tb_nama_user" name="tb_nama_user" class="form-control" placeholder="Nama Program Donasi">
+                                  <span id="result-name" />
                                 </div>
                                 <div class="form-group mt-3 mb-2">
-                                    <label for="gender" class="font-weight-bold" ><span class="label-form-span">Nominal Donasi</span></label><br>
-                                    <input type="number" id="tb_nama_user" name="tb_nama_user" class="form-control" placeholder="Nominal Donasi">
+                                    <span id="result-surname" />
                                 </div>
                                 <div class="form-group mt-3 mb-2">
-                                    <label for="gender" class="font-weight-bold" ><span class="label-form-span">Nama Donatur</span></label><br>
-                                    <input type="text" id="tb_nama_user" name="tb_nama_user" class="form-control" placeholder="Nama Donatur">
+                                    <span id="result-name2" />
                                 </div>
                             </div>
                             <div class="garis-atas">
@@ -179,7 +172,7 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
-
+    <script type="text/javascript" src="js/review-donasi.js"></script>
 
 </body>
 

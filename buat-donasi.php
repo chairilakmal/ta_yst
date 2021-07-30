@@ -43,6 +43,7 @@
             echo "
             <script>
                 alert('Data berhasil ditambahkan!');
+                window.location = 'review-donasi.php';
             </script>
             ";
         }else{
@@ -218,7 +219,7 @@
                             </div>
                             
                             <button type="submit" name="submit" value="Simpan" 
-                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="return confirm('Anda yakin ingin melanjutkan ?');"> 
+                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="handleSubmit()"> 
                                 <span class="yst-login-btn-fs">Lanjut</span>
                             </button>
                         </form>
@@ -263,6 +264,7 @@
         });
         });
     </script>
+    <script type="text/javascript" src="js/buat-donasi.js"></script>
 
 
 </body>
