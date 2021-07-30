@@ -144,7 +144,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Icon Title -->
     <link rel="icon" href="img/logo-only.svg">
-    <title>YST - Input Program Relawan</title>
+    <title>YST - Edit Program Relawan</title>
     <!-- Font Awesome
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> -->
     <!-- Font Awesome -->
@@ -299,12 +299,12 @@
                             class="form-control" value="<?= $programRelawan["nama_program_relawan"]; ?>">
                         </div>
                         <div class="form-group mb-3">
-                        <label for="tb_target_relawan" class="label-txt">Target Relawan</label>
+                        <label for="tb_target_relawan" class="label-txt">Target Jumlah Relawan</label>
                             <input type="number" id="tb_target_relawan" name="tb_target_relawan" 
                             class="form-control" value="<?= $programRelawan["target_relawan"]; ?>">
                         </div>
                         <div class="form-group mt-4 mb-3">
-                        <label for="tb_lokasi_program" class="label-txt">Lokasi Program</label>
+                        <label for="tb_lokasi_program" class="label-txt">Lokasi Pelaksanaan Program</label>
                             <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" 
                             class="form-control" value="<?= $programRelawan["lokasi_program"]; ?>">
                         </div>
@@ -313,13 +313,18 @@
                             <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" 
                             class="form-control" value="<?= $programRelawan["tgl_pelaksanaan"]; ?>">
                         </div>
+                        <div class="form-group mt-4 mb-3">
+                        <label for="tb_lokasi_program" class="label-txt">Lokasi Titik Kumpul</label>
+                            <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" 
+                            class="form-control" value="<?= $programRelawan["lokasi_awal"]; ?>">
+                        </div>
                         <div class="form-group">
-                        <label for="tb_deskripsi_relawan_singkat" class="label-txt">Deskripsi Singkat</label>
+                        <label for="tb_deskripsi_relawan_singkat" class="label-txt">Deskripsi Singkat Program</label>
                             <textarea class="form-control" id="tb_deskripsi_relawan_singkat" 
                             name="tb_deskripsi_relawan_singkat" rows="2"><?= $programRelawan["deskripsi_singkat_relawan"]; ?></textarea>
                         </div>
                         <div class="form-group">
-                        <label for="tb_deskripsi_relawan_lengkap" class="label-txt">Deskripsi Lengkap</label>
+                        <label for="tb_deskripsi_relawan_lengkap" class="label-txt">Deskripsi Lengkap Program</label>
                             <textarea class="form-control" id="tb_deskripsi_relawan_lengkap" 
                             name="tb_deskripsi_relawan_lengkap" rows="6"><?= $programRelawan["deskripsi_lengkap_relawan"]; ?></textarea>
                         </div>

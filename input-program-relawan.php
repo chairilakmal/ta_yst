@@ -56,29 +56,33 @@
         $nama_program_relawan        = $_POST["tb_nama_program_relawan"]; 
         $nama_program_relawan        = htmlspecialchars($nama_program_relawan);
 
-        $target_relawan              = $_POST["tb_target_relawan"];
-
-        $lokasi_program              = $_POST["tb_lokasi_program"]; 
-        $lokasi_program              = htmlspecialchars($lokasi_program);
-
-        $tgl_pelaksanaan              = $_POST["tb_tgl_pelaksanaan"];
-         
         $deskripsi_singkat_relawan   = $_POST["tb_deskripsi_relawan_singkat"]; 
         $deskripsi_singkat_relawan   = htmlspecialchars($deskripsi_singkat_relawan);
+
+        $target_relawan              = $_POST["tb_target_relawan"];
+
+        $tgl_pelaksanaan              = $_POST["tb_tgl_pelaksanaan"];
+
+        $lokasi_program              = $_POST["tb_lokasi_program"]; 
+        $lokasi_program              = htmlspecialchars($lokasi_program);  
 
         $deskripsi_lengkap_relawan   = $_POST["tb_deskripsi_relawan_lengkap"];
         $deskripsi_lengkap_relawan   = htmlspecialchars($deskripsi_lengkap_relawan);
 
-        $status_program_relawan      = "Pending";
-
         $gambar = upload();
+
+        $status_program_relawan      = "Pending";
+ 
 
         $tgl_prelawan                = date ('Y-m-d', time());
 
+        $status_program_relawan      = "Pending";
+        
+        $lokasi_awal                 = $_POST["tb_lokasi_awal"]; 
        
         $query = "INSERT INTO t_program_relawan
                     VALUES 
-                  ('','$nama_program_relawan','$deskripsi_singkat_relawan','$target_relawan','','$tgl_pelaksanaan','$lokasi_program',' $deskripsi_lengkap_relawan','$gambar','$status_program_relawan','$tgl_prelawan')  
+                  ('','$nama_program_relawan','$deskripsi_singkat_relawan','$target_relawan','$tgl_pelaksanaan','$lokasi_program',' $deskripsi_lengkap_relawan','$gambar','$status_program_relawan','$tgl_prelawan','$lokasi_awal')  
                     ";
 
         mysqli_query($conn,$query);
@@ -264,23 +268,27 @@
                             <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" placeholder="Nama program relawan">
                         </div>
                         <div class="form-group mb-3">
-                        <label for="tb_target_relawan" class="label-txt">Target Relawan</label>
+                        <label for="tb_target_relawan" class="label-txt">Target Jumlah Relawan</label>
                             <input type="number" id="tb_target_relawan" name="tb_target_relawan" class="form-control" placeholder="Target relawan dikumpulkan">
                         </div>
                         <div class="form-group mt-4 mb-3">
-                        <label for="tb_lokasi_program" class="label-txt">Lokasi Program</label>
+                        <label for="tb_lokasi_program" class="label-txt">Lokasi Pelaksanaan</label>
                             <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" placeholder="Lokasi dilaksanakannya program relawan">
                         </div>
                         <div class="form-group mt-4 mb-3">
                         <label for="tb_tgl_pelaksanaan" class="label-txt">Tanggal Pelaksanaan Program</label>
                             <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" placeholder="Tanggal dilaksanakannya program relawan">
                         </div>
+                        <div class="form-group mt-4 mb-3">
+                        <label for="tb_lokasi_awal" class="label-txt">Lokasi Titik Kumpul</label>
+                            <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" placeholder="Lokasi Titik kumpul">
+                        </div>
                         <div class="form-group">
-                        <label for="tb_deskripsi_relawan_singkat" class="label-txt">Deskripsi Singkat</label>
+                        <label for="tb_deskripsi_relawan_singkat" class="label-txt">Deskripsi Singkat Program</label>
                             <textarea class="form-control" id="tb_deskripsi_relawan_singkat" name="tb_deskripsi_relawan_singkat" rows="2" placeholder="Gambaran umum tentang program"></textarea>
                         </div>
                         <div class="form-group">
-                        <label for="tb_deskripsi_relawan_lengkap" class="label-txt">Deskripsi Lengkap</label>
+                        <label for="tb_deskripsi_relawan_lengkap" class="label-txt">Deskripsi Lengkap Program</label>
                             <textarea class="form-control" id="tb_deskripsi_relawan_lengkap" name="tb_deskripsi_relawan_lengkap" rows="6" placeholder="Gambaran lengkap tentang program"></textarea>
                         </div>
                         <div class="form-group">

@@ -1,4 +1,5 @@
 <?php
+
     session_start();
     include 'config/connection.php';
 
@@ -6,8 +7,16 @@
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
+    $id_program_relawan = $_GET["id"];
+
+    $query      = mysqli_query($conn, "SELECT * FROM t_program_relawan
+                WHERE id_program_relawan = $id_program_relawan");
+    $result     = mysqli_fetch_array($query);
+
+
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Icon Title -->
     <link rel="icon" href="img/logo-only.svg">
-    <title>YST - Program Relawan Saya</title>
+    <title>YST - Buat Donasi</title>
     <!-- Font Awesome
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> -->
     <!-- Font Awesome -->
@@ -57,8 +66,8 @@
         </nav>
         <!-- /.Navbar -->
 
-          <!-- Main Sidebar Container -->
-          <aside class="main-sidebar sidebar-background elevation-4">
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-background elevation-4">
             <!-- Brand Logo -->
 
             <a href="dashboard-user.php" class="brand-link">
@@ -73,16 +82,16 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item nav-item-sidebar">
-                            <a href="dashboard-user.php" class="nav-link side-icon  ">
+                        <li class="nav-item nav-item-sidebar menu-open">
+                            <a href="dashboard-user.php" class="nav-link side-icon active ">
                                 <i class="nav-icon fas fa-hand-holding-heart"></i>
                                 <p>
                                     Donasi Saya
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-sidebar menu-open">
-                            <a href="program-relawan-saya.php" class="nav-link side-icon active">
+                        <li class="nav-item nav-item-sidebar">
+                            <a href="program-relawan-saya.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-user-clock"></i>
                                 <p>
                                     Program Relawan
@@ -99,74 +108,41 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
         <main>
-            <div class="request-data">
-                    <div class="projects">
-                        <div class="page-title-link ml-4 mb-4">     
-                            <a href="dashboard-user.php">
-                                <i class="nav-icon fas fa-home mr-1"></i>Dashboard user</a> > 
+            <div class="page-title-link ml-4 mb-4">     
+               <div class="page-title-link ml-4 mb-4">     
                             <a href="program-relawan-saya.php">
-                                <i class="nav-icon fas fa-hand-holding-heart mr-1"></i>Program relawan</a>
+                                <i class="nav-icon fas fa-user-cog mr-1"></i>Program relawan Saya</a> >
+                            <a href="pilih-relawan.php">
+                                <i class="nav-icon fas fa-user-cog mr-1"></i>Pilih Program relawan</a>
+       
                         </div>
-
-                        <div class="card card-request-data">
-                            <div class="card-header-req">
-                                <div class="row ml-1 ">
-                                    <div class="col ">
-                                      <div class="dropdown show ">
-                                        <a class="btn btn-info  filter-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          Filter
-                                        </a>
-                                        <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                          <a class="dropdown-item" href="#">Terbaru</a>
-                                          <a class="dropdown-item" href="#">Perlu Konfirmasi</a>
-                                          <a class="dropdown-item" href="#">Selesai</a>
-                                          <a class="dropdown-item" href="#">Bermasalah</a>
-                                      </div>
-                                    </div>
-                                    </div>
-                              </div>
-                              <button class="mr-5" onclick="location.href='pilih-relawan.php'">Daftar Jadi Relawan <span class="fas fa-plus-square"></span></button>
-                        
-                            </div>
-                            <div class="card-body card-body-req">
-                                <div class="table-responsive">
-                                    <table width="100%">
-                                        <thead>
-                                            <tr>
-                                                <td>ID</td>
-                                                <td>Program Pilihan</td>
-                                                <td>Lokasi Program</td>
-                                                <td>Tgl Pelaksanaan</td>
-                                                <td>Kehadiran</td>
-                                                <td>Status Relawan</td>
-                                                <td class="justify-content-center" >Aksi</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            
-                                            <tr>
-                                                <td>109819239</td>
-                                                <td class="table-snipet2">wodokwdaokwdoak</td>
-                                                <td class="table-snipet2">Bandung</td>
-                                                <td >12/12/20</td>
-                                                <td>Belum diisi</td>
-                                                <td>Status</td>
-                                                <td class="justify-content-center">
-                                                    <button type="button" class="btn btn-edit">
-                                                        <a href="#" class="fas fa-edit"></a>
-                                                    </button>
-                                                  </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
+            </div>               
+            <div class="form-profil halaman-view"> 
+                <div class="row card-deck ">                             
+                    <div class="halaman-view mt-5 w-100">
+                        <img class="card-img-top halaman-view-img" width="100%" src="img/<?= $result['foto_p_relawan']; ?>">
+                        <div class="view-desc-singkat mt-2">
+                            <h2 class="mt-4"><?php echo $result['nama_program_relawan']?></h2>
+                            <p>
+                                <?php echo $result['deskripsi_singkat_relawan']?>
+                            </p>
+                            <div class="d-flex view-kumpulan  mb-3">
+                                <div class="float-left value-penting"></div>
+                                <div class="ml-2">terkumpul dari</div>
+                                <div class="ml-2 value-penting"><?php echo $result['target_relawan']?> Relawan</div>
                             </div>
                         </div>
-                    </div>
-                    
+                        <div class="view-desc-lengkap mt-4">
+                            <h4 class="mt-4"> Informasi Program</h4>
+                            <p>
+                                <?php echo $result['deskripsi_lengkap_relawan']?>
+                            </p>
+                            <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
+                            href="buat-relawan.php?id=<?php echo $result['id_program_relawan'];?>">Daftar Sekarang</a>
+                        </div>  
+                    </div>  
                 </div>
-            </main>
+        </main>
         </div>
         <!-- /.container-fluid -->
         <!-- /.content -->

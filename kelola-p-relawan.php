@@ -203,11 +203,11 @@
                                             <tr>
                                                 <td>ID</td>
                                                 <td>Nama Program</td>
-                                                <td>Tempat </td>
+                                                <td>Lokasi Pelaksanaan </td>
+                                                <td>Titik Kumpul</td>
                                                 <td>Tgl Pelaksanaan </td>
-                                                                                          
-                                                <td>Relawan Terkumpul</td>
-                                                <td>Target Relawan</td>    
+            
+                                                <td>Jumlah Target Relawan</td>    
                                                 <td>Status Program</td>
                                                 <td class="justify-content-center" >Aksi</td>
                                             </tr>
@@ -218,9 +218,9 @@
                                                 <td><?= $row["id_program_relawan"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_relawan"]; ?></td>
                                                 <td class="table-snipet2"><?= $row["lokasi_program"]; ?></td>
+                                                <td class="table-snipet2"><?= $row["lokasi_awal"]; ?></td>
                                                 <td><?= $row["tgl_pelaksanaan"]; ?></td>
-                                               
-                                                <td><?= $row["relawan_terkumpul"]; ?></td>
+                                            
                                                 <td><?= $row["target_relawan"]; ?></td>
                                                 <td>
                                                 <?= $row["status_program_relawan"]; ?>
