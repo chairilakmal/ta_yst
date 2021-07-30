@@ -111,10 +111,10 @@
                             </a>
                         </li>
                         <li class="nav-item nav-item-sidebar">
-                            <a href="laporan-program.php" class="nav-link side-icon">
+                            <a href="laporan-program-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-calendar-check"></i>
                                 <p>
-                                    Laporan  Program
+                                    Lp.  Program Donasi
                                 </p>
                             </a>
                         </li>
@@ -122,15 +122,23 @@
                             <a href="laporan-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-file-invoice-dollar"></i>
                                 <p>
-                                    Laporan  Donasi
+                                    Lp. Donasi
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item nav-item-sidebar">
-                            <a href="laporan-relawan.php" class="nav-link side-icon">
+                            <a href="laporan-program-relawan.php" class="nav-link side-icon">
+                                <i class="nav-icon fas fa-calendar-check"></i>
+                                <p>
+                                    Lp.  Program Relawan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-item-sidebar ">
+                            <a href="laporan-relawan.php" class="nav-link side-icon ">
                                 <i class="nav-icon fas fa-address-book"></i>
                                 <p>
-                                    Laporan  Relawan
+                                    Lp.  Relawan
                                 </p>
                             </a>
                         </li>

@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Icon Title -->
     <link rel="icon" href="img/logo-only.svg">
-    <title>YST - Laporan Relawan</title>
+    <title>YST - Laporan Program Relawan</title>
     <!-- Font Awesome
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> -->
     <!-- Font Awesome -->
@@ -123,16 +123,16 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-sidebar">
-                            <a href="laporan-program-relawan.php" class="nav-link side-icon">
+                        <li class="nav-item nav-item-sidebar menu-open">
+                            <a href="laporan-program-relawan.php" class="nav-link side-icon active">
                                 <i class="nav-icon fas fa-calendar-check"></i>
                                 <p>
                                     Lp.  Program Relawan
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-sidebar menu-open">
-                            <a href="laporan-relawan.php" class="nav-link side-icon active">
+                        <li class="nav-item nav-item-sidebar ">
+                            <a href="laporan-relawan.php" class="nav-link side-icon ">
                                 <i class="nav-icon fas fa-address-book"></i>
                                 <p>
                                     Lp.  Relawan

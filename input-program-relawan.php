@@ -170,7 +170,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item nav-item-sidebar">
+                        <li class="nav-item nav-item-sidebar ">
                             <a href="dashboard-admin.php" class="nav-link side-icon  ">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
@@ -179,8 +179,8 @@
                             </a>
                         </li>
 
-                        <li class="nav-item nav-item-sidebar">
-                            <a href="kelola-donasi.php" class="nav-link side-icon">
+                        <li class="nav-item nav-item-sidebar ">
+                            <a href="kelola-donasi.php" class="nav-link side-icon ">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
                                     Kelola Donasi
@@ -188,7 +188,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item nav-item-sidebar  menu-open">
+                        <li class="nav-item nav-item-sidebar menu-open">
                             <a href="kelola-p-relawan.php" class="nav-link side-icon active">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
@@ -205,10 +205,10 @@
                             </a>
                         </li>
                         <li class="nav-item nav-item-sidebar">
-                            <a href="laporan-program.php" class="nav-link side-icon">
+                            <a href="laporan-program-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-calendar-check"></i>
                                 <p>
-                                    Laporan  Program
+                                    Lp.  Program Donasi
                                 </p>
                             </a>
                         </li>
@@ -216,15 +216,23 @@
                             <a href="laporan-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-file-invoice-dollar"></i>
                                 <p>
-                                    Laporan  Donasi
+                                    Lp. Donasi
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item nav-item-sidebar">
-                            <a href="laporan-relawan.php" class="nav-link side-icon">
+                            <a href="laporan-program-relawan.php" class="nav-link side-icon">
+                                <i class="nav-icon fas fa-calendar-check"></i>
+                                <p>
+                                    Lp.  Program Relawan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-item-sidebar ">
+                            <a href="laporan-relawan.php" class="nav-link side-icon ">
                                 <i class="nav-icon fas fa-address-book"></i>
                                 <p>
-                                    Laporan  Relawan
+                                    Lp.  Relawan
                                 </p>
                             </a>
                         </li>
