@@ -9,6 +9,11 @@
         exit;
     }
 
+     function rupiah($angka){
+        $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+        return $hasil_rupiah;
+    }
+
     $id_donasi = $_GET["id_donasi"];
     // var_dump($id_donasi);die;
 
@@ -190,8 +195,8 @@
                                 </div>   
                                 <div class="form-group mt-2 mb-2" id="buatNominal">
                                     <label for="nominal2" class="font-weight-bold" ><span class="label-form-span">Nominal Donasi</span></label><br>
-                                    <input type="number" id="nominal2" name="nominal2" class="form-control" 
-                                    value="<?php echo $result['belum_dibayar']?>" readonly>
+                                    <input type="text" id="nominal2" name="nominal2" class="form-control" 
+                                    value="<?php echo rupiah($result['belum_dibayar'])?>" readonly>
                                 </div>
                                 <div class="form-group mt-3 mb-2">
                                     <label for="nama_donatur" class="font-weight-bold" ><span class="label-form-span">Nama Donatur</span></label><br>
@@ -206,6 +211,14 @@
                             </div>
 
                         </form>
+                        <div class="garis-atas">
+                                <p>
+                                    Mohon transfer <b>tepat</b> sebesar nominal donasi ke rekening berikut :
+                                </p>
+                                <p>
+                                    <b>BANK MANDIRI 131-00-0458589-1 : a/n YAYASAN SEKAR TELKOM</b>
+                                </p>
+                            </div>
                     </div>  
         </main>
         </div>

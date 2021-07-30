@@ -1,4 +1,5 @@
 <?php
+
     session_start();
     include 'config/connection.php';
 
@@ -7,6 +8,25 @@
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
+
+    function query($query){
+       global $conn;
+        $result = mysqli_query($conn, "SELECT * FROM t_donasi
+                      LEFT JOIN t_program_donasi ON t_donasi.id_program_donasi = t_program_donasi.id_program_donasi
+                      WHERE status_donasi = 'Diterima'      
+                      ORDER BY id_donasi DESC
+                        "); 
+        $rows = [];
+        while($row = mysqli_fetch_assoc($result)){
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+
+   $result = query("SELECT * FROM t_donasi");
+   
+//    var_dump($donasiSaya);die;
 
 ?>
 <!DOCTYPE html>
@@ -151,8 +171,57 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <main>
-                <div class="home-content">
-                   
+            <div class="request-data">
+                    <div class="projects">
+                        <div class="page-title-link ml-4 mb-4">     
+                            <a href="dashboard-admin.php">
+                                <i class="nav-icon fas fa-home mr-1"></i>Dashboard admin</a> > 
+                            <a href="kelola-donasi.php">
+                                <i class="nav-icon fas fa-donate mr-1"></i>Laporan donasi</a>
+                        </div>
+
+                        <div class="card card-request-data">
+                            <div class="card-header-req">
+                                <div class="row ml-1 ">
+      
+                              </div>
+                              <button class="mr-5" onclick="#">Cetak Laporan <span class="fa fa-print"></span></button>
+                        
+                            </div>
+                            <div class="card-body card-body-req">
+                                <div class="table-responsive">
+                                    <table width="100%" >
+                                        <thead>
+                                            <tr class="text-center">
+                                                <td>Kode Donasi</td>
+                                                <td>Tgl Donasi</td>
+                                                <td>Nama Donatur</td>
+                                                
+                                                <td>Nominal</td>
+                                                <td>Program Pilihan</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                        <?php foreach($result as $row):?>                            
+                                            <tr>
+                                                <td class="text-center"><?= $row["id_donasi"]; ?></td>
+                                                <td class="text-center"><?= $row["tgl_donasi"]; ?></td>
+                                                <td class="text-center"><?= $row["nama_donatur"]; ?></td>
+                                                
+                                                <td class="text-center">Rp. <?= $row["nominal_donasi"]; ?></td>
+                                                <!-- <td class="table-snipet1"> -->
+                                                <td ><?= $row["nama_program_donasi"]; ?></td>
+      
+     
+                                            </tr> 
+                                        <?php endforeach;?>   
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </main>
         </div>

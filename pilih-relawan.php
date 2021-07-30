@@ -12,7 +12,7 @@
      //Relawan
     function queryRelawan($query){
         global $conn;
-        $result = mysqli_query($conn, "SELECT * FROM t_program_relawan"); 
+        $result = mysqli_query($conn, $query); 
         $rows = [];
         while($row = mysqli_fetch_assoc($result)){
             $rows[] = $row;
@@ -20,8 +20,15 @@
         return $rows;
     }
 
-    $programRelawan = queryRelawan("SELECT * FROM t_program_relawan");
-    rsort($programRelawan);
+
+    $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan 
+                    FROM t_relawan 
+                    RIGHT JOIN t_program_relawan 
+                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan  
+                    WHERE status_program_relawan = 'Disetujui'             
+                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
+                    ");
+    
 
     //Hanya tampilkan total
     
@@ -148,7 +155,7 @@
                                                     <div>Jumlah Target</div>
                                                 </div>
                                                 <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left"><b> </b></div>
+                                                    <div class="float-left"><b><?= $row["jumlah_relawan"]; ?> </b></div>
                                                     <div><b><?= $row["target_relawan"]; ?></b></div>
                                                 </div>
                                                 <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 

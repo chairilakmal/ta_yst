@@ -9,7 +9,10 @@
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
-
+     function rupiah($angka){
+        $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+        return $hasil_rupiah;
+    }
    function query($query){
        global $conn;
         $result = mysqli_query($conn,$query); 
@@ -236,7 +239,7 @@
                                                 <td class="text-center"><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
                                                 <td>Rp. <?= $row['dana_terkumpul_total'] == 0 ? '0' : $row['dana_terkumpul_total']; ?></td>
-                                                <td>Rp. <?= $row["target_dana"]; ?></td>
+                                                <td><?= rupiah($row["target_dana"]); ?></td>
                                                 <td class="text-center"><?= $row["jumlah_donatur"]; ?></td>
                                                 <td class="text-center">
                                                     <?= $row["status_program_donasi"]; ?>

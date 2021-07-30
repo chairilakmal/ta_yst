@@ -1,11 +1,30 @@
 <?php
+
     session_start();
     include 'config/connection.php';
+
 
     if(!isset($_SESSION["username"])) {
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
+
+    function query($query){
+       global $conn;
+        $result = mysqli_query($conn, "SELECT * FROM t_relawan
+                      LEFT JOIN t_program_relawan ON t_relawan.id_program_relawan = t_program_relawan.id_program_relawan
+                      WHERE status_relawan = 'Selesai' 
+                      ORDER BY id_relawan DESC
+                        "); 
+        $rows = [];
+        while($row = mysqli_fetch_assoc($result)){
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+
+   $result = query("SELECT * FROM t_relawan");
 ?>
 
 <!DOCTYPE html>
@@ -150,8 +169,57 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <main>
-                <div class="home-content">
-                   
+            <div class="request-data">
+                    <div class="projects">
+                        <div class="page-title-link ml-4 mb-4">     
+                            <a href="dashboard-admin.php">
+                                <i class="nav-icon fas fa-home mr-1"></i>Dashboard admin</a> > 
+                            <a href="kelola-relawan.php">
+                                <i class="nav-icon fas fa-user-cog mr-1"></i>Kelola relawan</a>
+                        </div>
+
+                        <div class="card card-request-data">
+                            <div class="card-header-req">
+                                <div class="row ml-1 ">
+                                
+                       
+                                    
+                              </div>
+                              <button class="mr-5" onclick="#">Cetak Laporan <span class="fa fa-print"></span></button>
+                        
+                            </div>
+                            <div class="card-body card-body-req">
+                                <div class="table-responsive">
+                                    <table width="100%">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <td>Kode Relawan</td>
+                                                <td>Tgl Pelaksanaan</td>
+                                                <td>Program Pilihan</td>
+                                                <td>Nama Relawan</td>
+                                                 <td>Domisili</td>
+                                                <td>Nomor HP</td>  
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach($result as $row):?>
+                                            <tr class="text-center">
+                                                <td><?= $row["id_relawan"]; ?></td>
+                                                <td><?= $row["tgl_pelaksanaan"]; ?></td>
+                                                <td class="col-2"><?= $row["nama_program_relawan"]; ?></td>
+                                                <td class="col-2"><?= $row["nama_lengkap"]; ?></td>
+                                                <td class="col-2"><?= $row["domisili"]; ?></td>
+                                                <td><?= $row["no_hp"]; ?></td>
+                                 
+                                            </tr>
+                                        <?php endforeach;?>       
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </main>
         </div>

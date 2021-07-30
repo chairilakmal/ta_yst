@@ -23,7 +23,17 @@
         $tgl_donasi               = date ('Y-m-d', time());
         $nominal1                 = $_POST["nominal1"]; 
         $nominal2                 = $_POST["nominal2"]; 
-        $belum_dibayar             = $nominal1 + $nominal2;
+        $totalSementara             = $nominal1 + $nominal2;
+
+        $unik  = rand(1,999);
+        $belum_dibayar =  $totalSementara + $unik;
+
+        echo "
+            <script type='text/javascript'>
+                var totalBayar = '<?php echo $belum_dibayar; ?>';
+            </script>
+        ";
+
         $nama_donatur             = $_POST["tb_nama_donatur"]; 
         $id_user                  = $_SESSION['id_user'];
         
@@ -42,14 +52,14 @@
         if(mysqli_affected_rows($conn) > 0 ){
             echo "
             <script>
-                alert('Data berhasil ditambahkan!');
-                window.location = 'review-donasi.php';
+                alert('Donasi Berhasil Dibuat !');
+                window.location = 'dashboard-user.php';
             </script>
             ";
         }else{
             echo "
                 <script>
-                    alert('Data gagal ditambahkan!');
+                    alert('Gagal membuat donasi');
                 </script>
             ";
         }
@@ -216,9 +226,12 @@
                                     <input type="text" id="tb_nama_donatur" name="tb_nama_donatur" class="form-control" placeholder="Nama Donatur">
                                 </div>           
                             </div>
+
+
+
                             
                             <button type="submit" name="submit" value="Simpan" 
-                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="handleSubmit()"> 
+                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
                                 <span class="yst-login-btn-fs">Lanjut</span>
                             </button>
                         </form>

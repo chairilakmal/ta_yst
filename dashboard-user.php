@@ -9,6 +9,11 @@
         exit;
     }
 
+    function rupiah($angka){
+        $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+        return $hasil_rupiah;
+    }
+
     function query($query){
        global $conn;
        $id_user                  = $_SESSION['id_user'];
@@ -170,7 +175,7 @@
                                                 <td class="text-center"><?= $row["id_donasi"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
                                                 <td class="text-center"><?= $row["tgl_donasi"]; ?></td>
-                                                <td class="text-center table-snipet2">Rp. <?= $row["belum_dibayar"]; ?></td>
+                                                <td class="text-center table-snipet2"><?= rupiah($row["belum_dibayar"]); ?></td>
                                                 <td><?= $row["nama_donatur"]; ?></td>
                                                 <td class="text-center"><?= $row["status_donasi"]; ?></td>
                                                 <td class="justify-content-center">

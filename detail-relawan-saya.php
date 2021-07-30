@@ -202,10 +202,20 @@
                                     <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Domisili</span></label><br>
                                     <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" value="<?php echo $result['domisili']?>" readonly>
                                 </div> 
+                                <div class="form-group mt-4 mb-2">
+                                    <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Status Relawan</span></label><br>
+                                    <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" value="<?php echo $result['status_relawan']?>" readonly>
+                                </div> 
                                         
                             </div>
                             
                         </form>
+                        <div class="garis-atas text-center">
+                                <p>
+                                    Pengurus Yayasan akan menghubungi nomor telepon anda untuk melakukan konfirmasi
+                                </p>
+    
+                            </div>
                     </div>  
         </main>
         </div>

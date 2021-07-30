@@ -3,7 +3,16 @@
     include "config/connection.php";
     $id_program_donasi = $_GET["id"];
 
-    $query      = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE id_program_donasi = $id_program_donasi");
+    function rupiah($angka){
+            $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+            return $hasil_rupiah;
+    }
+
+    $query      = mysqli_query($conn, "SELECT *, (SELECT SUM(nominal_donasi) 
+                FROM t_donasi WHERE id_program_donasi = $id_program_donasi) 
+                AS dana_terkumpul_total 
+                FROM t_program_donasi 
+                WHERE id_program_donasi = $id_program_donasi");
     $result     = mysqli_fetch_array($query);
 
     // var_dump($result);die;
@@ -47,7 +56,7 @@
                         </button>
                        <!-- Button & Link Action -->
                         <ul class="ml-auto d-none d-lg-block navbar-nav"> 
-                            <button class="btn radius-50 py-1.5 px-4 ml-3 btn-donasi " onclick="window.location.href=#'">Beri Bantuan</button>                       
+                            <!-- <button class="btn radius-50 py-1.5 px-4 ml-3 btn-donasi " onclick="window.location.href=#'">Beri Bantuan</button>                        -->
                             <button class="btn radius-50 py-1.5 px-5 ml-3 btn-relawan " onclick="window.location.href='login.php'">Login</button>
                             
                         </ul>
@@ -59,16 +68,16 @@
                             <li class="nav-item   ">
                                 <a class="nav-link current" href="index.php">Beranda</a>
                             </li>
-                            <li class="nav-item ">
+                            <!-- <li class="nav-item ">
                                 <a class="nav-link " href="berita.php">Berita</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item active teks-biru">
                                 <a class="nav-link " href="donasi.php">Donasi</a>
                             </li>  
                             <li class="nav-item ">
                                 <a class="nav-link " href="relawan.php">Relawan</a>
                             </li> 
-                            <li class="nav-item dropdown">
+                            <!-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Tentang YST
                                 </a>
@@ -77,7 +86,7 @@
                                 <a class="dropdown-item" href="#">Visi Misi</a>
                                 <a class="dropdown-item" href="#">Kontak</a>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                         <!-- END Navbar Menu -->
                         <!-- Navbar Button & Link Action Mobile Version-->
@@ -109,11 +118,15 @@
                         <?php echo $result['deskripsi_singkat_donasi']?>
                     </p>
                     <div class="d-flex view-kumpulan  mb-3">
-                        <div class="float-left value-penting">Rp. </div>
+                        <div class="float-left value-penting"><?php echo rupiah($result['dana_terkumpul_total']) == 0 ? '0' : rupiah($result['dana_terkumpul_total'])?></div>
                         <div class="ml-2">terkumpul dari</div>
-                        <div class="ml-2 value-penting">Rp. <?php echo $result['target_dana']?></div>
+                        <div class="ml-2 value-penting"><?php echo rupiah($result['target_dana'])?></div>
                     </div>
-                    
+                    <div class="d-flex view-kumpulan  mb-3">
+                                <div class="float-left">Akan disalurkan kepada <b><?php echo $result['penerima_donasi']?></b></div>
+                                <div class="ml-2">pada tanggal</div>
+                                <div class="ml-2"><b><?php echo $result['tgl_selesai']?></b></div>
+                            </div>
 
                 </div>
                 <div class="view-desc-lengkap mt-4">
@@ -122,7 +135,7 @@
                         <?php echo $result['deskripsi_lengkap_donasi']?>
                     </p>
                     <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
-                    href="pilih-donasi.php?id=<?php echo $result['id_program_donasi'];?>">Donasi Sekarang</a>
+                    href="login.php?status=restrictedaccess">Donasi Sekarang</a>
                 </div>
             </div>
            

@@ -16,6 +16,18 @@ body {
   overflow-x: hidden;
 }
 
+.donasi-relawan-konten {
+  padding-top: 10vw;
+}
+
+.donasi-relawan-konten h2 {
+  font-size: 25px;
+  padding-bottom: 30px;
+  font-family: "Montserrat", sans-serif;
+  color: #d44436;
+  text-align: center;
+}
+
 .informational {
   width: 100%;
 }

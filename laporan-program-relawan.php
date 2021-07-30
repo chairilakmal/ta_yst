@@ -2,10 +2,48 @@
     session_start();
     include 'config/connection.php';
 
+
     if(!isset($_SESSION["username"])) {
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
+
+
+    function query($query){
+       global $conn;
+        $result = mysqli_query($conn,$query); 
+        $rows = [];
+        while($row = mysqli_fetch_assoc($result)){
+            $rows[] = $row;
+        }
+        return $rows;
+   }
+
+    // WHERE status_donasi = 'Diterima'
+    //    COUNT(id_user) AS jumlah_relawan
+    // var_dump($programDonasi);die;
+   $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
+                    FROM t_relawan
+                    RIGHT JOIN t_program_relawan
+                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan  
+                    WHERE status_program_relawan = 'Selesai'                    
+                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
+                    ");
+
+//    function query($query){
+//        global $conn;
+//         $result = mysqli_query($conn, "SELECT * FROM t_program_relawan"); 
+//         $rows = [];
+//         while($row = mysqli_fetch_assoc($result)){
+//             $rows[] = $row;
+//         }
+//         return $rows;
+//    }
+
+   
+
+//    $programRelawan = query("SELECT * FROM t_program_relawan");
+    
 ?>
 
 <!DOCTYPE html>
@@ -150,8 +188,73 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <main>
-                <div class="home-content">
-                   
+            <div class="request-data">
+                    <div class="projects">
+                        <div class="page-title-link ml-4 mb-4">     
+                            <a href="dashboard-admin.php">
+                                <i class="nav-icon fas fa-home mr-1"></i>Dashboard admin</a> > 
+                            <a href="laporan-program-relawan.php">
+                                <i class="nav-icon fas fa-cog mr-1"></i>Laporan program relawan</a>
+                        </div>
+
+                        <div class="card card-request-data">
+                            <div class="card-header-req">
+                                <div class="row ml-1 ">
+                                    <div class="col ">
+                                      <div class="dropdown show ">
+                                        
+                                        <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
+                                            <a class="dropdown-item" href="#">Terbaru</a>
+                                          <a class="dropdown-item" href="#">Pending</a>
+                                          <a class="dropdown-item" href="#">Disetujui</a>
+                                          <a class="dropdown-item" href="#">Ditolak</a>
+                                      </div>
+                                    </div>
+                                    </div>
+                              </div>
+                               <button class="mr-5" onclick="#">Cetak Laporan <span class="fa fa-print"></span></button>
+    
+                            </div>
+                            <div class="card-body card-body-req">
+                                <div class="table-responsive">
+                                    <table width="100%">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <td>Kode<br> Program</td>
+                                                <td>Nama Program Relawan</td>
+                                                <td>Lokasi Pelaksanaan </td>
+                                                
+                                              
+                                                <td>Relawan Terkumpul</td>
+                                                <td>Jumlah Target Relawan</td>
+                                                <td>Tgl Dibuat </td>    
+                                                <td class=" mt-2">Tgl Pelaksanaan </td>
+                                              
+                                      
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach($programRelawan as $row):?>
+                                            <tr class="text-center">
+                                                <td><?= $row["id_program_relawan"]; ?></td>
+                                                <td class="col-2"><?= $row["nama_program_relawan"]; ?></td>
+                                                <td class="col-2"><?= $row["lokasi_program"]; ?></td>
+
+                                                
+                                                <td><?= $row['jumlah_relawan'] == 0 ? '0' : $row['jumlah_relawan']; ?></td>
+                                                <td><?= $row["target_relawan"]; ?></td>
+                                                <td><?= $row["tgl_prelawan"]; ?></td>
+                                                <td><?= $row["tgl_pelaksanaan"]; ?></td>
+                              
+                                            </tr>
+                                        <?php endforeach;?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </main>
         </div>

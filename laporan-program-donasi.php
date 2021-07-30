@@ -1,12 +1,51 @@
 <?php
+    include "config/connection.php";
+
     session_start();
     include 'config/connection.php';
+
 
     if(!isset($_SESSION["username"])) {
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
 
+   function query($query){
+       global $conn;
+        $result = mysqli_query($conn,$query); 
+        $rows = [];
+        while($row = mysqli_fetch_assoc($result)){
+            $rows[] = $row;
+        }
+        return $rows;
+   }
+
+    // WHERE status_donasi = 'Diterima'
+
+    // var_dump($programDonasi);die;
+   $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS dana_terkumpul_total, 
+                    COUNT(id_user) 
+                    AS jumlah_donatur 
+                    FROM t_donasi 
+                    RIGHT JOIN t_program_donasi
+                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi 
+                    WHERE status_program_donasi = 'Selesai'                 
+                    GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
+                    ");
+
+//    function query($query){
+//        global $conn;
+//         $result = mysqli_query($conn, "SELECT * FROM t_program_donasi"); 
+//         $rows = [];
+//         while($row = mysqli_fetch_assoc($result)){
+//             $rows[] = $row;
+//         }
+//         return $rows;
+//    }
+
+
+//    $programDonasi = query("SELECT * FROM t_program_donasi");
+    
 ?>
 
 
@@ -157,7 +196,7 @@
                         <div class="page-title-link ml-4 mb-4">     
                             <a href="dashboard-user.php">
                                 <i class="nav-icon fas fa-home mr-1"></i>Dashboard user</a> > 
-                            <a href="dashboard-user.php">
+                            <a href="laporan-program-donasi.php">
                                 <i class="nav-icon fas fa-user-cog mr-1"></i>Laporan Program Donasi</a>
                         </div>
 
@@ -176,57 +215,38 @@
                                     </div>
                                     </div>
                               </div>
-                              <button class="mr-5" onclick="location.href='index.php'">Cetak Laporan <span class="fa fa-print"></span></button>
+                              <button class="mr-5" onclick="#">Cetak Laporan <span class="fa fa-print"></span></button>
                         
                             </div>
                             <div class="card-body card-body-req">
                                 <div class="table-responsive">
                                     <table width="100%">
                                         <thead>
-                                            <tr>
-                                                <td>No</td>
+                                            <tr class="text-center">
+                                                <td>Kode Program</td>
                                                 <td>Nama Program Donasi</td>
                                                 <td>Dana Terkumpul</td>
                                                 <td>Target Dana</td>
-                                                <td>Jumlah Donatur</td>
-                                                <td>Tanggal Dibuat</td>
+                                                <td >Jumlah Donatur</td>
+                                                <td >Tanggal Dibuat</td>
                                                 <td>Tanggal Selesai</td>
                                                 <td>Penerima Donasi</td>
                                   
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            <?php foreach($programDonasi as $row):?>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Renovasi panti asuhan X</td>
-                                                <td>Rp.1.250.000</td>
-                                                <td>Rp.1.200.000</td>
-                                                <td>20</td>
-                                                <td>12/05/2021</td>
-                                                <td>12/06/2021</td>
-                                                <td>Pengurus panti asuhan X</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Donasi untuk korban luka bakar</td>
-                                                <td>Rp.4.000.000</td>
-                                                <td>Rp.3.500.000</td>
-                                                <td>28</td>
-                                                <td>05/06/2021</td>
-                                                <td>12/06/2021</td>
-                                                <td>Orang tua korban</td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Donasi untuk korban bencana alam longsor desa X</td>
-                                                <td>Rp.7.000.000</td>
-                                                <td>Rp.10.000.000</td>
-                                                <td>30</td>
-                                                <td>20/06/2021</td>
-                                                <td>27/06/2021</td>
-                                                <td>Posko bantuan desa X</td>
-                                            </tr>
+                                                <td class="text-center"><?= $row["id_donasi"]; ?></td>
+                                                <td class="col-2"><?= $row["nama_program_donasi"]; ?></td>
+                                                <td class="col-1 text-center">Rp. <?= $row['dana_terkumpul_total'] == 0 ? '0' : $row['dana_terkumpul_total']; ?></td>
+                                                <td class="col-2 text-center">Rp. <?= $row["target_dana"]; ?></td>
+                                                <td class="text-center"><?= $row["jumlah_donatur"]; ?></td>
+                                                <td class="col-2 text-center"><?= $row["tgl_pdonasi"]; ?></td>
+                                                <td class="col-2 text-center "><?= $row["tgl_selesai"]; ?></td>
+                                                <td class="text-center"><?= $row["penerima_donasi"]; ?></td>
+                                            </tr>                                          
+                                            <?php endforeach;?> 
                                         </tbody>
                                     </table>
                                 </div>

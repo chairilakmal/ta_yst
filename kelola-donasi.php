@@ -219,7 +219,7 @@
                                                 <td><?= $row["id_donasi"]; ?></td>
                                                 <td><?= $row["nama_donatur"]; ?></td>
                                                 <td><?= $row["tgl_donasi"]; ?></td>
-                                                <td ><?= $row["belum_dibayar"]; ?></td>
+                                                <td >Rp. <?= $row["belum_dibayar"]; ?></td>
                                                 <!-- <td class="table-snipet1"> -->
                                                 <td class="text-center"><?= $row["id_program_donasi"]; ?></td>
                                                 <td><?= $row["status_donasi"]; ?></td>

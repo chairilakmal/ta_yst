@@ -2,10 +2,14 @@
 
 include "config/connection.php";
 
+    function rupiah($angka){
+            $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+            return $hasil_rupiah;
+    }
     //Donasi
     function queryDonasi($query){
         global $conn;
-        $result = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE status_program_donasi='Berjalan'"); 
+        $result = mysqli_query($conn, $query); 
         $rows = [];
         while($row = mysqli_fetch_assoc($result)){
             $rows[] = $row;
@@ -13,14 +17,21 @@ include "config/connection.php";
         return $rows;
     }
 
-    $programDonasi = queryDonasi("SELECT * FROM t_program_donasi WHERE status_program_donasi='Berjalan'");
-    rsort($programDonasi);
+    $programDonasi = queryDonasi("SELECT *, SUM(t_donasi.nominal_donasi) AS dana_terkumpul_total, 
+                    COUNT(id_user) 
+                    AS jumlah_donatur 
+                    FROM t_donasi 
+                    RIGHT JOIN t_program_donasi 
+                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi    
+                    WHERE status_program_donasi = 'Berjalan'             
+                    GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
+                    ");
     // var_dump($programDonasi);die;
 
     //Relawan
     function queryRelawan($query){
         global $conn;
-        $result = mysqli_query($conn, "SELECT * FROM t_program_relawan"); 
+        $result = mysqli_query($conn, $query); 
         $rows = [];
         while($row = mysqli_fetch_assoc($result)){
             $rows[] = $row;
@@ -28,8 +39,14 @@ include "config/connection.php";
         return $rows;
     }
 
-    $programRelawan = queryRelawan("SELECT * FROM t_program_relawan");
-    rsort($programRelawan);
+
+    $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan 
+                    FROM t_relawan 
+                    RIGHT JOIN t_program_relawan 
+                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan  
+                    WHERE status_program_relawan = 'Disetujui'             
+                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
+                    ");
 ?>
 
 <html lang="en">
@@ -69,7 +86,7 @@ include "config/connection.php";
                         </button>
                        <!-- Button & Link Action -->
                         <ul class="ml-auto d-none d-lg-block navbar-nav"> 
-                            <button class="btn radius-50 py-1.5 px-4 ml-3 btn-donasi " onclick="window.location.href=#'">Beri Bantuan</button>                       
+                            <!-- <button class="btn radius-50 py-1.5 px-4 ml-3 btn-donasi " onclick="window.location.href=#'">Beri Bantuan</button>                        -->
                             <button class="btn radius-50 py-1.5 px-5 ml-3 btn-relawan " onclick="window.location.href='login.php'">Login</button>
                             
                         </ul>
@@ -81,16 +98,16 @@ include "config/connection.php";
                             <li class="nav-item active  teks-biru">
                                 <a class="nav-link current" href="index.php">Beranda</a>
                             </li>
-                            <li class="nav-item ">
+                            <!-- <li class="nav-item ">
                                 <a class="nav-link " href="berita.php">Berita</a>
-                            </li>
+                            </li> -->
                             <li class="nav-item ">
                                 <a class="nav-link " href="donasi.php">Donasi</a>
                             </li>  
                             <li class="nav-item ">
                                 <a class="nav-link " href="relawan.php">Relawan</a>
                             </li> 
-                            <li class="nav-item dropdown">
+                            <!-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Tentang YST
                                 </a>
@@ -99,7 +116,7 @@ include "config/connection.php";
                                 <a class="dropdown-item" href="#">Visi Misi</a>
                                 <a class="dropdown-item" href="#">Kontak</a>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                         <!-- END Navbar Menu -->
                         <!-- Navbar Button & Link Action Mobile Version-->
@@ -136,7 +153,7 @@ include "config/connection.php";
                             <p>
                             Berbagi bersama YST semakin mudah hanya dengan lewat smartphone
                             </p><br>
-                             <a href="konten-donasi.php" class="btn btn-link-slide py-2" role="button" aria-pressed="true">
+                             <a href="#" class="btn btn-link-slide py-2" role="button" aria-pressed="true">
                               Simak Caranya
                              </a>
                             </center>
@@ -168,8 +185,8 @@ include "config/connection.php";
                                                     <div>Donatur</div>
                                                 </div>
                                                 <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left">Rp. </div>
-                                                    <div></div>
+                                                    <div class="float-left"><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?> </div>
+                                                    <div><?= $row["jumlah_donatur"]; ?></div>
                                                 </div>
                                                 <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" href="view-donasi.php?id=<?php echo $row['id_program_donasi'];?>">Lihat Program</a>
                                             </div>
@@ -203,10 +220,10 @@ include "config/connection.php";
                                                 <div>Target Relawan</div>
                                             </div>
                                             <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                <div class="float-left">Rp. <?= $row2["relawan_terkumpul"]; ?></div>
+                                                <div class="float-left"><?= $row2['jumlah_relawan'] == 0 ? '0' : $row2['jumlah_relawan']; ?></div>
                                                 <div><?= $row2["target_relawan"]; ?></div>
                                             </div>
-                                            <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" href="#">Lihat Program</a>
+                                            <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" href="view-relawan.php?id=<?php echo $row2['id_program_relawan'];?>">Lihat Program</a>
                                         </div>
                                     </div>
                                 </div>
