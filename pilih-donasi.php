@@ -9,6 +9,11 @@
         exit;
     }
 
+    function rupiah($angka){
+            $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+            return $hasil_rupiah;
+    }
+
     //Program Donasi
     function queryDonasi($query){
         global $conn;
@@ -155,7 +160,7 @@
                                                     <div>Donatur</div>
                                                 </div>
                                                 <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left"><b>Rp. <?= $row['dana_terkumpul_total'] == 0 ? '0' : $row['dana_terkumpul_total']; ?></b></div>
+                                                    <div class="float-left"><b><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></b></div>
                                                     <div><b><?= $row["jumlah_donatur"]; ?></b></div>
                                                 </div>
                                                 <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 

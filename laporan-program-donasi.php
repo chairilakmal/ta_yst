@@ -4,6 +4,10 @@
     session_start();
     include 'config/connection.php';
 
+    function rupiah($angka){
+            $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+            return $hasil_rupiah;
+    }
 
     if(!isset($_SESSION["username"])) {
         header('Location: login.php?status=restrictedaccess');
@@ -239,8 +243,8 @@
                                             <tr>
                                                 <td class="text-center"><?= $row["id_donasi"]; ?></td>
                                                 <td class="col-2"><?= $row["nama_program_donasi"]; ?></td>
-                                                <td class="col-1 text-center">Rp. <?= $row['dana_terkumpul_total'] == 0 ? '0' : $row['dana_terkumpul_total']; ?></td>
-                                                <td class="col-2 text-center">Rp. <?= $row["target_dana"]; ?></td>
+                                                <td class="col-2 text-center"><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></td>
+                                                <td class="col-2 text-center"><?= rupiah($row["target_dana"]); ?></td>
                                                 <td class="text-center"><?= $row["jumlah_donatur"]; ?></td>
                                                 <td class="col-2 text-center"><?= $row["tgl_pdonasi"]; ?></td>
                                                 <td class="col-2 text-center "><?= $row["tgl_selesai"]; ?></td>

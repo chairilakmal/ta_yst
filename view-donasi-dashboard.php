@@ -7,6 +7,13 @@
         header('Location: login.php?status=restrictedaccess');
         exit;
     }
+
+    function rupiah($angka){
+            $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+            return $hasil_rupiah;
+    }
+
+
     $id_program_donasi = $_GET["id"];
 
     $query      = mysqli_query($conn, "SELECT *, (SELECT SUM(nominal_donasi) 
@@ -140,9 +147,9 @@
                                 <?php echo $result['deskripsi_singkat_donasi']?>
                             </p>
                             <div class="d-flex view-kumpulan  mb-3">
-                                <div class="float-left value-penting">Rp.<?php echo $result['dana_terkumpul_total'] == 0 ? '0' : $result['dana_terkumpul_total']?> </div>
+                                <div class="float-left value-penting"><?php echo rupiah($result['dana_terkumpul_total']) == 0 ? '0' : rupiah($result['dana_terkumpul_total'])?> </div>
                                 <div class="ml-2">terkumpul dari</div>
-                                <div class="ml-2 value-penting">Rp. <?php echo $result['target_dana']?></div>
+                                <div class="ml-2 value-penting"><?php echo rupiah($result['target_dana'])?></div>
                             </div>
                             <div class="d-flex view-kumpulan  mb-3">
                                 <div class="float-left">Akan disalurkan kepada <b><?php echo $result['penerima_donasi']?></b></div>

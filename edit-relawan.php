@@ -282,7 +282,7 @@
                             
                             <button type="submit" name="submit" value="Simpan" 
                             class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="handleSubmit()"> 
-                                <span class="yst-login-btn-fs">Daftar</span>
+                                <span class="yst-login-btn-fs">Edit</span>
                             </button>
                         </form>
                     </div>  

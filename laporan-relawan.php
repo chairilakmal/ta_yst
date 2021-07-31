@@ -209,7 +209,7 @@
                                                 <td class="col-2"><?= $row["nama_program_relawan"]; ?></td>
                                                 <td class="col-2"><?= $row["nama_lengkap"]; ?></td>
                                                 <td class="col-2"><?= $row["domisili"]; ?></td>
-                                                <td><?= $row["no_hp"]; ?></td>
+                                                <td class="col-2"><?= $row["no_hp"]; ?></td>
                                  
                                             </tr>
                                         <?php endforeach;?>       

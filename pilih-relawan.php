@@ -155,7 +155,7 @@
                                                     <div>Jumlah Target</div>
                                                 </div>
                                                 <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left"><b><?= $row["jumlah_relawan"]; ?> </b></div>
+                                                    <div class="float-left"><b><?= $row['jumlah_relawan'] == 0 ? '0' : $row['jumlah_relawan']; ?> </b></div>
                                                     <div><b><?= $row["target_relawan"]; ?></b></div>
                                                 </div>
                                                 <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
