@@ -219,7 +219,7 @@
                                     </div>
                                     </div>
                               </div>
-                              <button class="mr-5" onclick="#">Cetak Laporan <span class="fa fa-print"></span></button>
+                              <button class="mr-5" onclick="window.print();">Cetak Laporan <span class="fa fa-print"></span></button>
                         
                             </div>
                             <div class="card-body card-body-req">
