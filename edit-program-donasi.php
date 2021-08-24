@@ -129,6 +129,8 @@
 
     }
 
+    
+
 ?>
 
 
@@ -302,11 +304,11 @@
                                 <div class="form-group mb-3">
                                     <label for="tb_penerima_donasi" class="label-txt">Penerima Donasi</label>
                                     <input type="text" id="tb_penerima_donasi" name="tb_penerima_donasi" 
-                                    class="form-control" placeholder="Penerima donasi" value="<?= $programDonasi["penerima_donasi"]; ?>">
+                                    class="form-control" placeholder="Penerima donasi" value="<?php echo $programDonasi["penerima_donasi"]; ?>">
                                 </div>
                                 <div class="form-group mt-4 mb-3">
-                                <label for="tb_tgl_selesai" class="label-txt">Tanggal Berakhir</label>
-                                    <input type="date" id="tb_tgl_selesai" name="tb_tgl_selesai" class="form-control" value="<?= $programDonasi["tgl_selesai"]; ?>">
+                                <label for="tb_tgl_selesai" class="label-txt">Batas Waktu Pengumpulan</label>
+                                    <input type="datetime-local" id="tb_tgl_selesai" name="tb_tgl_selesai" class="form-control" value="<?php $programDonasi['tgl_selesai'] = preg_replace("/\s/",'T',$programDonasi['tgl_selesai']); echo $programDonasi['tgl_selesai']?>" REQUIRED readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="tb_deskripsi_donasi_singkat" class="label-txt">Deskripsi Singkat</label>
