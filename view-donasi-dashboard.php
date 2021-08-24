@@ -152,9 +152,36 @@
                                 <div class="ml-2 value-penting"><?php echo rupiah($result['target_dana'])?></div>
                             </div>
                             <div class="d-flex view-kumpulan  mb-3">
-                                <div class="float-left">Akan disalurkan kepada <b><?php echo $result['penerima_donasi']?></b></div>
-                                <div class="ml-2">pada tanggal</div>
-                                <div class="ml-2"><b><?php echo $result['tgl_selesai']?></b></div>
+                                <div class="float-left">Bantuan akan disalurkan kepada <b><?php echo $result['penerima_donasi']?></b></div>                       
+                                <div class="ml-2 d-none"><b><?php echo $result['tgl_selesai']?></b></div>
+                            </div>
+                            <div class="d-flex view-kumpulan  mb-3">
+                                <div class="float-left" id="teks">
+                                    Sisa Waktu
+                                        <script>
+                                        //Countdown
+                                        var dateStringFromDP = '<?php echo $result['tgl_selesai']?>';
+                                        const tanggalTujuan = new Date(dateStringFromDP).getTime();
+                                        const hitungMundur = setInterval(function() {
+                                            const sekarang = new Date().getTime();
+                                            const selisih = tanggalTujuan - sekarang;
+                                            const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+                                            const jam = Math.floor(selisih % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+                                            const menit = Math.floor(selisih % (1000 * 60 * 60) / (1000 * 60));
+                                            const detik = Math.floor(selisih % (1000 * 60) / 1000);
+                                            const teks = document.getElementById('teks');
+                                            teks.innerHTML = 'Sisa Waktu : '+hari+' hari '+jam+' jam '+menit+' menit '+detik+' detik lagi ! ';
+                                           
+                                            if(selisih < 0){
+                                                clearInterval(hitungMundur);
+                                                teks.innerHTML = 'Waktu program telah habis !';
+                                                
+                                            }
+
+                                        },1000);
+                                        </script>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="view-desc-lengkap mt-4">
@@ -162,7 +189,7 @@
                             <p>
                                 <?php echo $result['deskripsi_lengkap_donasi']?>
                             </p>
-                            <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
+                            <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" id="tombolDonasi"
                             href="buat-donasi.php?id=<?php echo $result['id_program_donasi'];?>">Donasi Sekarang</a>
                         </div>  
                     </div>  
