@@ -19,6 +19,11 @@
 
     include "config/connection.php";
 
+    function rupiah($angka){
+        $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+        return $hasil_rupiah;
+    }
+
     //query user
     $id_user           = $_SESSION['id_user'];
     $queryUser      = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user=$id_user");
@@ -102,7 +107,7 @@
                             <tr>
                                 <td>Nominal donasi</td>
                                 <td>:</td>
-                                <td><strong>Rp.'.$belum_dibayar.'</strong></td>
+                                <td><strong>'.rupiah($belum_dibayar).'</strong></td>
                             </tr>
                         </table>
                         <p>

@@ -10,6 +10,10 @@
     session_start();
     include 'config/connection.php';
 
+    function rupiah($angka){
+        $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+        return $hasil_rupiah;
+    }
 
     if(!isset($_SESSION["username"])) {
         header('Location: login.php?status=restrictedaccess');
@@ -29,6 +33,8 @@
          }
          return $rows;
     }
+
+    
 
     $result = query("SELECT * FROM t_donasi WHERE id_donasi = $id_donasi")[0];
 
@@ -83,11 +89,8 @@
             
             $subjek = '[Yayasan Sekar Telkom] Donasi Untuk '.$nama_program_donasi.' Sudah Diterima';
 
-            $pesan = '<h2>Donasi atas nama '.$nama_donatur.' sejumlah Rp.'.$nominal_donasi.' telah kami terima, kami ucapkan terima kasih.</h2>
+            $pesan = '<h2>Donasi atas nama '.$nama_donatur.' sejumlah '.rupiah($nominal_donasi).' telah kami terima, kami ucapkan terima kasih. Semoga Anda mendapat berkah selalu dalam kehidupan.</h2>
 
-                        <p>
-                            Semoga Anda mendapat berkah selalu dalam kehidupan.
-                        </p>
                         <p>
                             <strong>Rincian donasi :</strong>
                         </p>
@@ -110,9 +113,8 @@
                             <tr>
                                 <td>Nominal donasi</td>
                                 <td>:</td>
-                                <td><strong>Rp.'.$nominal_donasi.'</strong></td>
-                            </tr>
-                            
+                                <td><strong>'.rupiah($nominal_donasi).'</strong></td>
+                            </tr> 
                         </table>
                         ';
 
