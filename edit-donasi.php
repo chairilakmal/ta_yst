@@ -1,5 +1,12 @@
 <?php
 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    include('config/PHPMailer-master/PHPMailer-master/src/Exception.php');
+    include('config/PHPMailer-master/PHPMailer-master/src/PHPMailer.php');
+    include('config/PHPMailer-master/PHPMailer-master/src/SMTP.php');
+
     session_start();
     include 'config/connection.php';
 
@@ -28,11 +35,17 @@
     //UPDATE
     if(isset($_POST["submit"])) {
 
-        $status_donasi      = $_POST["status_donasi"];
-        $nominal_donasi     = '';
+        $status_donasi          = $_POST["status_donasi"];
+        $nominal_donasi         = '';
+        $email_penerima         = $_POST["tb_email"];
+        $nama_program_donasi    = $_POST["tb_nama_program_donasi"];
+        $nama_donatur           = $_POST["tb_nama_donatur"];
+        $tgl_donasi             = $_POST["tb_tgl_donasi"];
 
         if($status_donasi = "Diterima"){
             $nominal_donasi = $_POST["belum_dibayar"];
+
+            
         }
 
         $query = "UPDATE t_donasi SET
@@ -60,9 +73,88 @@
             echo "
             <script>
                 alert('Data berhasil diubah!');
-                window.location.href = 'kelola-donasi.php'; 
+                
             </script>
-        ";
+            ";
+
+            //PHPMailer
+            $email_pengirim = 'vchoze@gmail.com';
+            $nama_pengirim = 'Yayasan Sekar Telkom';
+            
+            $subjek = '[Yayasan Sekar Telkom] Donasi Untuk '.$nama_program_donasi.' Sudah Diterima';
+
+            $pesan = '<h2>Donasi atas nama '.$nama_donatur.' sejumlah Rp.'.$nominal_donasi.' telah kami terima, kami ucapkan terima kasih.</h2>
+
+                        <p>
+                            Semoga Anda mendapat berkah selalu dalam kehidupan.
+                        </p>
+                        <p>
+                            <strong>Rincian donasi :</strong>
+                        </p>
+                        <table>
+                            <tr>
+                                <td>Tanggal pembuatan donasi</td>
+                                <td>:</td>
+                                <td>'.$tgl_donasi.'</td>
+                            </tr>
+                            <tr>
+                                <td>Program pilihan</td>
+                                <td>:</td>
+                                <td>'.$nama_program_donasi.'</td>
+                            </tr>
+                            <tr>
+                                <td>Donasi atas nama</td>
+                                <td>:</td>
+                                <td>'.$nama_donatur.'</td>
+                            </tr>
+                            <tr>
+                                <td>Nominal donasi</td>
+                                <td>:</td>
+                                <td><strong>Rp.'.$nominal_donasi.'</strong></td>
+                            </tr>
+                            
+                        </table>
+                        ';
+
+            // $pesan = 'Halo '.$email_penerima.', ikut test PHPMailer ya !';
+
+            $mail = new PHPMailer;
+            $mail->isSMTP();
+
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Username = $email_pengirim;
+            $mail->Password = 'xzwuieypdcbmmcyp';
+            $mail->Port = 465;
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure ='ssl'; 
+            $mail->SMTPDebug = 2;
+
+            $mail->setFrom($email_pengirim,$nama_pengirim);
+            $mail->addAddress($email_penerima);
+            $mail->isHTML(true);
+            $mail->Subject = $subjek;
+            $mail->Body = $pesan;
+
+            $send = $mail->send();
+
+            if($send){
+                echo "
+                <script>
+                    alert('Email Terkirim !');
+                    window.location.href = 'kelola-donasi.php'; 
+                </script>
+                ";
+            }else{
+                echo "
+                <script>
+                    alert('Email Gagal Terkirim !');
+                    
+                </script>
+                ";
+            }
+
+            
+
         }else{
             echo "
                 <script>
@@ -222,6 +314,7 @@
                     <div class="mt-2 regis-title"><h3>ID Donasi :<?php echo $result['id_donasi']?></h3></div>    
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
+                                <input type="text" id="tb_email" name="tb_email" class="form-control" value="<?= $result["email"]; ?>" readonly>
                                 <div class="form-group mt-2 mb-2" id="tb_tgl_donasi">
                                 <label for="tb_tgl_donasi" class="font-weight-bold" ><span class="label-form-span">Tanggal Donasi</span></label><br>
                                     <input type="date" id="tb_tgl_donasi" name="tb_tgl_donasi" class="form-control" value="<?= $result["tgl_donasi"]; ?>" readonly>
