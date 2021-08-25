@@ -1,5 +1,13 @@
 <?php
 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    include('config/PHPMailer-master/PHPMailer-master/src/Exception.php');
+    include('config/PHPMailer-master/PHPMailer-master/src/PHPMailer.php');
+    include('config/PHPMailer-master/PHPMailer-master/src/SMTP.php');
+
+
     session_start();
     include 'config/connection.php';
 
@@ -10,8 +18,14 @@
     }
 
     include "config/connection.php";
-    $id_program_donasi = $_GET["id"];
 
+    //query user
+    $id_user           = $_SESSION['id_user'];
+    $queryUser      = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user=$id_user");
+    $data_user      = mysqli_fetch_array($queryUser);
+
+    //query program donasi
+    $id_program_donasi = $_GET["id"];
     $query      = mysqli_query($conn, "SELECT * FROM t_program_donasi WHERE id_program_donasi = $id_program_donasi");
     $result     = mysqli_fetch_array($query);
 
@@ -23,7 +37,9 @@
         $tgl_donasi               = date ('Y-m-d', time());
         $nominal1                 = $_POST["nominal1"]; 
         $nominal2                 = $_POST["nominal2"]; 
-        $totalSementara             = $nominal1 + $nominal2;
+    
+        $totalSementara           = $nominal1 + $nominal2;
+        $email_penerima = $_POST['tb_email'];
 
         $unik  = rand(1,999);
         $belum_dibayar =  $totalSementara + $unik;
@@ -53,9 +69,53 @@
             echo "
             <script>
                 alert('Donasi Berhasil Dibuat !');
-                window.location = 'dashboard-user.php';
+                
             </script>
             ";
+            // window.location = 'dashboard-user.php';
+            //PHPMailer
+            $email_pengirim = 'vchoze@gmail.com';
+            $nama_pengirim = 'Yayasan Sekar Telkom';
+            
+            $subjek = 'Tes PHPMailer';
+            $pesan = 'Halo '.$email_penerima.', ikut test PHPMailer ya !';
+
+            $mail = new PHPMailer;
+            $mail->isSMTP();
+
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Username = $email_pengirim;
+            $mail->Password = 'xzwuieypdcbmmcyp';
+            $mail->Port = 465;
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure ='ssl'; 
+            $mail->SMTPDebug = 2;
+
+            $mail->setFrom($email_pengirim,$nama_pengirim);
+            $mail->addAddress($email_penerima);
+            $mail->isHTML(true);
+            $mail->Subject = $subjek;
+            $mail->Body = $pesan;
+
+            $send = $mail->send();
+
+            if($send){
+                echo "
+                <script>
+                    alert('Email Terkirim !');
+                    window.location = 'dashboard-user.php';
+                </script>
+                ";
+            }else{
+                echo "
+                <script>
+                    alert('Email Gagal Terkirim !');
+                    
+                </script>
+                ";
+            }
+
+
         }else{
             echo "
                 <script>
@@ -178,6 +238,7 @@
                     <div class="mt-2 regis-title"><h3>Buat Donasi</h3></div>    
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
+                                <input type="hidden" id="tb_email" name="tb_email" class="form-control" value="<?php echo $data_user['email']?>" readonly>
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_nama_program_donasi" class="font-weight-bold" ><span class="label-form-span">Nama Program Donasi</span></label><br>
                                     <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" value="<?php echo $result['nama_program_donasi']?>" readonly>
