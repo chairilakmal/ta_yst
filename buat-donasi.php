@@ -37,12 +37,14 @@
         $tgl_donasi               = date ('Y-m-d', time());
         $nominal1                 = $_POST["nominal1"]; 
         $nominal2                 = $_POST["nominal2"]; 
-    
         $totalSementara           = $nominal1 + $nominal2;
-        $email_penerima = $_POST['tb_email'];
-
         $unik  = rand(1,999);
         $belum_dibayar =  $totalSementara + $unik;
+
+        $nama_penerima  = $_POST['tb_nama_user'];
+        $email_penerima = $_POST['tb_email'];
+
+        
 
         echo "
             <script type='text/javascript'>
@@ -77,8 +79,46 @@
             $email_pengirim = 'vchoze@gmail.com';
             $nama_pengirim = 'Yayasan Sekar Telkom';
             
-            $subjek = 'Tes PHPMailer';
-            $pesan = 'Halo '.$email_penerima.', ikut test PHPMailer ya !';
+            $subjek = '[Yayasan Sekar Telkom] Checkout Donasi '.$tgl_donasi.'';
+
+            $pesan = '<h3>Halo '.$nama_penerima.',</h3>
+                        <h2>Mohon segera menyelesaikan transaksi donasi anda</h2>
+                        <table>
+                            <tr>
+                                <td>Tanggal transaksi</td>
+                                <td>:</td>
+                                <td>'.$tgl_donasi.'</td>
+                            </tr>
+                            <tr>
+                                <td>Program pilihan</td>
+                                <td>:</td>
+                                <td>'.$nama_program_donasi.'</td>
+                            </tr>
+                            <tr>
+                                <td>Donasi atas nama</td>
+                                <td>:</td>
+                                <td>'.$nama_donatur.'</td>
+                            </tr>
+                            <tr>
+                                <td>Nominal donasi</td>
+                                <td>:</td>
+                                <td><strong>Rp.'.$belum_dibayar.'</strong></td>
+                            </tr>
+                        </table>
+                        <p>
+                            Transfer ke nomor rekening berikut :
+                        </p>
+                        <p>
+                            Bank MANDIRI : <strong> 131-00-0458589-1 </strong> (an. Yayasan Sekar Telkom)
+                        </p>
+                        <p>
+                            <strong>PENTING :</strong>  Mohon transfer tepat sampai 3 angka terakhir nominal donasi agar donasi Anda dapat diproses. Kode unik akan didonasikan.
+                        </p>
+                        <p>
+                            Anda akan menerima notifikasi ketika transaksi sudah kami terima.
+                        </p>';
+
+            // $pesan = 'Halo '.$email_penerima.', ikut test PHPMailer ya !';
 
             $mail = new PHPMailer;
             $mail->isSMTP();
@@ -239,6 +279,7 @@
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
                                 <input type="hidden" id="tb_email" name="tb_email" class="form-control" value="<?php echo $data_user['email']?>" readonly>
+                                <input type="hidden" id="tb_nama_user" name="tb_nama_user" class="form-control" value="<?php echo $data_user['nama_lengkap']?>" readonly>
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_nama_program_donasi" class="font-weight-bold" ><span class="label-form-span">Nama Program Donasi</span></label><br>
                                     <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" value="<?php echo $result['nama_program_donasi']?>" readonly>
