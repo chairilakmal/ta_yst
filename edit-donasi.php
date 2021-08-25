@@ -10,6 +10,8 @@
     session_start();
     include 'config/connection.php';
 
+    $level_user = $_SESSION['level_user'];
+
     function rupiah($angka){
         $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
         return $hasil_rupiah;
@@ -270,10 +272,10 @@
                             </a>
                         </li>
                         <li class="nav-item nav-item-sidebar">
-                            <a href="laporan-program.php" class="nav-link side-icon">
+                            <a href="laporan-program-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-calendar-check"></i>
                                 <p>
-                                    Laporan  Program
+                                    Lp.  Program Donasi
                                 </p>
                             </a>
                         </li>
@@ -281,15 +283,23 @@
                             <a href="laporan-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-file-invoice-dollar"></i>
                                 <p>
-                                    Laporan  Donasi
+                                    Lp. Donasi
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item nav-item-sidebar">
-                            <a href="laporan-relawan.php" class="nav-link side-icon">
+                            <a href="laporan-program-relawan.php" class="nav-link side-icon">
+                                <i class="nav-icon fas fa-calendar-check"></i>
+                                <p>
+                                    Lp.  Program Relawan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-item-sidebar ">
+                            <a href="laporan-relawan.php" class="nav-link side-icon ">
                                 <i class="nav-icon fas fa-address-book"></i>
                                 <p>
-                                    Laporan  Relawan
+                                    Lp.  Relawan
                                 </p>
                             </a>
                         </li>
@@ -316,7 +326,7 @@
                     <div class="mt-2 regis-title"><h3>ID Donasi :<?php echo $result['id_donasi']?></h3></div>    
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
-                                <input type="text" id="tb_email" name="tb_email" class="form-control" value="<?= $result["email"]; ?>" readonly>
+                                <input type="hidden" id="tb_email" name="tb_email" class="form-control" value="<?= $result["email"]; ?>" readonly>
                                 <div class="form-group mt-2 mb-2" id="tb_tgl_donasi">
                                 <label for="tb_tgl_donasi" class="font-weight-bold" ><span class="label-form-span">Tanggal Donasi</span></label><br>
                                     <input type="date" id="tb_tgl_donasi" name="tb_tgl_donasi" class="form-control" value="<?= $result["tgl_donasi"]; ?>" readonly>
@@ -336,6 +346,9 @@
                                     <input type="text" id="tb_nama_donatur" name="tb_nama_donatur" class="form-control" 
                                     value="<?php echo $result['nama_donatur']?>" readonly>
                                 </div> 
+
+                                <!-- Hanya muncul jika level user = 3 / super admin -->
+                                <?php if($_SESSION['level_user'] == 3 ){?>
                                 <div class="form-group mb-5 ">
                                     <label for="status_donasi" class="font-weight-bold" ><span class="label-form-span">Status Donasi</span></label><br>
                                     <div class="radio-wrapper mt-1">
@@ -352,13 +365,18 @@
                                             <label class="form-check-label" for="status_donasi">Diterima</label>
                                         </div>
                                     </div>
-                                </div>         
+                                </div>   
+                                <?php } ?>
+                                
+                                
                             </div>
                             
+                            <?php if($_SESSION['level_user'] == 3 ){?>
                             <button type="submit" name="submit" value="Simpan" 
                             class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
                                 <span class="yst-login-btn-fs">Kirim</span>
                             </button>
+                            <?php } ?>
                         </form>
                     </div>  
         </main>

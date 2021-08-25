@@ -8,6 +8,8 @@
         exit;
     }
 
+    $level_user = $_SESSION['level_user'];
+
     //ambil id program di URL
     $id_program_donasi = $_GET["id_program_donasi"];
 
@@ -327,6 +329,9 @@
                                         <input type="file" id="image_uploads" name="image_uploads" class="form-control ">
                                     </div>
                                 </div>
+
+                                <!-- Hanya muncul jika level user = 3 / super admin -->
+                                <?php if($_SESSION['level_user'] == 3 ){?>
                                 <div class="form-group mb-5 ">
                                     <label for="status_program_donasi" class="font-weight-bold" ><span class="label-form-span">Status Program</span></label><br>
                                     <div class="radio-wrapper mt-1">
@@ -351,6 +356,8 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                               <?php } ?>
                                 <!-- <div class="form-group">
                                     <label for="image_uploads_program_donasi" class="label-txt">Foto Program</label>
                                     <div class="file-form">

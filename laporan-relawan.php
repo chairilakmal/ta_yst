@@ -194,10 +194,10 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <td>Kode Relawan</td>
-                                                <td>Tgl Pelaksanaan</td>
-                                                <td>Program Pilihan</td>
                                                 <td>Nama Relawan</td>
-                                                 <td>Domisili</td>
+                                                <td>Program Pilihan</td>
+                                                <td>Tgl Pelaksanaan</td>
+                                                <td>Domisili</td>
                                                 <td>Nomor HP</td>  
                                             </tr>
                                         </thead>
@@ -205,9 +205,9 @@
                                         <?php foreach($result as $row):?>
                                             <tr class="text-center">
                                                 <td><?= $row["id_relawan"]; ?></td>
-                                                <td><?= $row["tgl_pelaksanaan"]; ?></td>
+                                                <td><?= $row["nama_lengkap"]; ?></td>
                                                 <td class="col-2"><?= $row["nama_program_relawan"]; ?></td>
-                                                <td class="col-2"><?= $row["nama_lengkap"]; ?></td>
+                                                <td><?= $row["tgl_pelaksanaan"]; ?></td>
                                                 <td class="col-2"><?= $row["domisili"]; ?></td>
                                                 <td class="col-2"><?= $row["no_hp"]; ?></td>
                                  
@@ -249,6 +249,23 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
+    <!-- Print Landscape -->
+    <script>
+        var css = '@page { size: landscape; }',
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
+
+        style.type = 'text/css';
+        style.media = 'print';
+
+        if (style.styleSheet){
+        style.styleSheet.cssText = css;
+        } else {
+        style.appendChild(document.createTextNode(css));
+        }
+
+        head.appendChild(style);
+    </script>
 
 
 </body>

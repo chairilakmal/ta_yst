@@ -8,6 +8,7 @@
         exit;
     }
 
+    $level_user = $_SESSION['level_user'];
     //ambil id program di URL
     $id_program_relawan = $_GET["id_program_relawan"];
 
@@ -335,6 +336,8 @@
                                     <input type="file" id="image_uploads" name="image_uploads" class="form-control">
                                 </div>
                         </div>
+
+                        <?php if($_SESSION['level_user'] == 3 ){?>
                         <div class="form-group mb-5 ">
                                     <label for="status_program_donasi" class="font-weight-bold" ><span class="label-form-span">Status Program</span></label><br>
                                     <div class="radio-wrapper mt-1">
@@ -358,7 +361,8 @@
                                             <label class="form-check-label" for="status_program_relawan">Selesai</label>
                                         </div>
                                     </div>
-                         </div>
+                        </div>
+                        <?php } ?>
                     </div>
                     <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="location.href='login.php'"> 
                   <span class="yst-login-btn-fs">Edit Program</span></button>

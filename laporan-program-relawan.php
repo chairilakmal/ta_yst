@@ -284,6 +284,23 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
+    <!-- Print Landscape -->
+    <script>
+        var css = '@page { size: landscape; }',
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
+
+        style.type = 'text/css';
+        style.media = 'print';
+
+        if (style.styleSheet){
+        style.styleSheet.cssText = css;
+        } else {
+        style.appendChild(document.createTextNode(css));
+        }
+
+        head.appendChild(style);
+    </script>
 
 
 </body>
