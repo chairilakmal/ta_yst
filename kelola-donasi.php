@@ -9,6 +9,11 @@
         exit;
     }
 
+    function rupiah($angka){
+        $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+        return $hasil_rupiah;
+    }
+
     function query($query){
        global $conn;
         $result = mysqli_query($conn, "SELECT * FROM t_donasi
@@ -219,7 +224,7 @@
                                                 <td><?= $row["id_donasi"]; ?></td>
                                                 <td><?= $row["nama_donatur"]; ?></td>
                                                 <td><?= $row["tgl_donasi"]; ?></td>
-                                                <td >Rp. <?= $row["belum_dibayar"]; ?></td>
+                                                <td ><?= rupiah($row["belum_dibayar"]); ?></td>
                                                 <!-- <td class="table-snipet1"> -->
                                                 <td class="text-center"><?= $row["id_program_donasi"]; ?></td>
                                                 <td><?= $row["status_donasi"]; ?></td>

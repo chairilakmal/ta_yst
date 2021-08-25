@@ -238,7 +238,7 @@
                                             <tr>
                                                 <td class="text-center"><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
-                                                <td>Rp. <?= $row['dana_terkumpul_total'] == 0 ? '0' : $row['dana_terkumpul_total']; ?></td>
+                                                <td><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></td>
                                                 <td><?= rupiah($row["target_dana"]); ?></td>
                                                 <td class="text-center"><?= $row["jumlah_donatur"]; ?></td>
                                                 <td class="text-center">
