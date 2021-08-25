@@ -264,41 +264,41 @@
                 <form action="" enctype="multipart/form-data" method="POST">
                     <div class="form-group label-txt">
                         <div class="form-group mt-4 mb-3">
-                            <label for="tb_nama_program_relawan" class="label-txt">Nama Program</label>
-                            <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" placeholder="Nama program relawan">
+                            <label for="tb_nama_program_relawan" class="label-txt">Nama Program<span class="red-star">*</span></label>
+                            <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" placeholder="Nama program relawan" Required>
                         </div>
                         <div class="form-group mb-3">
-                        <label for="tb_target_relawan" class="label-txt">Target Jumlah Relawan</label>
-                            <input type="number" id="tb_target_relawan" name="tb_target_relawan" class="form-control" placeholder="Target relawan dikumpulkan">
+                        <label for="tb_target_relawan" class="label-txt">Target Jumlah Relawan<span class="red-star">*</span></label>
+                            <input type="number" id="tb_target_relawan" name="tb_target_relawan" class="form-control" placeholder="Target relawan dikumpulkan" Required>
                         </div>
                         <div class="form-group mt-4 mb-3">
-                        <label for="tb_lokasi_program" class="label-txt">Lokasi Pelaksanaan</label>
-                            <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" placeholder="Lokasi dilaksanakannya program relawan">
+                        <label for="tb_lokasi_program" class="label-txt">Lokasi Pelaksanaan<span class="red-star">*</span></label>
+                            <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" placeholder="Lokasi dilaksanakannya program relawan" Required>
                         </div>
                         <div class="form-group mt-4 mb-3">
-                        <label for="tb_tgl_pelaksanaan" class="label-txt">Tanggal Pelaksanaan Program</label>
-                            <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" placeholder="Tanggal dilaksanakannya program relawan">
+                        <label for="tb_tgl_pelaksanaan" class="label-txt">Tanggal Pelaksanaan Program<span class="red-star">*</span></label>
+                            <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" placeholder="Tanggal dilaksanakannya program relawan" Required>
                         </div>
                         <div class="form-group mt-4 mb-3">
-                        <label for="tb_lokasi_awal" class="label-txt">Lokasi Titik Kumpul</label>
-                            <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" placeholder="Lokasi Titik kumpul">
+                        <label for="tb_lokasi_awal" class="label-txt">Lokasi Titik Kumpul<span class="red-star">*</span></label>
+                            <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" placeholder="Lokasi Titik kumpul" Required>
                         </div>
                         <div class="form-group">
-                        <label for="tb_deskripsi_relawan_singkat" class="label-txt">Deskripsi Singkat Program</label>
-                            <textarea class="form-control" id="tb_deskripsi_relawan_singkat" name="tb_deskripsi_relawan_singkat" rows="2" placeholder="Gambaran umum tentang program"></textarea>
+                        <label for="tb_deskripsi_relawan_singkat" class="label-txt">Deskripsi Singkat Program<span class="red-star">*</span></label>
+                            <textarea class="form-control" id="tb_deskripsi_relawan_singkat" name="tb_deskripsi_relawan_singkat" rows="2" placeholder="Gambaran umum tentang program" Required></textarea>
                         </div>
                         <div class="form-group">
                         <label for="tb_deskripsi_relawan_lengkap" class="label-txt">Deskripsi Lengkap Program</label>
                             <textarea class="form-control" id="tb_deskripsi_relawan_lengkap" name="tb_deskripsi_relawan_lengkap" rows="6" placeholder="Gambaran lengkap tentang program"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="image_uploads" class="label-txt">Foto Program</label>
+                            <label for="image_uploads" class="label-txt">Foto Program<span class="red-star">*</span></label>
                                 <div class="file-form">
                                     <input type="file" id="image_uploads" name="image_uploads" class="form-control">
                                 </div>
                         </div>
                     </div>
-                    <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="location.href='login.php'"> 
+                    <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
                   <span class="yst-login-btn-fs">Buat Program</span></button>
                 </form>
                 </div>

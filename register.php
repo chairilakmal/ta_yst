@@ -60,19 +60,19 @@
                 <form action="" enctype="multipart/form-data" method="POST">
                     <div class="form-group">
                         <div class="form-group mt-4 mb-2">
-                            <input type="text" id="tb_nama_user" name="tb_nama_user" class="form-control" placeholder="Nama lengkap">
+                            <input type="text" id="tb_nama_user" name="tb_nama_user" class="form-control" placeholder="Nama lengkap" Required>
                         </div>
                         <div class="form-group mb-2">
-                            <input type="number" id="num_nomer_hp" name="num_nomer_hp" class="form-control" placeholder="Nomor telepon">
+                            <input type="number" id="num_nomer_hp" name="num_nomer_hp" class="form-control" placeholder="Nomor telepon" Required>
                         </div>
                         <div class="form-group mb-2">
-                            <input type="text" id="tb_email" name="tb_email" class="form-control" placeholder="Email">
+                            <input type="text" id="tb_email" name="tb_email" class="form-control" placeholder="Email" Required>
                         </div>
                         <div class="form-group mb-2">
-                            <input type="text" id="tb_username" name="tb_username" class="form-control" placeholder="Username login">
+                            <input type="text" id="tb_username" name="tb_username" class="form-control" placeholder="Username login" Required>
                         </div>
                         <div class="form-group mb-2">
-                            <input type="password" id="pwd" name="pwd" class="form-control" placeholder="Kata sandi baru">
+                            <input type="password" id="pwd" name="pwd" class="form-control" placeholder="Kata sandi baru" Required>
                         </div>
                         <!-- <div class="form-group mb-2">
                             <input type="password" id="pwd2" name="pwd2" class="form-control" placeholder="Konfirmasi kata sandi">

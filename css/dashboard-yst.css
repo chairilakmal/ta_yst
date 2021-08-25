@@ -221,6 +221,10 @@ tr td:last-child {
   align-items: center;
 }
 
+.red-star{
+  color : red;
+}
+
 .status.yellow {
   background: yellow;
 }

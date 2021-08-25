@@ -259,31 +259,31 @@
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
                                 <div class="form-group mt-4 mb-3">
-                                    <label for="tb_nama_program_donasi" class="label-txt">Nama Program</label>
-                                    <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" placeholder="Nama program donasi">
+                                    <label for="tb_nama_program_donasi" class="label-txt">Nama Program<span class="red-star">*</span></label>
+                                    <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" placeholder="Nama program donasi" Required>
                                 </div>
                                 <div class="form-group mt-4 mb-3">
-                                    <label for="tb_penerima_donasi" class="label-txt">Penerima Donasi</label>
-                                    <input type="text" id="tb_penerima_donasi" name="tb_penerima_donasi" class="form-control" placeholder="Penerima Donasi">
+                                    <label for="tb_penerima_donasi" class="label-txt">Penerima Donasi<span class="red-star">*</span></label>
+                                    <input type="text" id="tb_penerima_donasi" name="tb_penerima_donasi" class="form-control" placeholder="Penerima Donasi" Required>
                                 </div>                            
                                 <div class="form-group mb-3">
-                                    <label for="tb_target_dana" class="label-txt">Target Dana</label>
-                                    <input type="number" id="tb_target_dana" name="tb_target_dana" class="form-control" placeholder="Target dana dikumpulkan">
+                                    <label for="tb_target_dana" class="label-txt">Target Dana<span class="red-star">*</span></label>
+                                    <input type="number" id="tb_target_dana" name="tb_target_dana" class="form-control" placeholder="Target dana dikumpulkan" Required>
                                 </div>
                                 <div class="form-group mt-4 mb-3">
-                                <label for="tb_tgl_selesai" class="label-txt">Tanggal Berakhir</label>
-                                    <input type="datetime-local" id="tb_tgl_selesai" name="tb_tgl_selesai" class="form-control" placeholder="Tanggal akhir pengumpulan dana">
+                                <label for="tb_tgl_selesai" class="label-txt">Tenggat Waktu Pengumpulan Donasi<span class="red-star">*</span></label>
+                                    <input type="datetime-local" id="tb_tgl_selesai" name="tb_tgl_selesai" class="form-control" placeholder="Tanggal akhir pengumpulan dana" Required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="tb_deskripsi_donasi_singkat" class="label-txt">Deskripsi Singkat</label>
-                                    <textarea class="form-control" id="tb_deskripsi_donasi_singkat" name="tb_deskripsi_donasi_singkat" rows="2" placeholder="Gambaran umum tentang program"></textarea>
+                                    <label for="tb_deskripsi_donasi_singkat" class="label-txt">Deskripsi Singkat<span class="red-star">*</span></label>
+                                    <textarea class="form-control" id="tb_deskripsi_donasi_singkat" name="tb_deskripsi_donasi_singkat" rows="2" placeholder="Gambaran umum tentang program" Required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="tb_deskripsi_donasi_lengkap" class="label-txt">Deskripsi Lengkap</label>
                                     <textarea class="form-control" id="tb_deskripsi_donasi_lengkap" name="tb_deskripsi_donasi_lengkap" rows="6" placeholder="Gambaran lengkap tentang program"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="image_uploads" class="label-txt">Foto Program</label>
+                                    <label for="image_uploads" class="label-txt">Foto Program<span class="red-star">*</span></label>
                                     <div class="file-form">
                                         <input type="file" id="image_uploads" name="image_uploads" class="form-control">
                                     </div>

@@ -205,8 +205,8 @@
                                     <input type="text" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $data_user['no_hp']?>" readonly>
                                 </div>      
                                 <div class="form-group mt-3 mb-2">
-                                    <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Kota Domisili</span></label><br>
-                                    <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" placeholder="Kota domisili saat ini, contoh : Kota Bandung">
+                                    <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Kota Domisili<span class="red-star">*</span></span></label><br>
+                                    <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" placeholder="Kota domisili saat ini, contoh : Kota Bandung" Required>
                                 </div>           
                             </div>
                             

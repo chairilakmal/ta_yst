@@ -183,7 +183,7 @@
                                     <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" value="<?php echo $result['nama_program_donasi']?>" readonly>
                                 </div>
                                 <div class="form-group mt-3 mb-5 ">
-                                    <label for="nominal1" class="font-weight-bold" ><span class="label-form-span">Pilih Nominal Donasi</span></label><br>
+                                    <label for="nominal1" class="font-weight-bold" ><span class="label-form-span">Pilih Nominal Donasi<span class="red-star">*</span></span></label><br>
 
                                     <div class="radio-wrapper mt-1">
                                         <div class="form-check form-check-inline">
@@ -222,8 +222,8 @@
                                     <input type="number" id="nominal2" name="nominal2" class="form-control" placeholder="Buat Nominal Donasi" value="0">
                                 </div>
                                 <div class="form-group mt-3 mb-2">
-                                    <label for="nama_donatur" class="font-weight-bold" ><span class="label-form-span">Nama Donatur</span></label><br>
-                                    <input type="text" id="tb_nama_donatur" name="tb_nama_donatur" class="form-control" placeholder="Nama Donatur">
+                                    <label for="nama_donatur" class="font-weight-bold" ><span class="label-form-span">Nama Donatur<span class="red-star">*</span></span></label><br>
+                                    <input type="text" id="tb_nama_donatur" name="tb_nama_donatur" class="form-control" placeholder="Nama Donatur" Required>
                                 </div>           
                             </div>
 
@@ -232,7 +232,7 @@
                             
                             <button type="submit" name="submit" value="Simpan" 
                             class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
-                                <span class="yst-login-btn-fs">Lanjut</span>
+                                <span class="yst-login-btn-fs">Buat Donasi</span>
                             </button>
                         </form>
                     </div>  
