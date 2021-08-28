@@ -16,7 +16,7 @@
     
     
     $id_program_donasi = $_GET["id"];
-    $status_program_donasi = 'Selesai';
+    
 
     // var_dump($status_program_donasi);die;
 
