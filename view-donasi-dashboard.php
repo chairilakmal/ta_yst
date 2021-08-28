@@ -13,8 +13,13 @@
             return $hasil_rupiah;
     }
 
-
+    
+    
     $id_program_donasi = $_GET["id"];
+    $status_program_donasi = 'Selesai';
+
+    // var_dump($status_program_donasi);die;
+
 
     $query      = mysqli_query($conn, "SELECT *, (SELECT SUM(nominal_donasi) 
                 FROM t_donasi WHERE id_program_donasi = $id_program_donasi) 
@@ -140,6 +145,9 @@
             <div class="form-profil halaman-view"> 
                 <div class="row card-deck ">                             
                     <div class="halaman-view mt-5 w-100">
+                        <input type="text" data-target="status_program_donasi" id="status_program_donasi" name="status_program_donasi" class="form-control" value="Selesai" readonly>
+                        <input type="text" data-target="id_program_donasi" id="id_program_donasi" name="id_program_donasi" class="form-control" value="<?php echo $result["id_program_donasi"]; ?>" readonly>
+                        
                         <img class="card-img-top halaman-view-img" width="100%" src="img/<?= $result['foto_p_donasi']; ?>">
                         <div class="view-desc-singkat mt-2">
                             <h2 class="mt-4"><?php echo $result['nama_program_donasi']?></h2>
@@ -160,6 +168,9 @@
                                     Sisa Waktu
                                         <script>
                                         //Countdown
+                                        // var id_program_donasi = "?php echo $id_program_donasi; ?>";
+                                        // var status_program_donasi = "?php echo $status_program_donasi; ?>";
+
                                         var dateStringFromDP = '<?php echo $result['tgl_selesai']?>';
                                         const tanggalTujuan = new Date(dateStringFromDP).getTime();
                                         const hitungMundur = setInterval(function() {
@@ -174,11 +185,35 @@
                                            
                                             if(selisih < 0){
                                                 clearInterval(hitungMundur);
-                                                teks.innerHTML = 'Waktu program telah habis !';
+                                                // teks.innerHTML = 'Waktu program telah habis !';
                                                 
+                                                //Get Variable
+                                                var id_program_donasi = $('#id_program_donasi').val();
+		                                        var status_program_donasi = $('#status_program_donasi').val();
+
+                                                console.log(id_program_donasi);
+                                                
+
+                                                //Update value
+                                                $.ajax({
+                                                url: 'update-ajax.php',
+                                                type: 'POST',
+
+                                                data    : { status_program_donasi : status_program_donasi, id_program_donasi : id_program_donasi},
+                                                success: function(response) 
+                                                {
+                                                // alert('success, server says '+output);
+                                                console.log(response);
+                                                }, error: function()
+                                                {
+                                                alert('something went wrong, rating failed');
+                                                }
+                                                });              
+                                                // console.log(statusProgram);
+                                                                             
                                             }
 
-                                        },1000);
+                                        },1000); 
                                         </script>
                                 </div>
                                 
