@@ -85,7 +85,8 @@
         $deskripsi_lengkap_donasi   = $_POST["tb_deskripsi_donasi_lengkap"];
         $deskripsi_lengkap_donasi   = htmlspecialchars($deskripsi_lengkap_donasi);
 
-        $status_program_donasi      = $_POST["status_program_donasi"];
+        
+        
 
         $gambarLama                 = $_POST["gambarLama"];
 
@@ -99,8 +100,24 @@
         } else {
             $gambar = upload();
         }
-
+        
+        // GLOBAL UPDATE
         $query = "UPDATE t_program_donasi SET
+                    nama_program_donasi         = '$nama_program_donasi',
+                    deskripsi_singkat_donasi    = '$deskripsi_singkat_donasi',
+                    target_dana                 = '$target_dana',
+                    deskripsi_lengkap_donasi    = '$deskripsi_lengkap_donasi',
+                 
+                    foto_p_donasi               = '$gambar',
+                    penerima_donasi             = '$penerima_donasi'
+                  WHERE id_program_donasi       = $id_program_donasi
+                ";
+
+        //SUPERADMIN UPDATE (DENGAN STATUS)
+        if($_SESSION['level_user'] == 3 ){
+            $status_program_donasi      = $_POST["status_program_donasi"];
+
+            $query = "UPDATE t_program_donasi SET
                     nama_program_donasi         = '$nama_program_donasi',
                     deskripsi_singkat_donasi    = '$deskripsi_singkat_donasi',
                     target_dana                 = '$target_dana',
@@ -110,6 +127,7 @@
                     penerima_donasi             = '$penerima_donasi'
                   WHERE id_program_donasi       = $id_program_donasi
                 ";
+        }
 
         mysqli_query($conn, $query);
 
@@ -324,7 +342,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="image_uploads" class="label-txt">Foto Program</label><br>
-                                    <img src="img/<?= $programDonasi["foto_p_donasi"]; ?>" class="edit-img" alt="">
+                                        <img src="img/<?= $programDonasi["foto_p_donasi"]; ?>" class="edit-img popup " alt="">
                                     <div class="file-form">
                                         <input type="file" id="image_uploads" name="image_uploads" class="form-control ">
                                     </div>
@@ -370,6 +388,23 @@
                             </button>
                         </form>
                     </div>
+                
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Foto Program</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="" id="popup-img" alt="image" class="w-100">  
+                            </div>                                                    
+                        </div>
+                    </div>
+                    </div>
             </main>
         </div>
         <!-- /.container-fluid -->
@@ -398,6 +433,17 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
+
+    <script>
+
+        $('.popup').click(function(){
+            var src = $(this).attr('src');
+            
+            $('.modal').modal('show');
+            $('#popup-img').attr('src',src);
+        });
+
+    </script>
 
 
 </body>
