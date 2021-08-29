@@ -341,7 +341,7 @@
                                     rows="6"><?= $programDonasi["deskripsi_lengkap_donasi"]; ?></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="image_uploads" class="label-txt">Foto Program</label><br>
+                                    <label for="image_uploads" class="label-txt">Foto Program (klik foto untuk memperbesar)</label><br>
                                         <img src="img/<?= $programDonasi["foto_p_donasi"]; ?>" class="edit-img popup " alt="">
                                     <div class="file-form">
                                         <input type="file" id="image_uploads" name="image_uploads" class="form-control ">
@@ -391,19 +391,19 @@
                 
                     <!-- Modal -->
                     <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Foto Program</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Foto Program </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="" id="popup-img" alt="image" class="w-100">  
+                                </div>                                                    
                             </div>
-                            <div class="modal-body">
-                                <img src="" id="popup-img" alt="image" class="w-100">  
-                            </div>                                                    
                         </div>
-                    </div>
                     </div>
             </main>
         </div>

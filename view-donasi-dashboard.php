@@ -185,7 +185,7 @@
                                            
                                             if(selisih < 0){
                                                 clearInterval(hitungMundur);
-                                                // teks.innerHTML = 'Waktu program telah habis !';
+                                                teks.innerHTML = 'Waktu program telah habis !';
                                                 
                                                 //Get Variable
                                                 var id_program_donasi = $('#id_program_donasi').val();
