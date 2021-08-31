@@ -19,15 +19,16 @@
         $ukuranFile = $_FILES['image_uploads']['size'];
         $error = $_FILES['image_uploads']['error'];
         $tmpName = $_FILES['image_uploads']['tmp_name'];
+        
 
-            if($error === 4){
-                echo "
-                    <script>
-                        alert('gambar tidak ditemukan !');
-                    </script>
-                ";
-                return false;
-            }
+            // if($error === 4){
+            //     echo "
+            //         <script>
+            //             alert('gambar tidak ditemukan !');
+            //         </script>
+            //     ";
+            //     return false;
+            // }
    
         //cek ekstensi gambar
         $ekstensiGambarValid = ['jpg','jpeg','png'];
@@ -51,8 +52,30 @@
 
         //lolos pengecekan
         move_uploaded_file($tmpName,'img/'.$namaFileBaru);
-
         return $namaFileBaru;
+   }
+
+   function upload2(){
+        //upload gambar
+        $namaFile2 = $_FILES['image_uploads2']['name'];
+        $ukuranFile2 = $_FILES['image_uploads2']['size'];
+        $error = $_FILES['image_uploads2']['error'];
+        $tmpName2 = $_FILES['image_uploads2']['tmp_name'];
+        
+        //cek ekstensi gambar
+        $ekstensiGambarValid2 = ['jpg','jpeg','png'];
+        $ekstensiGambar2 = explode('.', $namaFile2);
+        $ekstensiGambar2 = strtolower(end($ekstensiGambar2));
+
+       //generate nama baru
+       $namaFileBaru2 = uniqid();
+       $namaFileBaru2 .= '.';
+       $namaFileBaru2 .= $ekstensiGambar2;
+   
+
+        //lolos pengecekan
+        move_uploaded_file($tmpName2,'img/'.$namaFileBaru2);
+        return $namaFileBaru2;
    }
     
     //fungsi GET Array
@@ -85,14 +108,17 @@
         $deskripsi_lengkap_donasi   = $_POST["tb_deskripsi_donasi_lengkap"];
         $deskripsi_lengkap_donasi   = htmlspecialchars($deskripsi_lengkap_donasi);
 
-        
-        
-
         $gambarLama                 = $_POST["gambarLama"];
+
+        $gambarLama2                 = $_POST["gambarLama2"];
 
         $tgl_selesai                = $_POST["tb_tgl_selesai"];
 
         $penerima_donasi            = $_POST["tb_penerima_donasi"];
+
+        $tgl_penyaluran             = $_POST["tb_tgl_penyaluran"];
+
+        $status_program_donasi      = $_POST["status_program_donasi"];
         
 
         if($_FILES['image_uploads']['error'] === 4){
@@ -100,16 +126,29 @@
         } else {
             $gambar = upload();
         }
+
+        if($_FILES['image_uploads2']['error'] === 4){
+            $gambar2 = $gambarLama2;
+        } else {
+            $gambar2 = upload2();
+        }
         
+        // if (isset($_FILES['image_uploads2'], $_POST['tb_tgl_penyaluran'])) {//do the fields exist
+        //     if($_FILES['image_uploads2'] && $_POST['tb_tgl_penyaluran']){ //do the fields contain data
+        //         $status_program_donasi      = 'Selesai';
+        //     }
+        // }
+
         // GLOBAL UPDATE
         $query = "UPDATE t_program_donasi SET
                     nama_program_donasi         = '$nama_program_donasi',
                     deskripsi_singkat_donasi    = '$deskripsi_singkat_donasi',
                     target_dana                 = '$target_dana',
-                    deskripsi_lengkap_donasi    = '$deskripsi_lengkap_donasi',
-                 
+                    deskripsi_lengkap_donasi    = '$deskripsi_lengkap_donasi',              
                     foto_p_donasi               = '$gambar',
-                    penerima_donasi             = '$penerima_donasi'
+                    penerima_donasi             = '$penerima_donasi',
+                    bukti_penyaluran            = '$gambar2',
+                    tgl_penyaluran              = '$tgl_penyaluran'
                   WHERE id_program_donasi       = $id_program_donasi
                 ";
 
@@ -124,7 +163,9 @@
                     deskripsi_lengkap_donasi    = '$deskripsi_lengkap_donasi',
                     status_program_donasi       = '$status_program_donasi',
                     foto_p_donasi               = '$gambar',
-                    penerima_donasi             = '$penerima_donasi'
+                    penerima_donasi             = '$penerima_donasi',
+                    bukti_penyaluran            = '$gambar2',
+                    tgl_penyaluran              = '$tgl_penyaluran'
                   WHERE id_program_donasi       = $id_program_donasi
                 ";
         }
@@ -142,7 +183,7 @@
         }else{
             echo "
                 <script>
-                    alert('Data gagal diubah!');
+                    alert('Tidak ada perubahan data');
                 </script>
             ";
         }
@@ -310,6 +351,7 @@
                         <form action="" enctype="multipart/form-data" method="POST">
                             <input type="hidden" name="id_program_donasi" value="<?= $programDonasi["id_program_donasi"]; ?>">
                             <input type="hidden" name="gambarLama" value="<?= $programDonasi["foto_p_donasi"]; ?>">
+                            <input type="hidden" name="gambarLama2" value="<?= $programDonasi["bukti_penyaluran"]; ?>">
                             <div class="form-group label-txt">
                                 <div class="form-group mt-4 mb-3">
                                     <label for="tb_nama_program_donasi" class="label-txt">Nama Program</label>
@@ -341,7 +383,7 @@
                                     rows="6"><?= $programDonasi["deskripsi_lengkap_donasi"]; ?></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="image_uploads" class="label-txt">Foto Program (klik foto untuk memperbesar)</label><br>
+                                    <label for="image_uploads" class="label-txt">Foto Program</label><br>
                                         <img src="img/<?= $programDonasi["foto_p_donasi"]; ?>" class="edit-img popup " alt="">
                                     <div class="file-form">
                                         <input type="file" id="image_uploads" name="image_uploads" class="form-control ">
@@ -362,27 +404,47 @@
                                     <div class="radio-wrapper2 mt-1">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" id="status_program_donasi" name="status_program_donasi" 
-                                            class="form-check-input" value="Berjalan" <?php if($programDonasi['status_program_donasi']=='Berjalan') echo 'checked'?>>
+                                            class="form-check-input" value="Berjalan" <?php if($programDonasi['status_program_donasi']=='Berjalan') echo 'checked'?> >
                                             <label class="form-check-label" for="status_program_donasi">Berjalan</label>
                                         </div>
                                     </div>
                                     <div class="radio-wrapper mt-1 ml-3">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" id="status_program_donasi" name="status_program_donasi" 
+                                            class="form-check-input" value="Siap disalurkan" <?php if($programDonasi['status_program_donasi']=='Siap disalurkan') echo 'checked'?>>
+                                            <label class="form-check-label" for="status_program_donasi">Siap disalurkan</label>
+                                        </div>
+                                    </div>
+                                    <div class="radio-wrapper mt-1">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" id="status_program_donasi" name="status_program_donasi" 
                                             class="form-check-input" value="Selesai" <?php if($programDonasi['status_program_donasi']=='Selesai') echo 'checked'?>>
                                             <label class="form-check-label" for="status_program_donasi">Selesai</label>
                                         </div>
                                     </div>
+                                </div>                               
+                               <?php } ?>
+                               
+                               <?php if($programDonasi['status_program_donasi'] == 'Siap disalurkan' || $programDonasi['status_program_donasi'] == 'Selesai'){?>
+                               <!-- Untuk upload bukti penyaluran -->
+                                <div class="form-group upload-bukti">
+                                    <h3 class="mt-4">Bukti Penyaluran Dana</h3>
+                                    <label for="image_uploads2" class="label-txt">Foto Bukti Penyaluran Dana</label><br>
+                                        <img src="img/<?= $programDonasi["bukti_penyaluran"]; ?>" class="edit-img popup " alt="">
+                                    <div class="file-form">
+                                        <input type="file" id="image_uploads2" name="image_uploads2" class="form-control ">
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4 mb-3">
+                                    <label for="tb_tgl_penyaluran" class="label-txt">Tanggal Penyaluran Dana</label>
+                                        <input type="date" id="tb_tgl_penyaluran" name="tb_tgl_penyaluran" 
+                                        class="form-control" value="<?= $programDonasi["tgl_penyaluran"]; ?>">
                                 </div>
                                 
-                               <?php } ?>
-                                <!-- <div class="form-group">
-                                    <label for="image_uploads_program_donasi" class="label-txt">Foto Program</label>
-                                    <div class="file-form">
-                                        <input type="file" id="image_uploads_program_donasi" name="image_uploads_program_donasi" class="form-control">
-                                    </div>
-                                </div> -->
-                            </div>
+                                <?php } ?>
+                                <!-- END Untuk upload bukti penyaluran -->
+                                
+
                             <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
                                 <span class="yst-login-btn-fs">Edit Program</span>
                             </button>

@@ -466,6 +466,18 @@ tr td:last-child {
   font-size: 15px;
 }
 
+.upload-bukti{
+  border-top: 0.5px solid #d8d8d8;
+  margin-top: 5rem;
+}
+
+.upload-bukti h3{
+ margin-bottom: 4vh;
+  text-align: center;
+  color: #4f4f4e;
+  font-family: Nunito, sans-serif;
+}
+
 @media only screen and (max-width: 1200px) {
 }
 

@@ -15,14 +15,14 @@
          $error = $_FILES['image_uploads']['error'];
          $tmpName = $_FILES['image_uploads']['tmp_name'];
  
-             if($error === 4){
-                 echo "
-                     <script>
-                         alert('gambar tidak ditemukan !');
-                     </script>
-                 ";
-                 return false;
-             }
+            //  if($error === 4){
+            //      echo "
+            //          <script>
+            //              alert('gambar tidak ditemukan !');
+            //          </script>
+            //      ";
+            //      return false;
+            //  }
     
          //cek ekstensi gambar
          $ekstensiGambarValid = ['jpg','jpeg','png'];
@@ -285,7 +285,7 @@
                                 <div class="form-group">
                                     <label for="image_uploads" class="label-txt">Foto Program<span class="red-star">*</span></label>
                                     <div class="file-form">
-                                        <input type="file" id="image_uploads" name="image_uploads" class="form-control">
+                                        <input type="file" id="image_uploads" name="image_uploads" class="form-control" Required>
                                     </div>
                                 </div>
                             </div>

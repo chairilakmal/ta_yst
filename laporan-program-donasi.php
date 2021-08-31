@@ -24,7 +24,7 @@
         return $rows;
    }
 
-    // WHERE status_donasi = 'Diterima'
+    // WHERE status_donasi = 'Selesai'
 
     // var_dump($programDonasi);die;
    $programDonasi = query("SELECT *, SUM(t_donasi.nominal_donasi) AS dana_terkumpul_total, 
