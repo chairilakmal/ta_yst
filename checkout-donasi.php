@@ -10,34 +10,10 @@
     }
 
     function rupiah($angka){
-            $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
-            return $hasil_rupiah;
+        $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
+        return $hasil_rupiah;
     }
-
-    //Program Donasi
-    function queryDonasi($query){
-        global $conn;
-        $result = mysqli_query($conn, $query); 
-        $rows = [];
-        while($row = mysqli_fetch_assoc($result)){
-            $rows[] = $row;
-        }
-        return $rows;
-    }
-
-    $programDonasi = queryDonasi("SELECT *, SUM(t_donasi.nominal_donasi) AS dana_terkumpul_total, 
-                    COUNT(id_user) 
-                    AS jumlah_donatur 
-                    FROM t_donasi 
-                    RIGHT JOIN t_program_donasi 
-                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi    
-                    WHERE status_program_donasi = 'Berjalan'             
-                    GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
-                    ");
-
-    //Hanya tampilkan total
-    
-    // var_dump($programDonasi);die;
+  
 
 ?>
 
@@ -49,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Icon Title -->
     <link rel="icon" href="img/logo-only.svg">
-    <title>YST - Pilih Donasi</title>
+    <title>YST - Buat Donasi</title>
     <!-- Font Awesome
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> -->
     <!-- Font Awesome -->
@@ -62,6 +38,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Roboto:wght@500&display=swap" rel="stylesheet"> 
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -134,42 +111,57 @@
         <main>
             <div class="page-title-link ml-4 mb-4">     
                         <div class="page-title-link ml-4 mb-4">     
-                            <a href="dashboard-user.php">
-                                <i class="nav-icon fas fa-home mr-1"></i>Dashboard user</a> > 
-                            <a href="dashboard-user.php">
-                                <i class="nav-icon fas fa-user-cog mr-1"></i>Donasi saya</a> >
-                            <a href="pilih-donasi.php">
-                                <i class="nav-icon fas fa-hand-holding-heart mr-1"></i>Buat Donasi</a>
-                        </div>
+                            <div class="page-title-link ml-4 mb-4">     
+                                <a href="dashboard-user.php">
+                                    <i class="nav-icon fas fa-home mr-1"></i>Dashboard user</a> > 
+                                <a href="dashboard-user.php">
+                                    <i class="nav-icon fas fa-user-cog mr-1"></i>Donasi saya</a> >
+                                <a href="pilih-donasi.php">
+                                    <i class="nav-icon fas fa-hand-holding-heart mr-1"></i>Buat Donasi</a> >
+                                <a href="#" onclick="javascript:window.history.back(-1);return false;">
+                                    <i class="nav-icon fas fa-info-circle mr-1"></i>Detail Donasi</a>
+                            </div>
+                        </div>  
                 </div>               
                 <div class="form-profil halaman-view">
-                    <div class="mt-2 regis-title"><h3>Pilih Donasi</h3></div>    
-                        <div class="row card-deck">
-                                    <?php foreach($programDonasi as $row):?>
-                                    <div class="col-md-6">
-                                        <div class="card card-pilihan mb-4 shadow-sm">
-                                        <a href="">
-                                            <img class="card-img-top berita-img" width="100%" src="img/<?= $row['foto_p_donasi']; ?>">
-                                        </a>
-                                            <div class="card-body">
-                                                <div class="nama-program">
-                                                    <p ><h5 class="max-length2"><b><?= $row["nama_program_donasi"]; ?></b></h5></p>
-                                                </div>
-                                                <div class="d-flex justify-content-between dana-donatur-row-top mt-2">
-                                                    <div class="float-left">Terkumpul</div>
-                                                    <div>Donatur</div>
-                                                </div>
-                                                <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                                    <div class="float-left"><b><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></b></div>
-                                                    <div><b><?= $row["jumlah_donatur"]; ?></b></div>
-                                                </div>
-                                                <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" 
-                                                href="view-donasi-dashboard.php?id=<?php echo $row['id_program_donasi'];?>">Lihat Program</a>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <?php endforeach;?>   
+                    <div class="mt-2 regis-title"><h3>Review Donasi</h3></div>    
+                        <form action="" enctype="multipart/form-data" method="POST">
+                            <div class="form-group label-txt">
+                                <div class="mt-4">                                 
+                                        <h5>Donasi berhasil dibuat ! Dengan rincian sebagai berikut : </h5>
+                                </div>   
+                                
+                                <div class="form-group mt-4 mb-2">
+                                    <label for="tb_nama_program_donasi" class="font-weight-bold" ><span class="label-form-span">Nama Program Donasi Pilihan</span></label><br>
+                                    <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" value="<?php echo $_SESSION['nama_program_donasi']?>" readonly>
+                                </div>
+
+                                <div class="form-group mt-3 mb-2">
+                                    <label for="tb_nominal_program_donasi" class="font-weight-bold" ><span class="label-form-span">Nominal Donasi</span></label><br>
+                                    <input type="text" id="tb_nominal_program_donasi" name="tb_nominal_program_donasi" class="form-control" value="<?php echo rupiah($_SESSION['nominal'])?>" readonly>
+                                </div>
+                                <div class="form-group mt-3 mb-2">
+                                    <label for="nama_donatur" class="font-weight-bold" ><span class="label-form-span">Nama Donatur</span></label><br>
+                                    <input type="text" id="tb_nama_donatur" name="tb_nama_donatur" class="form-control" value="<?php echo $_SESSION['nama_donatur']?>" readonly>
+                                </div>    
+                                <div class="mt-4">                                 
+                                        Transfer ke nomor rekening berikut : Bank MANDIRI <strong>131-00-0458589-1</strong> (an. Yayasan Sekar Telkom)              
+                                </div> 
+                                <div class="mt-4">                                 
+                                        <strong>PENTING :</strong> Mohon transfer tepat sampai 3 angka terakhir nominal donasi agar donasi Anda dapat diproses. Kode unik akan didonasikan.
+                                        Anda akan menerima notifikasi ketika transaksi sudah kami terima.   
+                                        
+                                        <br><br>Anda juga dapat melihat tagihan donasi ini pada menu "Donasi Saya" atau pada email yang telah kami kirim kepada email Anda.
+                                </div>       
                             </div>
+          
+                            <button type="submit" name="submit" value="Simpan" 
+                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"
+                            onclick="javascript:window.location.href='delete-review-session.php'; return false;"> 
+                           
+                                <span class="yst-login-btn-fs">OK</span>
+                            </button>
+                        </form>
                     </div>  
         </main>
         </div>
@@ -199,6 +191,7 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
+    <script type="text/javascript" src="js/buat-donasi.js"></script>
 
 
 </body>

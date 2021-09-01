@@ -17,7 +17,6 @@
         exit;
     }
 
-    include "config/connection.php";
 
     function rupiah($angka){
         $hasil_rupiah = "Rp. ".number_format($angka,0,'.','.');
@@ -26,6 +25,7 @@
 
     //query user
     $id_user           = $_SESSION['id_user'];
+    
     $queryUser      = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user=$id_user");
     $data_user      = mysqli_fetch_array($queryUser);
 
@@ -43,12 +43,22 @@
         $nominal1                 = $_POST["nominal1"]; 
         $nominal2                 = $_POST["nominal2"]; 
         $totalSementara           = $nominal1 + $nominal2;
-        $unik  = rand(1,999);
-        $belum_dibayar =  $totalSementara + $unik;
+        $unik                     = rand(1,999);
+        $belum_dibayar            =  $totalSementara + $unik;
 
         $nama_penerima  = $_POST['tb_nama_user'];
         $email_penerima = $_POST['tb_email'];
 
+        $nama_donatur             = $_POST["tb_nama_donatur"]; 
+
+        $_SESSION['id_program_donasi']   = $id_program_donasi;
+        $_SESSION['nama_program_donasi'] = $nama_program_donasi;
+        $_SESSION['nominal']             = $belum_dibayar;
+        $_SESSION['nama_donatur']        = $nama_donatur;
+
+        // Print_r($_SESSION);die;
+
+        
         
 
         echo "
@@ -57,8 +67,7 @@
             </script>
         ";
 
-        $nama_donatur             = $_POST["tb_nama_donatur"]; 
-        $id_user                  = $_SESSION['id_user'];
+        
         
 
         // var_dump($id_user);die;
@@ -148,7 +157,7 @@
                 echo "
                 <script>
                     alert('Email Terkirim !');
-                    window.location = 'dashboard-user.php';
+                    window.location = 'checkout-donasi.php';
                 </script>
                 ";
             }else{
@@ -216,7 +225,7 @@
                     <?php echo("{$_SESSION['username']}");?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
-                        <a class="dropdown-item" href="login.php">Logout</a>
+                        <a class="dropdown-item" href="logout.php">Logout</a>
                     </div>                   
                 </li>
             </ul>

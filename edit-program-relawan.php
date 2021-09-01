@@ -180,7 +180,7 @@
                     <?php echo("{$_SESSION['username']}");?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
-                        <a class="dropdown-item" href="login.php">Logout</a>
+                        <a class="dropdown-item" href="logout.php">Logout</a>
                     </div>                   
                 </li>
             </ul>
@@ -364,7 +364,7 @@
                         </div>
                         <?php } ?>
                     </div>
-                    <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="location.href='login.php'"> 
+                    <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
                   <span class="yst-login-btn-fs">Edit Program</span></button>
                 </form>
                 </div>

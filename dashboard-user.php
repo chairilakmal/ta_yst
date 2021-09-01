@@ -77,7 +77,7 @@
                     <?php echo("{$_SESSION['username']}");?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">      
-                        <a class="dropdown-item" href="login.php">Logout</a>
+                        <a class="dropdown-item" href="logout.php">Logout</a>
                     </div>                   
                 </li>
             </ul>
@@ -159,8 +159,8 @@
                                 <div class="table-responsive">
                                     <table width="100%">
                                         <thead>
-                                            <tr class="text-center">
-                                                <td>Kode<br>Donasi</td>
+                                            <tr >
+                                                <td class="text-center">Kode<br>Donasi</td>
                                                 <td>Program Pilihan</td>
                                                 <td>Tgl Donasi</td>
                                                 <td>Nominal</td>
@@ -174,10 +174,10 @@
                                             <tr>
                                                 <td class="text-center"><?= $row["id_donasi"]; ?></td>
                                                 <td class="table-snipet1"><?= $row["nama_program_donasi"]; ?></td>
-                                                <td class="text-center"><?= $row["tgl_donasi"]; ?></td>
-                                                <td class="text-center table-snipet2"><?= rupiah($row["belum_dibayar"]); ?></td>
+                                                <td ><?= $row["tgl_donasi"]; ?></td>
+                                                <td class="table-snipet2"><?= rupiah($row["belum_dibayar"]); ?></td>
                                                 <td><?= $row["nama_donatur"]; ?></td>
-                                                <td class="text-center"><?= $row["status_donasi"]; ?></td>
+                                                <td ><?= $row["status_donasi"]; ?></td>
                                                 <td class="justify-content-center">
                                                     <button type="button" class="btn btn-edit">
                                                         <a href="detail-donasi-saya.php?id_donasi=<?= $row["id_donasi"]; ?>" 
