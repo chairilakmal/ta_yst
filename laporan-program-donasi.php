@@ -241,14 +241,14 @@
                                         <tbody>
                                             <?php foreach($programDonasi as $row):?>
                                             <tr>
-                                                <td class="text-center"><?= $row["id_donasi"]; ?></td>
+                                                <td class="text-center"><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="col-2"><?= $row["nama_program_donasi"]; ?></td>
                                                 <td class="col-2 text-center"><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></td>
                                                 <td class="col-2 text-center"><?= rupiah($row["target_dana"]); ?></td>
                                                 <td class="text-center"><?= $row["jumlah_donatur"]; ?></td>
                                                 <td class="col-2 text-center"><?= $row["tgl_pdonasi"]; ?></td>
                                                 <td class="col-2 text-center "><?= $row["tgl_selesai"]; ?></td>
-                                                <td class="text-center"><?= $row["penerima_donasi"]; ?></td>
+                                                <td class="text-center "><?= $row["penerima_donasi"]; ?></td>
                                             </tr>                                          
                                             <?php endforeach;?> 
                                         </tbody>

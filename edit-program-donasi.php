@@ -347,11 +347,15 @@
                                 <i class="nav-icon fas fa-plus-square mr-1"></i>Edit program donasi</a>
                 </div>               
                 <div class="form-profil">
-                    <div class="mt-2 regis-title"><h3>Edit Program Donasi</h3></div>    
+                        <div class="mt-2 regis-title">
+                            <h3>Edit Program Donasi</h3>
+                        </div>    
                         <form action="" enctype="multipart/form-data" method="POST">
                             <input type="hidden" name="id_program_donasi" value="<?= $programDonasi["id_program_donasi"]; ?>">
                             <input type="hidden" name="gambarLama" value="<?= $programDonasi["foto_p_donasi"]; ?>">
                             <input type="hidden" name="gambarLama2" value="<?= $programDonasi["bukti_penyaluran"]; ?>">
+                          
+                        
                             <div class="form-group label-txt">
                                 <div class="form-group mt-4 mb-3">
                                     <label for="tb_nama_program_donasi" class="label-txt">Nama Program</label>
@@ -389,62 +393,65 @@
                                         <input type="file" id="image_uploads" name="image_uploads" class="form-control ">
                                     </div>
                                 </div>
-
-                                <!-- Hanya muncul jika level user = 3 / super admin -->
-                                <?php if($_SESSION['level_user'] == 3 ){?>
-                                <div class="form-group mb-5 ">
-                                    <label for="status_program_donasi" class="font-weight-bold" ><span class="label-form-span">Status Program</span></label><br>
-                                    <div class="radio-wrapper mt-1">
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" id="status_program_donasi" name="status_program_donasi" 
-                                            class="form-check-input" value="Pending" <?php if($programDonasi['status_program_donasi']=='Pending') echo 'checked'?>>
-                                            <label class="form-check-label" for="status_program_donasi">Pending</label>
-                                        </div>
-                                    </div>
-                                    <div class="radio-wrapper2 mt-1">
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" id="status_program_donasi" name="status_program_donasi" 
-                                            class="form-check-input" value="Berjalan" <?php if($programDonasi['status_program_donasi']=='Berjalan') echo 'checked'?> >
-                                            <label class="form-check-label" for="status_program_donasi">Berjalan</label>
-                                        </div>
-                                    </div>
-                                    <div class="radio-wrapper mt-1 ml-3">
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" id="status_program_donasi" name="status_program_donasi" 
-                                            class="form-check-input" value="Siap disalurkan" <?php if($programDonasi['status_program_donasi']=='Siap disalurkan') echo 'checked'?>>
-                                            <label class="form-check-label" for="status_program_donasi">Siap disalurkan</label>
-                                        </div>
-                                    </div>
-                                    <div class="radio-wrapper mt-1">
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" id="status_program_donasi" name="status_program_donasi" 
-                                            class="form-check-input" value="Selesai" <?php if($programDonasi['status_program_donasi']=='Selesai') echo 'checked'?>>
-                                            <label class="form-check-label" for="status_program_donasi">Selesai</label>
-                                        </div>
-                                    </div>
-                                </div>                               
-                               <?php } ?>
-                               
-                               <?php if($programDonasi['status_program_donasi'] == 'Siap disalurkan' || $programDonasi['status_program_donasi'] == 'Selesai'){?>
                                <!-- Untuk upload bukti penyaluran -->
-                                <div class="form-group upload-bukti">
-                                    <h3 class="mt-4">Bukti Penyaluran Dana</h3>
-                                    <label for="image_uploads2" class="label-txt">Foto Bukti Penyaluran Dana</label><br>
-                                        <img src="img/<?= $programDonasi["bukti_penyaluran"]; ?>" class="edit-img popup " alt="">
-                                    <div class="file-form">
-                                        <input type="file" id="image_uploads2" name="image_uploads2" class="form-control ">
+                               <?php if($programDonasi['status_program_donasi'] == 'Siap disalurkan' || $programDonasi['status_program_donasi'] == 'Selesai'){?>                            
+                                <div class="second-bg">
+                                    <div class="form-group upload-bukti">
+                                        <h3 class="mt-4">Bukti Penyaluran Dana</h3>
+                                        <label for="image_uploads2" class="label-txt">Foto Bukti Penyaluran Dana</label><br>
+                                            <img src="img/<?= $programDonasi["bukti_penyaluran"]; ?>" class="edit-img popup " alt="">
+                                        <div class="file-form">
+                                            <input type="file" id="image_uploads2" name="image_uploads2" class="form-control ">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group mt-4 mb-3">
-                                    <label for="tb_tgl_penyaluran" class="label-txt">Tanggal Penyaluran Dana</label>
-                                        <input type="date" id="tb_tgl_penyaluran" name="tb_tgl_penyaluran" 
-                                        class="form-control" value="<?= $programDonasi["tgl_penyaluran"]; ?>">
-                                </div>
+                                    <div class="form-group mt-4 mb-3">
+                                        <label for="tb_tgl_penyaluran" class="label-txt">Tanggal Penyaluran Dana</label>
+                                            <input type="date" id="tb_tgl_penyaluran" name="tb_tgl_penyaluran" 
+                                            class="form-control" value="<?= $programDonasi["tgl_penyaluran"]; ?>">
+                                    </div>    
                                 
                                 <?php } ?>
                                 <!-- END Untuk upload bukti penyaluran -->
-                                
 
+                                <!-- Hanya muncul jika level user = 3 / super admin -->
+                                <?php if($_SESSION['level_user'] == 3 ){?>
+                                    <div class="form-group mb-5">
+                                        <label for="status_program_donasi" class="font-weight-bold" ><span class="label-form-span">Status Program</span></label><br>
+                                        <div class="radio-wrapper mt-1 bg-white">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" id="status_program_donasi" name="status_program_donasi" 
+                                                class="form-check-input" value="Pending" <?php if($programDonasi['status_program_donasi']=='Pending') echo 'checked'?>>
+                                                <label class="form-check-label" for="status_program_donasi">Pending</label>
+                                            </div>
+                                        </div>
+                                        <div class="radio-wrapper2 mt-1 bg-white">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" id="status_program_donasi" name="status_program_donasi" 
+                                                class="form-check-input" value="Berjalan" <?php if($programDonasi['status_program_donasi']=='Berjalan') echo 'checked'?> >
+                                                <label class="form-check-label" for="status_program_donasi">Berjalan</label>
+                                            </div>
+                                        </div>
+                                        <div class="radio-wrapper mt-1 ml-3 bg-white">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" id="status_program_donasi" name="status_program_donasi" 
+                                                class="form-check-input" value="Siap disalurkan" <?php if($programDonasi['status_program_donasi']=='Siap disalurkan') echo 'checked'?>>
+                                                <label class="form-check-label" for="status_program_donasi">Siap disalurkan</label>
+                                            </div>
+                                        </div>
+                                        <div class="radio-wrapper mt-1 bg-white">
+                                            <div class="form-check form-check-inline">
+                                                <input type="radio" id="status_program_donasi" name="status_program_donasi" 
+                                                class="form-check-input" value="Selesai" <?php if($programDonasi['status_program_donasi']=='Selesai') echo 'checked'?>>
+                                                <label class="form-check-label" for="status_program_donasi">Selesai</label>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div class="form-group mb-2"><br><br></div>  
+                                </div>                           
+                               <?php } ?>
+
+                               
+                               
                             <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
                                 <span class="yst-login-btn-fs">Edit Program</span>
                             </button>
@@ -506,6 +513,7 @@
         });
 
     </script>
+    
 
 
 </body>

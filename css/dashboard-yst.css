@@ -468,7 +468,11 @@ tr td:last-child {
 
 .upload-bukti{
   border-top: 0.5px solid #d8d8d8;
-  margin-top: 5rem;
+  margin-top: 2rem;
+}
+
+.second-bg{
+  background-color: #e9ecef;
 }
 
 .upload-bukti h3{
@@ -477,6 +481,20 @@ tr td:last-child {
   color: #4f4f4e;
   font-family: Nunito, sans-serif;
 }
+
+/* Status */
+/* .status1 {  
+color: red;
+}
+
+.status2{
+color: yellow;
+}
+
+.status3{
+color: green;
+} */
+
 
 @media only screen and (max-width: 1200px) {
 }

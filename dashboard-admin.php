@@ -247,10 +247,17 @@
                                                 <td class="text-center">
                                                     <?= $row["status_program_donasi"]; ?>
                                                 </td>
-                                                <td class="justify-content-center">
+                                                <td class="justify-content-between">
                                                     <button type="button" class="btn btn-edit">
                                                         <a href="edit-program-donasi.php?id_program_donasi=<?= $row["id_program_donasi"]; ?>" class="fas fa-edit"></a>
                                                     </button>
+
+                                                    <!-- <php if($row['status_program_donasi'] == 'Siap disalurkan' || $row['status_program_donasi'] == 'Selesai'){?>
+                                                    <button type="button" class="btn btn-edit">
+                                                        <a href="edit-program-donasi.php?id_program_donasi=<= $row["id_program_donasi"]; ?>" class="fa fa-upload"></a>
+                                                    </button>
+                                                    <php } ?> -->
+                                                    
                                                     <button type="button" class="btn btn-delete ml-1">
                                                         <a href="hapus.php?type=pdonasi&id_program_donasi=<?=$row["id_program_donasi"];?>" 
                                                         class="far fa-trash-alt" onclick="return confirm('Anda yakin ingin menghapus program ini ?');"></a>
