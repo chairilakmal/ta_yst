@@ -226,29 +226,25 @@
                                 <div class="table-responsive">
                                     <table width="100%">
                                         <thead>
-                                            <tr class="text-center">
-                                                <td>Kode Program</td>
-                                                <td>Nama Program Donasi</td>
-                                                <td>Dana Terkumpul</td>
-                                                <td>Target Dana</td>
-                                                <td >Jumlah Donatur</td>
-                                                <td >Tanggal Dibuat</td>
-                                                <td>Tanggal Selesai</td>
-                                                <td>Penerima Donasi</td>
+                                            <tr>
+                                                <td>Kode<br> Program</td>
+                                                <td class="col-2">Nama Program Donasi</td>
+                                                <td class="col-2">Dana Disalurkan</td>                                                                   
+                                                <td class="col-2">Tanggal Disalurkan</td>
+                                                <td class="col-2">Penerima Donasi</td>
+                                                <td class="col-2">Penanggung Jawab</td>
                                   
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach($programDonasi as $row):?>
                                             <tr>
-                                                <td class="text-center"><?= $row["id_program_donasi"]; ?></td>
+                                                <td><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="col-2"><?= $row["nama_program_donasi"]; ?></td>
-                                                <td class="col-2 text-center"><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></td>
-                                                <td class="col-2 text-center"><?= rupiah($row["target_dana"]); ?></td>
-                                                <td class="text-center"><?= $row["jumlah_donatur"]; ?></td>
-                                                <td class="col-2 text-center"><?= $row["tgl_pdonasi"]; ?></td>
-                                                <td class="col-2 text-center "><?= $row["tgl_selesai"]; ?></td>
-                                                <td class="text-center "><?= $row["penerima_donasi"]; ?></td>
+                                                <td class="col-2"><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></td>
+                                                <td class="col-2"><?= date("d-m-Y",strtotime($row["tgl_penyaluran"])); ?></td>
+                                                <td class="col-2"><?= $row["penerima_donasi"]; ?></td>
+                                                <td class="col-2 text-center"><?= $row["penanggung_jawab"]; ?></td>
                                             </tr>                                          
                                             <?php endforeach;?> 
                                         </tbody>
@@ -287,6 +283,8 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
+
+    
     
     <!-- Print Landscape -->
     <script>

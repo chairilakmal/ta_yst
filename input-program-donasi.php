@@ -71,13 +71,14 @@
 
         $tgl_pdonasi                = date ('Y-m-d', time());
 
-        $tgl_selesai              = $_POST["tb_tgl_selesai"];
-        $penerima_donasi                = $_POST["tb_penerima_donasi"];
+        $tgl_selesai                = $_POST["tb_tgl_selesai"];
+        $penerima_donasi            = $_POST["tb_penerima_donasi"];
+        $penanggung_jawab           = $_POST["tb_penanggung_jawab"];
 
        
         $query = "INSERT INTO t_program_donasi
                     VALUES 
-                  ('','$nama_program_donasi','$deskripsi_singkat_donasi','$target_dana',' $deskripsi_lengkap_donasi','$gambar','$tgl_pdonasi','$tgl_selesai','$status_program_donasi','$penerima_donasi')  
+                  ('','$nama_program_donasi','$deskripsi_singkat_donasi','$target_dana',' $deskripsi_lengkap_donasi','$gambar','$tgl_pdonasi','$tgl_selesai','$status_program_donasi','$penerima_donasi','','','$penanggung_jawab')  
                     ";
      
         mysqli_query($conn,$query);
@@ -261,6 +262,10 @@
                                 <div class="form-group mt-4 mb-3">
                                     <label for="tb_nama_program_donasi" class="label-txt">Nama Program<span class="red-star">*</span></label>
                                     <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" class="form-control" placeholder="Nama program donasi" Required>
+                                </div>
+                                <div class="form-group mt-4 mb-3">
+                                    <label for="tb_penanggung_jawab" class="label-txt">Penanggung Jawab<span class="red-star">*</span></label>
+                                    <input type="text" id="tb_penanggung_jawab" name="tb_penanggung_jawab" class="form-control" placeholder="Nama penanggung jawab" Required>
                                 </div>
                                 <div class="form-group mt-4 mb-3">
                                     <label for="tb_penerima_donasi" class="label-txt">Penerima Donasi<span class="red-star">*</span></label>

@@ -100,6 +100,8 @@
         $nama_program_donasi        = $_POST["tb_nama_program_donasi"]; 
         $nama_program_donasi        = htmlspecialchars($nama_program_donasi);
 
+        $penanggung_jawab           = $_POST["tb_penanggung_jawab"]; 
+
         $deskripsi_singkat_donasi   = $_POST["tb_deskripsi_donasi_singkat"]; 
         $deskripsi_singkat_donasi   = htmlspecialchars($deskripsi_singkat_donasi);
 
@@ -142,6 +144,7 @@
         // GLOBAL UPDATE
         $query = "UPDATE t_program_donasi SET
                     nama_program_donasi         = '$nama_program_donasi',
+                    penanggung_jawab            = '$penanggung_jawab',
                     deskripsi_singkat_donasi    = '$deskripsi_singkat_donasi',
                     target_dana                 = '$target_dana',
                     deskripsi_lengkap_donasi    = '$deskripsi_lengkap_donasi',              
@@ -158,6 +161,7 @@
 
             $query = "UPDATE t_program_donasi SET
                     nama_program_donasi         = '$nama_program_donasi',
+                    penanggung_jawab            = '$penanggung_jawab',
                     deskripsi_singkat_donasi    = '$deskripsi_singkat_donasi',
                     target_dana                 = '$target_dana',
                     deskripsi_lengkap_donasi    = '$deskripsi_lengkap_donasi',
@@ -362,6 +366,11 @@
                                     <input type="text" id="tb_nama_program_donasi" name="tb_nama_program_donasi" 
                                     class="form-control" placeholder="Nama program donasi" value="<?= $programDonasi["nama_program_donasi"]; ?>">
                                 </div>
+                                <div class="form-group mt-4 mb-3">
+                                    <label for="tb_penanggung_jawab" class="label-txt">Penanggung Jawab</label>
+                                    <input type="text" id="tb_penanggung_jawab" name="tb_penanggung_jawab" 
+                                    class="form-control" placeholder="Nama penanggung jawab" value="<?= $programDonasi["penanggung_jawab"]; ?>">
+                                </div>
                                 <div class="form-group mb-3">
                                     <label for="tb_target_dana" class="label-txt">Target Dana</label>
                                     <input type="number" id="tb_target_dana" name="tb_target_dana" 
@@ -392,6 +401,22 @@
                                     <div class="file-form">
                                         <input type="file" id="image_uploads" name="image_uploads" class="form-control ">
                                     </div>
+                                </div>
+
+                                <div class="d-none">
+                                    <div class="form-group upload-bukti">
+                                        <h3 class="mt-4">Bukti Penyaluran Dana</h3>
+                                        <label for="image_uploads2" class="label-txt">Foto Bukti Penyaluran Dana</label><br>
+                                            <img src="img/<?= $programDonasi["bukti_penyaluran"]; ?>" class="edit-img popup " alt="">
+                                        <div class="file-form">
+                                            <input type="file" id="image_uploads2" name="image_uploads2" class="form-control ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-4 mb-3">
+                                        <label for="tb_tgl_penyaluran" class="label-txt">Tanggal Penyaluran Dana</label>
+                                            <input type="date" id="tb_tgl_penyaluran" name="tb_tgl_penyaluran" 
+                                            class="form-control" value="<?= $programDonasi["tgl_penyaluran"]; ?>">
+                                    </div>    
                                 </div>
                                <!-- Untuk upload bukti penyaluran -->
                                <?php if($programDonasi['status_program_donasi'] == 'Siap disalurkan' || $programDonasi['status_program_donasi'] == 'Selesai'){?>                            
@@ -502,6 +527,7 @@
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
     <script src="dist/js/adminlte.js"></script>
+
 
     <script>
 
