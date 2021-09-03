@@ -197,7 +197,7 @@
                                 <div class="table-responsive">
                                     <table width="100%" >
                                         <thead>
-                                            <tr class="text-center">
+                                            <tr>
                                                 <td>Kode Donasi</td>
                                                 <td>Tgl Donasi</td>
                                                 <td>Nama Donatur</td>
@@ -209,13 +209,13 @@
                                         <tbody> 
                                         <?php foreach($result as $row):?>                            
                                             <tr>
-                                                <td class="text-center"><?= $row["id_donasi"]; ?></td>
-                                                <td class="text-center"><?= $row["tgl_donasi"]; ?></td>
-                                                <td class="text-center"><?= $row["nama_donatur"]; ?></td>
+                                                <td class="col-2"><?= $row["id_donasi"]; ?></td>
+                                                <td class="col-2 "><?= date("d-m-Y",strtotime($row["tgl_donasi"])); ?></td>
+                                                <td class="col-2 "><?= $row["nama_donatur"]; ?></td>
                                                 
-                                                <td class="text-center"><?= rupiah($row["nominal_donasi"]); ?></td>
+                                                <td class="col-2 "><?= rupiah($row["nominal_donasi"]); ?></td>
                                                 <!-- <td class="table-snipet1"> -->
-                                                <td ><?= $row["nama_program_donasi"]; ?></td>
+                                                <td class="col-6"><?= $row["nama_program_donasi"]; ?></td>
       
      
                                             </tr> 

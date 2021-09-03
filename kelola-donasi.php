@@ -194,10 +194,8 @@
                                           Filter
                                         </a>
                                         <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                          <a class="dropdown-item" href="#">Terbaru</a>
-                                          <a class="dropdown-item" href="#">Perlu Verifikasi</a>
-                                          <a class="dropdown-item" href="#">Selesai</a>
-                                          <a class="dropdown-item" href="#">Bermasalah</a>
+                                          <a class="dropdown-item" href="#">Tampilkan Semua</a>
+                                         
                                       </div>
                                     </div>
                                     </div>

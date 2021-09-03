@@ -9,79 +9,6 @@
         exit;
     }
 
-     
-    $id_user           = $_SESSION['id_user'];
-
-    $queryUser      = mysqli_query($conn, "SELECT * FROM t_user WHERE id_user=$id_user");
-    $data_user      = mysqli_fetch_array($queryUser);
-
-    
-    $id_program_relawan = $_GET["id"];
-
-    $id_user           = $_SESSION['id_user'];
-
-    $queryProgram      = mysqli_query($conn, "SELECT * FROM t_program_relawan  WHERE id_program_relawan=$id_program_relawan");
-    $data_program     = mysqli_fetch_array($queryProgram);
-
-
-     if(isset($_POST["submit"])) {
-        
-        $status_relawan           = "Menunggu Seleksi";
-        $id_user                  = $_SESSION['id_user'];
-        $id_program_relawan       = $_GET["id"];
-        $nama_program_relawan     = $_POST["tb_nama_program_relawan"]; 
-        $tgl_pelaksanaan          = $_POST["tb_tgl_pelaksanaan"];
-        $domisili                 = $_POST["tb_domisili"];
-        $nama_lengkap             = $_POST["tb_nama_lengkap"];
-        $no_hp                    = $_POST["tb_no_hp"];
-        $tgl_daftar               = date ('Y-m-d', time());
-        $relawan_pending          = $_POST["tb_relawan_pending"];
-        $email                    = $_POST["tb_email"];
-        $lokasi                   = $_POST["tb_lokasi_program"];
-        $titik_kumpul             = $_POST["tb_lokasi_awal"];
-
-        $_SESSION['id_program_relawan']     = $id_program_relawan;
-        $_SESSION['nama_program_relawan']   = $nama_program_relawan;
-        $_SESSION['tgl_pelaksanaan']        = $tgl_pelaksanaan;
-        $_SESSION['lokasi']                 = $lokasi;
-        $_SESSION['titik_kumpul']           = $titik_kumpul;
-        $_SESSION['nama_lengkap']           = $nama_lengkap;
-        $_SESSION['no_hp']                  = $no_hp;
-        $_SESSION['email']                  = $email;
-        $_SESSION['domisili']               = $domisili;
-
-        
-     
-
-        
-
-        // var_dump($id_user);die;
-        
-        $query = "INSERT INTO t_relawan
-                    VALUES 
-                  ('','$status_relawan','$id_user','$id_program_relawan ','$nama_program_relawan','$tgl_pelaksanaan','$domisili','$nama_lengkap','$no_hp ','$tgl_daftar','$relawan_pending','','$email')  
-                    ";
-     
-        mysqli_query($conn,$query);
-        // var_dump($query);die;
-
-        //cek keberhasilan
-        if(mysqli_affected_rows($conn) > 0 ){
-            echo "
-            <script>
-                alert('Pendaftaran sukses !');
-                window.location = 'checkout-relawan.php';
-            </script>
-            ";
-        }else{
-            echo "
-                <script>
-                    alert('Pendaftaran gagal !');
-                </script>
-            ";
-        }
-
-    }
 
 ?>
 
@@ -190,47 +117,56 @@
                         </div>  
                 </div>               
                 <div class="form-profil halaman-view">
-                    <div class="mt-2 regis-title"><h3>Daftar Relawan</h3></div>    
+                    <div class="mt-2 regis-title"><h3>Review Pendaftaran Relawan</h3></div>    
                         <form action="" enctype="multipart/form-data" method="POST">
                             <div class="form-group label-txt">
-                                <input type="hidden" id="tb_relawan_pending" name="tb_relawan_pending" class="form-control" value="1">
+                                <div class="mt-4">                                 
+                                        <h5>Pendaftaran Relawan Berhasil ! Dengan rincian sebagai berikut : </h5>
+                                </div>   
+                                
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_nama_program_relawan" class="font-weight-bold" ><span class="label-form-span">Program Pilihan</span></label><br>
-                                    <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" value="<?php echo $data_program['nama_program_relawan']?>" readonly>
+                                    <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" value="<?php echo $_SESSION['nama_program_relawan']?>" readonly>
                                 </div>
                                 <div class="form-group mt-4 mb-3">
                                 <label for="tb_tgl_pelaksanaan" class="font-weight-bold" ><span class="label-form-span">Tanggal Pelaksanaan</span></label><br>
-                                    <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" value="<?= $data_program["tgl_pelaksanaan"]; ?>" readonly>
+                                    <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" value="<?php echo $_SESSION['tgl_pelaksanaan']?>" readonly>
                                 </div>
                                  <div class="form-group mt-4 mb-2">
                                     <label for="tb_lokasi_program" class="font-weight-bold" ><span class="label-form-span">Lokasi Pelaksanaan</span></label><br>
-                                    <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" value="<?php echo $data_program['lokasi_program']?>" readonly>
+                                    <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" value="<?php echo $_SESSION['lokasi']?>" readonly>
                                 </div>
                                  <div class="form-group mt-4 mb-2">
                                     <label for="tb_lokasi_awal" class="font-weight-bold" ><span class="label-form-span">Titik Kumpul</span></label><br>
-                                    <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" value="<?php echo $data_program['lokasi_awal']?>" readonly>
+                                    <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" value="<?php echo $_SESSION['titik_kumpul']?>" readonly>
                                 </div>
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_nama_lengkap" class="font-weight-bold" ><span class="label-form-span">Nama Relawan</span></label><br>
-                                    <input type="text" id="tb_nama_lengkap" name="tb_nama_lengkap" class="form-control" value="<?php echo $data_user['nama_lengkap']?>" readonly>
+                                    <input type="text" id="tb_nama_lengkap" name="tb_nama_lengkap" class="form-control" value="<?php echo $_SESSION['nama_lengkap']?>" readonly>
                                 </div>
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_no_hp" class="font-weight-bold" ><span class="label-form-span">Nomor Telepon</span></label><br>
-                                    <input type="text" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $data_user['no_hp']?>" readonly>
+                                    <input type="text" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $_SESSION['no_hp']?>" readonly>
                                 </div>   
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_email" class="font-weight-bold" ><span class="label-form-span">Email</span></label><br>
-                                    <input type="text" id="tb_email" name="tb_email" class="form-control" value="<?php echo $data_user['email']?>" readonly>
+                                    <input type="text" id="tb_email" name="tb_email" class="form-control" value="<?php echo $_SESSION['email']?>" readonly>
                                 </div>      
                                 <div class="form-group mt-3 mb-2">
                                     <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Kota Domisili<span class="red-star">*</span></span></label><br>
-                                    <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" placeholder="Kota domisili saat ini, contoh : Kota Bandung" Required>
+                                    <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" value="<?php echo $_SESSION['domisili']?> " readonly>
                                 </div>           
+                                <div class="mt-4">                                 
+                                        Pengurus Yayasan akan menghubungi nomor telepon anda untuk melakukan konfirmasi pendaftaran relawan.
+                                        
+                                        <br><br>Kami juga akan mengirimi anda email jika proses pendaftaran telah disetujui.
+                                </div>       
                             </div>
                             
                             <button type="submit" name="submit" value="Simpan" 
-                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="handleSubmit()"> 
-                                <span class="yst-login-btn-fs">Daftar</span>
+                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"
+                            onclick="javascript:window.location.href='delete-review-relawan.php'; return false;"> 
+                                <span class="yst-login-btn-fs">OK</span>
                             </button>
                         </form>
                     </div>  

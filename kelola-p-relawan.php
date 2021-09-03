@@ -205,10 +205,7 @@
                                           Filter
                                         </a>
                                         <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                            <a class="dropdown-item" href="#">Terbaru</a>
-                                          <a class="dropdown-item" href="#">Pending</a>
-                                          <a class="dropdown-item" href="#">Disetujui</a>
-                                          <a class="dropdown-item" href="#">Ditolak</a>
+                                          <a class="dropdown-item" href="#">Tampilkan Semua</a>
                                       </div>
                                     </div>
                                     </div>

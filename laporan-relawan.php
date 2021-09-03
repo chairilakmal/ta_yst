@@ -13,7 +13,7 @@
        global $conn;
         $result = mysqli_query($conn, "SELECT * FROM t_relawan
                       LEFT JOIN t_program_relawan ON t_relawan.id_program_relawan = t_program_relawan.id_program_relawan
-                      WHERE status_relawan = 'Selesai' 
+                      WHERE status_relawan = 'Diterima' 
                       ORDER BY id_relawan DESC
                         "); 
         $rows = [];
@@ -192,22 +192,22 @@
                                 <div class="table-responsive">
                                     <table width="100%">
                                         <thead>
-                                            <tr class="text-center">
+                                            <tr>
                                                 <td>Kode Relawan</td>
-                                                <td>Nama Relawan</td>
-                                                <td>Program Pilihan</td>
-                                                <td>Tgl Pelaksanaan</td>
-                                                <td>Domisili</td>
-                                                <td>Nomor HP</td>  
+                                                <td class="col-2">Nama Relawan</td>
+                                                <td class="col-2">Program Pilihan</td>
+                                                <td class="col-2">Tgl Pelaksanaan</td>
+                                                <td class="col-2">Domisili</td>
+                                                <td class="col-2">Nomor HP</td>  
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php foreach($result as $row):?>
-                                            <tr class="text-center">
+                                            <tr>
                                                 <td><?= $row["id_relawan"]; ?></td>
-                                                <td><?= $row["nama_lengkap"]; ?></td>
-                                                <td class="col-2"><?= $row["nama_program_relawan"]; ?></td>
-                                                <td><?= $row["tgl_pelaksanaan"]; ?></td>
+                                                <td class="col-2"><?= $row["nama_lengkap"]; ?></td>
+                                                <td class="col-4"><?= $row["nama_program_relawan"]; ?></td>
+                                                <td class="col-2"><?= date("d-m-Y",strtotime($row["tgl_pelaksanaan"])); ?></td>
                                                 <td class="col-2"><?= $row["domisili"]; ?></td>
                                                 <td class="col-2"><?= $row["no_hp"]; ?></td>
                                  
