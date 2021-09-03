@@ -1,8 +1,16 @@
 <?php
 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+
+    include('config/PHPMailer-master/PHPMailer-master/src/Exception.php');
+    include('config/PHPMailer-master/PHPMailer-master/src/PHPMailer.php');
+    include('config/PHPMailer-master/PHPMailer-master/src/SMTP.php');
+
     session_start();
     include 'config/connection.php';
 
+   
 
     if(!isset($_SESSION["username"])) {
         header('Location: login.php?status=restrictedaccess');
@@ -33,30 +41,114 @@
     if(isset($_POST["submit"])) {
 
         $status_relawan      = $_POST["status_relawan"];
+        // var_dump($status_relawan);die;
         $relawan_jadi        = '';
+        $email_penerima      = $_POST["tb_email"];
+        $nama_donatur        = $_POST["tb_nama_lengkap"];
+        $nama_program_relawan  = $_POST["tb_nama_program_relawan"];
+        $tgl_pelaksanaan        = $_POST["tb_tgl_pelaksanaan"];
+        $lokasi                 = $_POST["tb_lokasi_program"];
+        $titik_kumpul                 = $_POST["tb_lokasi_awal"];
 
-        if($status_donasi = "Segera Berjalan"){
+        if($status_relawan == "Diterima"){
             $relawan_jadi = 1;
         }
 
         $query = "UPDATE t_relawan SET
-              
                     status_relawan      = '$status_relawan',
                     relawan_jadi        = '$relawan_jadi'
                   WHERE id_relawan      = $id_relawan
 
                 ";
+        
     
         mysqli_query($conn, $query);
 
-        //cek keberhasilan
         if(mysqli_affected_rows($conn) > 0 ){
             echo "
             <script>
                 alert('Data berhasil diubah!');
-                window.location.href = 'kelola-donasi.php'; 
+                
             </script>
-        ";
+            ";
+
+            if($status_relawan == 'Diterima'){
+
+            //PHPMailer
+            $email_pengirim = 'vchoze@gmail.com';
+            $nama_pengirim = 'Yayasan Sekar Telkom';
+            
+            $subjek = '[Yayasan Sekar Telkom] Pendaftaran Anda sebagai relawan telah disetujui';
+
+            $pesan = '<h2>Halo '.$nama_donatur.' kami telah menyetujui pendaftaran relawan Anda.</h2>
+
+                        <p>
+                            <strong>Rincian program relawan :</strong>
+                        </p>
+                        <table>
+                            <tr>
+                                <td>Nama Program</td>
+                                <td>:</td>
+                                <td>'.$nama_program_relawan.'</td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal pelaksanaan</td>
+                                <td>:</td>
+                                <td>'.$tgl_pelaksanaan.'</td>
+                            </tr>
+                            <tr>
+                                <td>Lokasi pelaksanaan</td>
+                                <td>:</td>
+                                <td>'.$lokasi.'</td>
+                            </tr>
+                            <tr>
+                                <td>Titik kumpul</td>
+                                <td>:</td>
+                                <td>'.$titik_kumpul.'</td>
+                            </tr>
+                           
+                        </table>
+                        ';
+
+
+                // $pesan = 'Halo '.$email_penerima.', ikut test PHPMailer ya !';
+
+            $mail = new PHPMailer;
+            $mail->isSMTP();
+
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Username = $email_pengirim;
+            $mail->Password = 'xzwuieypdcbmmcyp';
+            $mail->Port = 465;
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure ='ssl'; 
+            $mail->SMTPDebug = 2;
+
+            $mail->setFrom($email_pengirim,$nama_pengirim);
+            $mail->addAddress($email_penerima);
+            $mail->isHTML(true);
+            $mail->Subject = $subjek;
+            $mail->Body = $pesan;
+
+            $send = $mail->send();
+
+            if($send){
+                echo "
+                <script>
+                    alert('Email Terkirim !');
+                    window.location.href = 'kelola-relawan.php'; 
+                </script>
+                ";
+            }else{
+                echo "
+                <script>
+                    alert('Email Gagal Terkirim !');
+                    
+                </script>
+                ";
+            }        
+        }
+
         }else{
             echo "
                 <script>
@@ -65,8 +157,12 @@
             ";
         }
 
+        
     }
 
+    
+
+    
 ?>
 
 
@@ -251,6 +347,10 @@
                                     <input type="text" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $result['no_hp']?>" readonly>
                                 </div>   
                                 <div class="form-group mt-4 mb-2">
+                                    <label for="tb_email" class="font-weight-bold" ><span class="label-form-span">Email</span></label><br>
+                                    <input type="text" id="tb_email" name="tb_email" class="form-control" value="<?php echo $result['email']?>" readonly>
+                                </div> 
+                                <div class="form-group mt-4 mb-2">
                                     <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Domisili</span></label><br>
                                     <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" value="<?php echo $result['domisili']?>" readonly>
                                 </div> 
@@ -266,15 +366,15 @@
                                     <div class="radio-wrapper mt-1">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" id="status_relawan" name="status_relawan" 
-                                            class="form-check-input" value="Segera Berjalan" <?php if($result['status_relawan']=='Segera Berjalan') echo 'checked'?>>
-                                            <label class="form-check-label" for="status_relawan">Segera Berjalan</label>
+                                            class="form-check-input" value="Diterima" <?php if($result['status_relawan']=='Diterima') echo 'checked'?>>
+                                            <label class="form-check-label" for="status_relawan">Diterima</label>
                                         </div>
                                     </div>
-                                    <div class="radio-wrapper2 mt-1">
+                                    <div class="radio-wrapper2 ml-2 mt-1">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" id="status_relawan" name="status_relawan" 
-                                            class="form-check-input" value="Selesai" <?php if($result['status_relawan']=='Selesai') echo 'checked'?>>
-                                            <label class="form-check-label" for="status_relawan">Selesai</label>
+                                            class="form-check-input" value="Ditolak" <?php if($result['status_relawan']=='Ditolak') echo 'checked'?>>
+                                            <label class="form-check-label" for="status_relawan">Ditolak</label>
                                         </div>
                                     </div>
                                 </div>            

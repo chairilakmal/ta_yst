@@ -36,6 +36,7 @@
         $no_hp                    = $_POST["tb_no_hp"];
         $tgl_daftar               = date ('Y-m-d', time());
         $relawan_pending          = $_POST["tb_relawan_pending"];
+        $email                    = $_POST["tb_email"];
 
         
         
@@ -45,7 +46,7 @@
         
         $query = "INSERT INTO t_relawan
                     VALUES 
-                  ('','$status_relawan','$id_user','$id_program_relawan ','$nama_program_relawan','$tgl_pelaksanaan','$domisili','$nama_lengkap','$no_hp ','$tgl_daftar','$relawan_pending','')  
+                  ('','$status_relawan','$id_user','$id_program_relawan ','$nama_program_relawan','$tgl_pelaksanaan','$domisili','$nama_lengkap','$no_hp ','$tgl_daftar','$relawan_pending','','$email')  
                     ";
      
         mysqli_query($conn,$query);
@@ -203,6 +204,10 @@
                                 <div class="form-group mt-4 mb-2">
                                     <label for="tb_no_hp" class="font-weight-bold" ><span class="label-form-span">Nomor Telepon</span></label><br>
                                     <input type="text" id="tb_no_hp" name="tb_no_hp" class="form-control" value="<?php echo $data_user['no_hp']?>" readonly>
+                                </div>   
+                                <div class="form-group mt-4 mb-2">
+                                    <label for="tb_email" class="font-weight-bold" ><span class="label-form-span">Email</span></label><br>
+                                    <input type="text" id="tb_email" name="tb_email" class="form-control" value="<?php echo $data_user['email']?>" readonly>
                                 </div>      
                                 <div class="form-group mt-3 mb-2">
                                     <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Kota Domisili<span class="red-star">*</span></span></label><br>

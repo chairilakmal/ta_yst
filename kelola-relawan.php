@@ -202,9 +202,9 @@
                                     <table width="100%">
                                         <thead>
                                             <tr>
-                                                <td>ID</td>
+                                                <td>Kode<br> Relawan</td>
                                                 <td>Nama Relawan</td>
-                                                <td>Program Relawan</td>
+                                                <td class="text-center">Kode Program Relawan</td>
                                                 <td>Tgl Pelaksanaan</td>
                                                 <td>Status Relawan</td>
                                                 <td class="justify-content-center" >Aksi</td>
@@ -215,7 +215,7 @@
                                             <tr>
                                                 <td><?= $row["id_relawan"]; ?></td>
                                                 <td class="table-snipet2"><?= $row["nama_lengkap"]; ?></td>
-                                                <td class="table-snipet2"><?= $row["id_program_relawan"]; ?></td>
+                                                <td class="table-snipet2 text-center"><?= $row["id_program_relawan"]; ?></td>
                                                 <td ><?= $row["tgl_pelaksanaan"]; ?></td>
                                                 <td><?= $row["status_relawan"]; ?></td>
                                                 <td class="justify-content-center">

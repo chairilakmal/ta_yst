@@ -56,6 +56,7 @@
         $nama_program_relawan        = $_POST["tb_nama_program_relawan"]; 
         $nama_program_relawan        = htmlspecialchars($nama_program_relawan);
 
+
         $deskripsi_singkat_relawan   = $_POST["tb_deskripsi_relawan_singkat"]; 
         $deskripsi_singkat_relawan   = htmlspecialchars($deskripsi_singkat_relawan);
 
@@ -79,10 +80,15 @@
         $status_program_relawan      = "Pending";
         
         $lokasi_awal                 = $_POST["tb_lokasi_awal"]; 
+
+        $penanggung_jawab            = $_POST["tb_penanggung_jawab"]; 
+        $penanggung_jawab            = htmlspecialchars($penanggung_jawab);
        
+        $tenggat_waktu               = $_POST["tb_tenggat_waktu"];
+
         $query = "INSERT INTO t_program_relawan
                     VALUES 
-                  ('','$nama_program_relawan','$deskripsi_singkat_relawan','$target_relawan','$tgl_pelaksanaan','$lokasi_program',' $deskripsi_lengkap_relawan','$gambar','$status_program_relawan','$tgl_prelawan','$lokasi_awal')  
+                  ('','$nama_program_relawan','$deskripsi_singkat_relawan','$target_relawan','$tgl_pelaksanaan','$lokasi_program',' $deskripsi_lengkap_relawan','$gambar','$status_program_relawan','$tgl_prelawan','$lokasi_awal','$penanggung_jawab','$tenggat_waktu','')  
                     ";
 
         mysqli_query($conn,$query);
@@ -267,6 +273,10 @@
                             <label for="tb_nama_program_relawan" class="label-txt">Nama Program<span class="red-star">*</span></label>
                             <input type="text" id="tb_nama_program_relawan" name="tb_nama_program_relawan" class="form-control" placeholder="Nama program relawan" Required>
                         </div>
+                        <div class="form-group mt-4 mb-3">
+                            <label for="tb_penanggung_jawab" class="label-txt">Penanggung Jawab<span class="red-star">*</span></label>
+                            <input type="text" id="tb_penanggung_jawab" name="tb_penanggung_jawab" class="form-control" placeholder="Nama penanggung jawab" Required>
+                        </div>
                         <div class="form-group mb-3">
                         <label for="tb_target_relawan" class="label-txt">Target Jumlah Relawan<span class="red-star">*</span></label>
                             <input type="number" id="tb_target_relawan" name="tb_target_relawan" class="form-control" placeholder="Target relawan dikumpulkan" Required>
@@ -275,13 +285,17 @@
                         <label for="tb_lokasi_program" class="label-txt">Lokasi Pelaksanaan<span class="red-star">*</span></label>
                             <input type="text" id="tb_lokasi_program" name="tb_lokasi_program" class="form-control" placeholder="Lokasi dilaksanakannya program relawan" Required>
                         </div>
+                         <div class="form-group mt-4 mb-3">
+                        <label for="tb_lokasi_awal" class="label-txt">Lokasi Titik Kumpul<span class="red-star">*</span></label>
+                            <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" placeholder="Lokasi Titik kumpul" Required>
+                        </div>
                         <div class="form-group mt-4 mb-3">
                         <label for="tb_tgl_pelaksanaan" class="label-txt">Tanggal Pelaksanaan Program<span class="red-star">*</span></label>
                             <input type="date" id="tb_tgl_pelaksanaan" name="tb_tgl_pelaksanaan" class="form-control" placeholder="Tanggal dilaksanakannya program relawan" Required>
                         </div>
                         <div class="form-group mt-4 mb-3">
-                        <label for="tb_lokasi_awal" class="label-txt">Lokasi Titik Kumpul<span class="red-star">*</span></label>
-                            <input type="text" id="tb_lokasi_awal" name="tb_lokasi_awal" class="form-control" placeholder="Lokasi Titik kumpul" Required>
+                        <label for="tb_tenggat_waktu" class="label-txt">Tenggat Waktu Pengumpulan Relawan<span class="red-star">*</span></label>
+                            <input type="date" id="tb_tenggat_waktu" name="tb_tenggat_waktu" class="form-control" placeholder="Lokasi Titik kumpul" Required>
                         </div>
                         <div class="form-group">
                         <label for="tb_deskripsi_relawan_singkat" class="label-txt">Deskripsi Singkat Program<span class="red-star">*</span></label>

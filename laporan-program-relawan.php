@@ -219,32 +219,26 @@
                                 <div class="table-responsive">
                                     <table width="100%">
                                         <thead>
-                                            <tr class="text-center">
+                                            <tr>
                                                 <td>Kode<br> Program</td>
-                                                <td>Nama Program Relawan</td>
-                                                <td>Lokasi Pelaksanaan </td>
-                                                
-                                              
-                                                <td>Relawan Terkumpul</td>
-                                                <td>Jumlah Target Relawan</td>
-                                                <td>Tgl Dibuat </td>    
-                                                <td class=" mt-2">Tgl Pelaksanaan </td>
+                                                <td class="col-2">Nama Program Relawan</td>
+                                                <td class="col-2">Lokasi Pelaksanaan </td>                                              
+                                                <td class="col-2">Relawan Terkumpul</td>
+                                                <td class="col-2">Tgl Pelaksanaan </td>
+                                                <td class="col-2">Penanggung Jawab </td>
                                               
                                       
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php foreach($programRelawan as $row):?>
-                                            <tr class="text-center">
+                                            <tr>
                                                 <td><?= $row["id_program_relawan"]; ?></td>
                                                 <td class="col-2"><?= $row["nama_program_relawan"]; ?></td>
-                                                <td class="col-2"><?= $row["lokasi_program"]; ?></td>
-
-                                                
-                                                <td><?= $row['jumlah_relawan'] == 0 ? '0' : $row['jumlah_relawan']; ?></td>
-                                                <td><?= $row["target_relawan"]; ?></td>
-                                                <td><?= $row["tgl_prelawan"]; ?></td>
-                                                <td><?= $row["tgl_pelaksanaan"]; ?></td>
+                                                <td class="col-2"><?= $row["lokasi_program"]; ?></td>           
+                                                <td class="col-2 text-center"><?= $row['jumlah_relawan'] == 0 ? '0' : $row['jumlah_relawan']; ?></td>
+                                                <td class="col-2"><?= $row["tgl_pelaksanaan"]; ?></td>
+                                                <td class="col-2"><?= $row["penanggung_jawab"]; ?></td>
                               
                                             </tr>
                                         <?php endforeach;?>

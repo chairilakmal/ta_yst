@@ -239,7 +239,7 @@
                                         <tbody>
                                             <?php foreach($programDonasi as $row):?>
                                             <tr>
-                                                <td><?= $row["id_program_donasi"]; ?></td>
+                                                <td ><?= $row["id_program_donasi"]; ?></td>
                                                 <td class="col-2"><?= $row["nama_program_donasi"]; ?></td>
                                                 <td class="col-2"><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></td>
                                                 <td class="col-2"><?= date("d-m-Y",strtotime($row["tgl_penyaluran"])); ?></td>

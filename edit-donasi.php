@@ -50,10 +50,8 @@
         $nama_donatur           = $_POST["tb_nama_donatur"];
         $tgl_donasi             = $_POST["tb_tgl_donasi"];
 
-        if($status_donasi = "Diterima"){
-            $nominal_donasi = $_POST["belum_dibayar"];
-
-            
+        if($status_donasi == 'Diterima'){
+            $nominal_donasi = $_POST["belum_dibayar"]; 
         }
 
         $query = "UPDATE t_donasi SET
@@ -84,6 +82,9 @@
                 
             </script>
             ";
+
+            if($status_donasi == 'Diterima'){
+            $nominal_donasi = $_POST["belum_dibayar"];
 
             //PHPMailer
             $email_pengirim = 'vchoze@gmail.com';
@@ -157,6 +158,13 @@
                 ";
             }
 
+
+            
+        }
+
+            
+
+         
             
 
         }else{

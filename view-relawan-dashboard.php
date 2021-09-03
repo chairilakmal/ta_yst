@@ -126,6 +126,8 @@
             <div class="form-profil halaman-view"> 
                 <div class="row card-deck ">                             
                     <div class="halaman-view mt-5 w-100">
+                        <input type="text" data-target="status_program_relawan" id="status_program_relawan" name="status_program_relawan" class="form-control" value="Siap dilaksanakan" readonly>
+                        <input type="text" data-target="id_program_relawan" id="id_program_relawan" name="id_program_relawan" class="form-control" value="<?php echo $result["id_program_relawan"]; ?>" readonly>
                         <img class="card-img-top halaman-view-img" width="100%" src="img/<?= $result['foto_p_relawan']; ?>">
                         <div class="view-desc-singkat mt-2">
                             <h2 class="mt-4"><?php echo $result['nama_program_relawan']?></h2>
@@ -138,9 +140,65 @@
                                 <div class="ml-2 value-penting"><?php echo $result['target_relawan']?> Relawan</div>
                             </div>
                             <div class="d-flex view-kumpulan  mb-3">
-                                <div class="float-left">Kegiatan relawan akan dilaksanakan di <b><?php echo $result['lokasi_program']?></b></div>
-                                <div class="ml-2">pada tanggal</div>
-                                <div class="ml-2"><b><?php echo $result['tgl_pelaksanaan']?></b></div>
+                                <div class="float-left">Kegiatan akan dilaksanakan di <b><?php echo $result['lokasi_program']?></b></div>
+                                <div class="ml-2">pada</div>
+                                <div class="ml-2"><?php echo date("d-m-Y",strtotime($result['tgl_pelaksanaan']));?></div> 
+                                
+                            </div>
+                            <div class="d-flex view-kumpulan  mb-3">
+                                <div class="float-left" id="teks">
+                                    Sisa Waktu
+                                        <script>
+                                        //Countdown
+                                        // var id_program_donasi = "?php echo $id_program_donasi; ?>";
+                                        // var status_program_donasi = "?php echo $status_program_donasi; ?>";
+
+                                        var dateStringFromDP = '<?php echo $result['tgl_pelaksanaan']?>';
+                                        const tanggalTujuan = new Date(dateStringFromDP).getTime();
+                                        const hitungMundur = setInterval(function() {
+                                            const sekarang = new Date().getTime();
+                                            const selisih = tanggalTujuan - sekarang;
+                                            const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+                                            const jam = Math.floor(selisih % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+                                            const menit = Math.floor(selisih % (1000 * 60 * 60) / (1000 * 60));
+                                            const detik = Math.floor(selisih % (1000 * 60) / 1000);
+                                            const teks = document.getElementById('teks');
+                                            teks.innerHTML = 'Sisa waktu pengumpulan relawan : '+hari+' hari '+jam+' jam '+menit+' menit '+detik+' detik lagi ! ';
+                                           
+                                            if(selisih < 0){
+                                                clearInterval(hitungMundur);
+                                                teks.innerHTML = 'Waktu program telah habis !';
+                                                
+                                                //Get Variable
+                                                var id_program_relawan = $('#id_program_relawan').val();
+		                                        var status_program_relawan = $('#status_program_relawan').val();
+
+                                                console.log(id_program_relawan);
+                                                
+
+                                                //Update value
+                                                $.ajax({
+                                                url: 'update-ajax-relawan.php',
+                                                type: 'POST',
+
+                                                data    : { status_program_relawan : status_program_relawan, id_program_relawan : id_program_relawan},
+                                                success: function(response) 
+                                                {
+                                                // alert('success, server says '+output);
+                                                console.log(response);
+                                                }, error: function()
+                                                {
+                                                alert('something went wrong, rating failed');
+                                                }
+                                                });              
+                                                // console.log(statusProgram);
+                                                                             
+                                            }
+
+                                        },1000); 
+                                        </script>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="view-desc-lengkap mt-4">
