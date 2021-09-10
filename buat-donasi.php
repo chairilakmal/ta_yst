@@ -340,14 +340,16 @@
                                 <div class="form-group mt-3 mb-2">
                                     <label for="nama_donatur" class="font-weight-bold" ><span class="label-form-span">Nama Donatur<span class="red-star">*</span></span></label><br>
                                     <input type="text" id="tb_nama_donatur" name="tb_nama_donatur" class="form-control" placeholder="Nama Donatur" Required>
-                                </div>           
+                                </div>    
+                                
+                                       
                             </div>
 
 
 
                             
                             <button type="submit" name="submit" value="Simpan" 
-                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4"> 
+                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="return confirm('Anda yakin ingin membuat donasi ?');"> 
                                 <span class="yst-login-btn-fs">Buat Donasi</span>
                             </button>
                         </form>

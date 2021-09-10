@@ -225,15 +225,48 @@
                                 <div class="form-group mt-3 mb-2">
                                     <label for="tb_domisili" class="font-weight-bold" ><span class="label-form-span">Kota Domisili<span class="red-star">*</span></span></label><br>
                                     <input type="text" id="tb_domisili" name="tb_domisili" class="form-control" placeholder="Kota domisili saat ini, contoh : Kota Bandung" Required>
-                                </div>           
+                                </div>        
+                                 
                             </div>
+                            <div class="label-txt mt-4 mb-2 d-flex justify-content-center">
+                                <div>
+                                    <input type="checkbox" name="persyaratan" id="persyaratan" Required>
+                                    <label for="persyaratan"><span class="label-form-span"> Saya menyetujui <a href="#" data-toggle="modal" data-target="#persyaratan_relawan">persyaratan dan kebijakan </a> yang berlaku pada proses rekrutmen relawan</span></label>
+                                </div>
+                            </div>  
                             
                             <button type="submit" name="submit" value="Simpan" 
-                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="handleSubmit()"> 
+                            class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4" onclick="return confirm('Anda yakin ingin mendaftar relawan ?');"> 
                                 <span class="yst-login-btn-fs">Daftar</span>
                             </button>
                         </form>
                     </div>  
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="persyaratan_relawan" tabindex="-1" role="dialog" aria-labelledby="persyaratan_relawanTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h5 class="modal-title w-100" id="persyaratan_relawanTitle">Persyaratan dan kebijakan menjadi relawan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ol>
+                                <li>Relawan berusia minimal 17 tahun keatas.</li>
+                                <li>Relawan harus sedang dalam kondisi sehat dan tidak sedang menderita penyakit berat.</li>
+                                <li>Pihak yayasan tidak memberi fasilitas transportasi ke titik kumpul, relawan secara mandiri pergi 
+                                    ke titik kumpul yang telah ditentukan.</li> 
+                                <li>Pihak yayasan hanya menyediakan transportasi dari titik kumpul ke lokasi program relawan.</li>                    
+                                <li>Program relawan ini bersifat <strong>sukarela</strong>, dengan mendaftar sebagai
+                                relawan berarti Anda setuju untuk tidak mengharapkan imbalan dari pihak yayasan.</li>
+                            </ol>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
         </main>
         </div>
         <!-- /.container-fluid -->

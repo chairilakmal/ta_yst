@@ -88,16 +88,16 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item nav-item-sidebar menu-open">
-                            <a href="dashboard-user.php" class="nav-link side-icon active ">
+                        <li class="nav-item nav-item-sidebar ">
+                            <a href="dashboard-user.php" class="nav-link side-icon  ">
                                 <i class="nav-icon fas fa-hand-holding-heart"></i>
                                 <p>
                                     Donasi Saya
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-sidebar">
-                            <a href="program-relawan-saya.php" class="nav-link side-icon">
+                        <li class="nav-item nav-item-sidebar menu-open">
+                            <a href="program-relawan-saya.php" class="nav-link side-icon active">
                                 <i class="nav-icon fas fa-user-clock"></i>
                                 <p>
                                     Program Relawan
