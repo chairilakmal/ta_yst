@@ -244,7 +244,7 @@
                                                 <td class="col-2"><?= rupiah($row['dana_terkumpul_total']) == 0 ? '0' : rupiah($row['dana_terkumpul_total']); ?></td>
                                                 <td class="col-2"><?= date("d-m-Y",strtotime($row["tgl_penyaluran"])); ?></td>
                                                 <td class="col-2"><?= $row["penerima_donasi"]; ?></td>
-                                                <td class="col-2 text-center"><?= $row["penanggung_jawab"]; ?></td>
+                                                <td class="col-2"><?= $row["penanggung_jawab"]; ?></td>
                                             </tr>                                          
                                             <?php endforeach;?> 
                                         </tbody>

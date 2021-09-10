@@ -126,8 +126,8 @@
             <div class="form-profil halaman-view"> 
                 <div class="row card-deck ">                             
                     <div class="halaman-view mt-5 w-100">
-                        <input type="text" data-target="status_program_relawan" id="status_program_relawan" name="status_program_relawan" class="form-control" value="Siap dilaksanakan" readonly>
-                        <input type="text" data-target="id_program_relawan" id="id_program_relawan" name="id_program_relawan" class="form-control" value="<?php echo $result["id_program_relawan"]; ?>" readonly>
+                        <input type="hidden" data-target="status_program_relawan" id="status_program_relawan" name="status_program_relawan" class="form-control" value="Siap dilaksanakan" readonly>
+                        <input type="hidden" data-target="id_program_relawan" id="id_program_relawan" name="id_program_relawan" class="form-control" value="<?php echo $result["id_program_relawan"]; ?>" readonly>
                         <img class="card-img-top halaman-view-img" width="100%" src="img/<?= $result['foto_p_relawan']; ?>">
                         <div class="view-desc-singkat mt-2">
                             <h2 class="mt-4"><?php echo $result['nama_program_relawan']?></h2>
