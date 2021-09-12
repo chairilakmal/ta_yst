@@ -33,8 +33,10 @@
                     COUNT(id_user) 
                     AS jumlah_donatur 
                     FROM t_donasi 
-                    RIGHT JOIN t_program_donasi 
-                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi                 
+                    
+                    RIGHT JOIN t_program_donasi     
+                    ON t_program_donasi.id_program_donasi = t_donasi.id_program_donasi   
+                    WHERE status_program_donasi = 'Berjalan'              
                     GROUP BY t_program_donasi.id_program_donasi ORDER BY t_program_donasi.id_program_donasi DESC
                     ");
 
