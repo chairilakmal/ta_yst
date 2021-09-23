@@ -24,7 +24,7 @@ include "config/connection.php";
                     FROM t_relawan 
                     RIGHT JOIN t_program_relawan 
                     ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan  
-                    WHERE status_program_relawan = 'Disetujui'             
+                    WHERE status_program_relawan = 'Berjalan'             
                     GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
                     ");
 ?>
