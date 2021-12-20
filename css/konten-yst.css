@@ -17,7 +17,7 @@ body {
 }
 
 .donasi-relawan-konten {
-  padding-top: 10vw;
+  padding-top: 6vw;
 }
 
 .donasi-relawan-konten h2 {
@@ -122,6 +122,20 @@ body {
   background: #f5f7fa;
 }
 
+.waktu-tulis {
+  font-size: 12px;
+  color: #6d6e71;
+}
+
+.bidang-relawan-vector {
+  padding-top: 10px;
+  padding-bottom: 15px;
+  display: block;
+  margin: auto;
+  width: 40%;
+  height: auto;
+  object-fit: cover;
+}
 .carousel-caption p {
   font-size: 18px;
   color: #f5f7fa;
@@ -195,12 +209,16 @@ body {
 }
 
 .starter-template {
-  margin-top: 20px;
-  padding-top: 10px;
+  /* margin-top: 20px;
+  padding-top: 10px; */
   padding-bottom: 10px;
-  padding-right: 40px;
-  padding-left: 40px;
+  /* padding-right: 40px;
+  padding-left: 40px; */
   text-align: justify;
+}
+
+.teks-paragraf {
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .margin-80 {
@@ -211,6 +229,13 @@ body {
   font-size: 25px;
   color: #d44436;
   text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+.starter-template h2 {
+  font-size: 22px;
+  color: #1e2025;
+  text-align: left;
   font-family: "Montserrat", sans-serif;
 }
 
@@ -417,6 +442,39 @@ body {
   text-align: justify;
 }
 
+.halaman-about-top {
+  padding-top: 8vh;
+  height: auto;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: #ffffff;
+  /* height: 700px; */
+  margin-left: 10vw;
+  margin-right: 30vw;
+  padding-right: 5vw;
+  padding-left: 5vw;
+  box-shadow: 10px 10px 10px -10px rgba(100, 100, 100, 0.59);
+  -webkit-box-shadow: 10px 10px 10px -10px rgba(100, 100, 100, 0.4);
+  -moz-box-shadow: 10px 10px 10px -10px rgba(100, 100, 100, 0.3);
+  text-align: justify;
+}
+
+.halaman-about {
+  height: auto;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: #ffffff;
+  /* height: 700px; */
+  margin-left: 10vw;
+  margin-right: 30vw;
+  padding-right: 5vw;
+  padding-left: 5vw;
+  box-shadow: 10px 10px 10px -10px rgba(100, 100, 100, 0.59);
+  -webkit-box-shadow: 10px 10px 10px -10px rgba(100, 100, 100, 0.4);
+  -moz-box-shadow: 10px 10px 10px -10px rgba(100, 100, 100, 0.3);
+  text-align: justify;
+}
+
 .halaman-view h2 {
   font-size: 25px;
   font-family: "Montserrat", sans-serif;
@@ -435,6 +493,43 @@ body {
   width: 100%;
   height: 400px;
   object-fit: cover;
+}
+
+.howto-linkaja-img {
+  padding-bottom: 10px;
+  display: block;
+  margin: auto;
+  width: 80%;
+  height: auto;
+  object-fit: cover;
+}
+
+.struktur-organisasi-img {
+  display: block;
+  margin: auto;
+  width: 95%;
+  height: auto;
+  object-fit: cover;
+}
+
+.visi-misi-img {
+  display: block;
+  margin: auto;
+  width: 95%;
+  height: auto;
+  object-fit: cover;
+}
+
+.alamat-img {
+  display: block;
+  margin: auto;
+  width: 95%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.teks-paragraf li {
+  line-height: 1.75;
 }
 
 .view-desc-singkat {
@@ -780,6 +875,52 @@ body {
     line-height: 30px;
   }
   .berita-img {
+    height: 200px;
+  }
+
+  .halaman-view {
+    padding-top: 7vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    padding-right: 5vw;
+    padding-left: 5vw;
+  }
+
+  .halaman-about-top {
+    padding-top: 2vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    padding-right: 5vw;
+    padding-left: 5vw;
+  }
+
+  .halaman-about {
+    padding-top: 1vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    padding-right: 5vw;
+    padding-left: 5vw;
+  }
+
+  .halaman-about ol {
+    padding-right: 5vw;
+    padding-left: 5vw;
+  }
+
+  .halaman-about ul {
+    padding-right: 5vw;
+    padding-left: 5vw;
+  }
+  .howto-linkaja-img {
+    padding-bottom: 10px;
+    display: block;
+    margin: auto;
+    width: 95%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .halaman-view-img {
     height: 200px;
   }
 }

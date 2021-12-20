@@ -1,4 +1,6 @@
 <?php
+include "config/connection.php";
+
 session_start();
 include 'config/connection.php';
 
@@ -9,7 +11,14 @@ if (!isset($_SESSION["username"])) {
 }
 
 
-function query($query)
+
+function rupiah($angka)
+{
+    $hasil_rupiah = "Rp. " . number_format($angka, 0, '.', '.');
+    return $hasil_rupiah;
+}
+//Berita
+function queryBerita($query)
 {
     global $conn;
     $result = mysqli_query($conn, $query);
@@ -20,19 +29,13 @@ function query($query)
     return $rows;
 }
 
-// WHERE status_donasi = 'Diterima'
-//    COUNT(id_user) AS jumlah_relawan
-// var_dump($programDonasi);die;
-$programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
-                    FROM t_relawan
-                    RIGHT JOIN t_program_relawan
-                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan                 
-                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
+$berita = queryBerita("SELECT *
+                    FROM t_berita
                     ");
 
 //    function query($query){
 //        global $conn;
-//         $result = mysqli_query($conn, "SELECT * FROM t_program_relawan"); 
+//         $result = mysqli_query($conn, "SELECT * FROM t_program_donasi"); 
 //         $rows = [];
 //         while($row = mysqli_fetch_assoc($result)){
 //             $rows[] = $row;
@@ -41,10 +44,10 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
 //    }
 
 
-
-//    $programRelawan = query("SELECT * FROM t_program_relawan");
+//    $programDonasi = query("SELECT * FROM t_program_donasi");
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +57,7 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Icon Title -->
     <link rel="icon" href="img/logo-only.svg">
-    <title>YST - Kelola Program Relawan</title>
+    <title>YST - Kelola Berita</title>
     <!-- Font Awesome
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> -->
     <!-- Font Awesome -->
@@ -110,7 +113,7 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item nav-item-sidebar ">
+                        <li class="nav-item nav-item-sidebar">
                             <a href="dashboard-admin.php" class="nav-link side-icon  ">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
@@ -119,8 +122,8 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                             </a>
                         </li>
 
-                        <li class="nav-item nav-item-sidebar ">
-                            <a href="kelola-donasi.php" class="nav-link side-icon ">
+                        <li class="nav-item nav-item-sidebar">
+                            <a href="kelola-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
                                     Kelola Donasi
@@ -128,8 +131,8 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                             </a>
                         </li>
 
-                        <li class="nav-item nav-item-sidebar menu-open">
-                            <a href="kelola-p-relawan.php" class="nav-link side-icon active">
+                        <li class="nav-item nav-item-sidebar">
+                            <a href="kelola-p-relawan.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Program Relawan
@@ -144,8 +147,8 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-sidebar">
-                            <a href="kelola-berita.php" class="nav-link side-icon">
+                        <li class="nav-item nav-item-sidebar  menu-open">
+                            <a href="kelola-berita.php" class="nav-link side-icon active">
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
                                     Kelola Berita
@@ -200,8 +203,8 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                         <div class="page-title-link ml-4 mb-4">
                             <a href="dashboard-admin.php">
                                 <i class="nav-icon fas fa-home mr-1"></i>Dashboard admin</a> >
-                            <a href="kelola-p-relawan.php">
-                                <i class="nav-icon fas fa-cog mr-1"></i>Program relawan</a>
+                            <a href="dashboard-admin.php">
+                                <i class="nav-icon fas fa-cog mr-1"></i>Program donasi</a>
                         </div>
 
                         <div class="card card-request-data">
@@ -213,12 +216,12 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                                                 Filter
                                             </a>
                                             <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="#">Tampilkan Semua</a>
+                                                <a class="dropdown-item" href="status-berjalan.php">Berjalan</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="mr-5" onclick="location.href='input-program-relawan.php'">Input Program Relawan<span class="fas fa-plus-square"></span></button>
+                                <button class="mr-5" onclick="location.href='input-berita.php'">Input Berita <span class="fas fa-plus-square"></span></button>
 
                             </div>
                             <div class="card-body card-body-req">
@@ -226,36 +229,35 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                                     <table width="100%">
                                         <thead>
                                             <tr>
-                                                <td>ID</td>
-                                                <td>Nama Program</td>
-                                                <td>Lokasi Pelaksanaan </td>
+                                                <td class="text-center">Kode <br> Berita</td>
+                                                <td>Judul Berita</td>
+                                                <td>Tanggal Kejadian</td>
+                                                <td>Tanggal Penulisan</td>
 
-                                                <td>Tgl Pelaksanaan </td>
-                                                <td>Relawan Terkumpul</td>
-                                                <td>Jumlah Target Relawan</td>
-                                                <td>Status Program</td>
                                                 <td class="justify-content-center">Aksi</td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($programRelawan as $row) : ?>
+                                            <?php foreach ($berita as $row) : ?>
                                                 <tr>
-                                                    <td><?= $row["id_program_relawan"]; ?></td>
-                                                    <td class="table-snipet1"><?= $row["nama_program_relawan"]; ?></td>
-                                                    <td class="table-snipet2"><?= $row["lokasi_program"]; ?></td>
+                                                    <td class="text-center"><?= $row["id_berita"]; ?></td>
+                                                    <td class="table-snipet1"><?= $row["judul_berita"]; ?></td>
+                                                    <td><?= date("d-m-Y", strtotime($row["tgl_kejadian"])); ?></td>
+                                                    <td><?= date("d-m-Y", strtotime($row["tgl_penulisan"])); ?></td>
 
-                                                    <td><?= $row["tgl_pelaksanaan"]; ?></td>
-                                                    <td><?= $row['jumlah_relawan'] == 0 ? '0' : $row['jumlah_relawan']; ?></td>
-                                                    <td><?= $row["target_relawan"]; ?></td>
-                                                    <td>
-                                                        <?= $row["status_program_relawan"]; ?>
-                                                    </td>
-                                                    <td class="justify-content-center">
+                                                    <td class="justify-content-between">
                                                         <button type="button" class="btn btn-edit">
-                                                            <a href="edit-program-relawan.php?id_program_relawan=<?= $row["id_program_relawan"]; ?>" class="fas fa-edit"></a>
+                                                            <a href="edit-berita.php?id_berita=<?= $row["id_berita"]; ?>" class="fas fa-edit"></a>
                                                         </button>
+
+                                                        <!-- <php if($row['status_program_donasi'] == 'Siap disalurkan' || $row['status_program_donasi'] == 'Selesai'){?>
+                                                    <button type="button" class="btn btn-edit">
+                                                        <a href="edit-program-donasi.php?id_program_donasi=<= $row["id_program_donasi"]; ?>" class="fa fa-upload"></a>
+                                                    </button>
+                                                    <php } ?> -->
+
                                                         <button type="button" class="btn btn-delete ml-1">
-                                                            <a href="hapus.php?type=prelawan&id_program_relawan=<?= $row["id_program_relawan"]; ?>" class="far fa-trash-alt" onclick="return confirm('Anda yakin ingin menghapus program ini ?');"></a>
+                                                            <a href="hapus.php?type=berita&id_berita=<?= $row["id_berita"]; ?>" class="far fa-trash-alt" onclick="return confirm('Anda yakin ingin menghapus program ini ?');"></a>
                                                         </button>
                                                     </td>
                                                 </tr>

@@ -43,7 +43,13 @@ if ($type == 'pdonasi'){
 
         header('Location: kelola-relawan.php?status=deletesuccess');
         exit(); 
+    }elseif ($type == 'berita'){
+        //ambil id program di URL
+        $id_berita = $_GET["id_berita"];
+
+        mysqli_query($conn, "DELETE FROM t_berita
+                            WHERE  	id_berita = $id_berita");
+
+        header('Location: kelola-berita.php?status=deletesuccess');
+        exit(); 
     }
-
-
-?>

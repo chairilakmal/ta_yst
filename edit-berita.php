@@ -8,7 +8,57 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
+$level_user = $_SESSION['level_user'];
 
+//ambil id program di URL
+$id_berita = $_GET["id_berita"];
+
+function upload()
+{
+    //upload gambar
+    $namaFile = $_FILES['image_uploads']['name'];
+    $ukuranFile = $_FILES['image_uploads']['size'];
+    $error = $_FILES['image_uploads']['error'];
+    $tmpName = $_FILES['image_uploads']['tmp_name'];
+
+
+    // if($error === 4){
+    //     echo "
+    //         <script>
+    //             alert('gambar tidak ditemukan !');
+    //         </script>
+    //     ";
+    //     return false;
+    // }
+
+    //cek ekstensi gambar
+    $ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
+    $ekstensiGambar = explode('.', $namaFile);
+    $ekstensiGambar = strtolower(end($ekstensiGambar));
+
+    if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+        echo "
+                    <script>
+                        alert('kesalahan pada format gambar !');
+                    </script>
+                ";
+        return false;
+    }
+
+    //generate nama baru
+    $namaFileBaru = uniqid();
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $ekstensiGambar;
+
+
+    //lolos pengecekan
+    move_uploaded_file($tmpName, 'img/' . $namaFileBaru);
+    return $namaFileBaru;
+}
+
+
+
+//fungsi GET Array
 function query($query)
 {
     global $conn;
@@ -20,31 +70,72 @@ function query($query)
     return $rows;
 }
 
-// WHERE status_donasi = 'Diterima'
-//    COUNT(id_user) AS jumlah_relawan
-// var_dump($programDonasi);die;
-$programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
-                    FROM t_relawan
-                    RIGHT JOIN t_program_relawan
-                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan                 
-                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
-                    ");
+$berita = query("SELECT * FROM t_berita WHERE id_berita = $id_berita")[0];
+// var_dump($berita);
+// die;
 
-//    function query($query){
-//        global $conn;
-//         $result = mysqli_query($conn, "SELECT * FROM t_program_relawan"); 
-//         $rows = [];
-//         while($row = mysqli_fetch_assoc($result)){
-//             $rows[] = $row;
-//         }
-//         return $rows;
-//    }
+//UPDATE
+if (isset($_POST["submit"])) {
+
+    $judul_berita               = $_POST["tb_judul_berita"];
+    $judul_berita               = htmlspecialchars($judul_berita);
+
+    $tgl_kejadian               = $_POST["tb_tgl_kejadian"];
+
+    $isi_berita                 = $_POST["tb_isi_berita"];
+    $isi_berita                 = htmlspecialchars($isi_berita);
+
+    $gambar                     = upload();
 
 
 
-//    $programRelawan = query("SELECT * FROM t_program_relawan");
+
+    if ($_FILES['image_uploads']['error'] === 4) {
+        $gambar = $gambarLama;
+    } else {
+        $gambar = upload();
+    }
+
+
+    // if (isset($_FILES['image_uploads2'], $_POST['tb_tgl_penyaluran'])) {//do the fields exist
+    //     if($_FILES['image_uploads2'] && $_POST['tb_tgl_penyaluran']){ //do the fields contain data
+    //         $status_program_donasi      = 'Selesai';
+    //     }
+    // }
+
+    // GLOBAL UPDATE
+    $query = "UPDATE t_berita SET
+                    judul_berita                = '$judul_berita',
+                    tgl_kejadian                = '$tgl_kejadian',
+                    isi_berita                  = '$isi_berita',
+                    gambar                      = '$gambar',        
+                    WHERE id_berita             = $id_berita
+                ";
+
+
+    mysqli_query($conn, $query);
+
+    //cek keberhasilan
+    if (mysqli_affected_rows($conn) > 0) {
+        echo "
+            <script>
+                alert('Data berhasil diubah!');
+                window.location.href = 'dashboard-admin.php'; 
+            </script>
+        ";
+    } else {
+        echo "
+                <script>
+                    alert('Tidak ada perubahan data');
+                </script>
+            ";
+    }
+}
+
+
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +145,7 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Icon Title -->
     <link rel="icon" href="img/logo-only.svg">
-    <title>YST - Kelola Program Relawan</title>
+    <title>YST - Edit Berita</title>
     <!-- Font Awesome
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css"> -->
     <!-- Font Awesome -->
@@ -66,6 +157,7 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
     <link rel="stylesheet" type="text/css" href="css/dashboard-yst.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Roboto:wght@500&display=swap" rel="stylesheet">
 </head>
 
@@ -111,7 +203,7 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
                         <li class="nav-item nav-item-sidebar ">
-                            <a href="dashboard-admin.php" class="nav-link side-icon  ">
+                            <a href="dashboard-admin.php" class="nav-link side-icon ">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Program Donasi
@@ -119,8 +211,8 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                             </a>
                         </li>
 
-                        <li class="nav-item nav-item-sidebar ">
-                            <a href="kelola-donasi.php" class="nav-link side-icon ">
+                        <li class="nav-item nav-item-sidebar">
+                            <a href="kelola-donasi.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-donate"></i>
                                 <p>
                                     Kelola Donasi
@@ -128,8 +220,8 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                             </a>
                         </li>
 
-                        <li class="nav-item nav-item-sidebar menu-open">
-                            <a href="kelola-p-relawan.php" class="nav-link side-icon active">
+                        <li class="nav-item nav-item-sidebar">
+                            <a href="kelola-p-relawan.php" class="nav-link side-icon">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Program Relawan
@@ -144,8 +236,8 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item nav-item-sidebar">
-                            <a href="kelola-berita.php" class="nav-link side-icon">
+                        <li class="nav-item nav-item-sidebar  menu-open">
+                            <a href="kelola-berita.php" class="nav-link side-icon active">
                                 <i class="nav-icon fas fa-newspaper"></i>
                                 <p>
                                     Kelola Berita
@@ -195,78 +287,46 @@ $programRelawan = query("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <main>
-                <div class="request-data">
-                    <div class="projects">
-                        <div class="page-title-link ml-4 mb-4">
-                            <a href="dashboard-admin.php">
-                                <i class="nav-icon fas fa-home mr-1"></i>Dashboard admin</a> >
-                            <a href="kelola-p-relawan.php">
-                                <i class="nav-icon fas fa-cog mr-1"></i>Program relawan</a>
-                        </div>
-
-                        <div class="card card-request-data">
-                            <div class="card-header-req">
-                                <div class="row ml-1 ">
-                                    <div class="col ">
-                                        <div class="dropdown show ">
-                                            <a class="btn btn-info  filter-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Filter
-                                            </a>
-                                            <div class="dropdown-menu green-drop" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="#">Tampilkan Semua</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="mr-5" onclick="location.href='input-program-relawan.php'">Input Program Relawan<span class="fas fa-plus-square"></span></button>
-
-                            </div>
-                            <div class="card-body card-body-req">
-                                <div class="table-responsive">
-                                    <table width="100%">
-                                        <thead>
-                                            <tr>
-                                                <td>ID</td>
-                                                <td>Nama Program</td>
-                                                <td>Lokasi Pelaksanaan </td>
-
-                                                <td>Tgl Pelaksanaan </td>
-                                                <td>Relawan Terkumpul</td>
-                                                <td>Jumlah Target Relawan</td>
-                                                <td>Status Program</td>
-                                                <td class="justify-content-center">Aksi</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($programRelawan as $row) : ?>
-                                                <tr>
-                                                    <td><?= $row["id_program_relawan"]; ?></td>
-                                                    <td class="table-snipet1"><?= $row["nama_program_relawan"]; ?></td>
-                                                    <td class="table-snipet2"><?= $row["lokasi_program"]; ?></td>
-
-                                                    <td><?= $row["tgl_pelaksanaan"]; ?></td>
-                                                    <td><?= $row['jumlah_relawan'] == 0 ? '0' : $row['jumlah_relawan']; ?></td>
-                                                    <td><?= $row["target_relawan"]; ?></td>
-                                                    <td>
-                                                        <?= $row["status_program_relawan"]; ?>
-                                                    </td>
-                                                    <td class="justify-content-center">
-                                                        <button type="button" class="btn btn-edit">
-                                                            <a href="edit-program-relawan.php?id_program_relawan=<?= $row["id_program_relawan"]; ?>" class="fas fa-edit"></a>
-                                                        </button>
-                                                        <button type="button" class="btn btn-delete ml-1">
-                                                            <a href="hapus.php?type=prelawan&id_program_relawan=<?= $row["id_program_relawan"]; ?>" class="far fa-trash-alt" onclick="return confirm('Anda yakin ingin menghapus program ini ?');"></a>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                <div class="page-title-link ml-4 mb-4">
+                    <a href="dashboard-admin.php">
+                        <i class="nav-icon fas fa-home mr-1"></i>Dashboard admin</a> >
+                    <a href="kelola-berita.php">
+                        <i class="nav-icon fas fa-cog mr-1"></i>Kelola Berita</a> >
+                    <a href="edit-berita.php">
+                        <i class="nav-icon fas fa-plus-square mr-1"></i>Edit Berita</a>
+                </div>
+                <div class="form-profil">
+                    <div class="mt-2 regis-title">
+                        <h3>Edit Berita</h3>
                     </div>
-
+                    <form action="" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="id_program_donasi" value="<?= $berita["id_berita"]; ?>">
+                        <input type="hidden" name="gambarLama" value="<?= $berita["gambar_berita"]; ?>">
+                        <div class="form-group label-txt">
+                            <div class="form-group mt-4 mb-3">
+                                <label for="tb_judul_berita" class="label-txt">Judul Berita<span class="red-star">*</span></label>
+                                <input type="text" id="tb_judul_berita" name="tb_judul_berita" class="form-control" placeholder="Judul Berita" value="<?= $berita["judul_berita"]; ?>">
+                            </div>
+                            <div class="form-group mt-4 mb-3">
+                                <label for="tb_tgl_kejadian" class="label-txt">Tanggal Kejadian<span class="red-star">*</span></label>
+                                <input type="date" id="tb_tgl_kejadian" name="tb_tgl_kejadian" class="form-control" value="<?= $berita["tgl_kejadian"]; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="tb_isi_berita" class="label-txt">Isi Berita<span class="red-star">*</span></label>
+                                <textarea class="form-control" id="tb_isi_berita" name="tb_isi_berita" rows="6" placeholder="Isi Berita"><?= $berita["isi_berita"]; ?></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="image_uploads" class="label-txt">Foto Berita<span class="red-star">*</span></label><br>
+                                <img src="img/<?= $berita["gambar_berita"]; ?>" class="edit-img popup " alt="">
+                                <div class="file-form">
+                                    <input type="file" id="image_uploads" name="image_uploads" class="form-control" Required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" name="submit" value="Simpan" class="btn btn-lg btn-primary w-100 yst-login-btn border-0 mt-4 mb-4">
+                            <span class="yst-login-btn-fs">Perbarui Berita</span>
+                        </button>
+                    </form>
                 </div>
             </main>
         </div>

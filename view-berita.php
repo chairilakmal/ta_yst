@@ -1,6 +1,7 @@
 <?php
 
 include "config/connection.php";
+$id_berita = $_GET["id"];
 
 function rupiah($angka)
 {
@@ -8,27 +9,13 @@ function rupiah($angka)
     return $hasil_rupiah;
 }
 
+$query      = mysqli_query($conn, "SELECT *
+                FROM t_berita
+                WHERE id_berita = $id_berita");
+$result     = mysqli_fetch_array($query);
 
-//Relawan
-function queryRelawan($query)
-{
-    global $conn;
-    $result = mysqli_query($conn, $query);
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $rows[] = $row;
-    }
-    return $rows;
-}
+// var_dump($result);die;
 
-
-$programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan 
-                    FROM t_relawan 
-                    RIGHT JOIN t_program_relawan 
-                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan  
-                    WHERE status_program_relawan = 'Berjalan'             
-                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
-                    ");
 ?>
 
 <html lang="en">
@@ -39,7 +26,7 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Icon Title -->
     <link rel="icon" href="img/YST-title.png">
-    <title>YST - Relawan</title>
+    <title>YST - Berita</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom CSS -->
@@ -52,7 +39,7 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
     <script src="https://kit.fontawesome.com/b41ecad032.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="background-color:#ebedf3;">
     <div class="informational">
         <div class="informational-container">
             <!-- Navbar Container-->
@@ -82,13 +69,13 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
                             <li class="nav-item ">
                                 <a class="nav-link current" href="index.php">Beranda</a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item active  teks-biru">
                                 <a class="nav-link " href="berita.php">Berita</a>
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link " href="kontribusi.php">Informasi</a>
                             </li>
-                            <li class="nav-item dropdown active  teks-biru">
+                            <li class="nav-item dropdown ">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Program YST
                                 </a>
@@ -130,47 +117,23 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
                 <!-- END Navbar -->
             </div>
             <!-- END Navbar Container -->
+            <div class="halaman-view mt-5 ">
+                <img class="card-img-top halaman-view-img" width="100%" src="img/<?= $result['gambar_berita']; ?>">
+                <div class="view-desc-singkat mt-2">
+                    <h2 class="mt-4"><?php echo $result['judul_berita'] ?></h2>
+
+                    <div class="waktu-tulis">Ditulis pada <?= date("d-m-Y", strtotime($result["tgl_penulisan"])); ?> </div>
 
 
+                </div>
+                <div class="view-desc-lengkap mt-4">
 
-            <div class="tkjb-card">
-                <div class="donasi-relawan-konten">
-                    <h2> Program Relawan </h2>
-                    <div class="row card-deck">
-                        <?php foreach ($programRelawan as $row2) : ?>
-                            <div class="col-md-4">
-                                <div class="card card-pilihan mb-4 shadow-sm">
-                                    <a href="">
-                                        <img class="card-img-top berita-img" width="100%" src="img/<?= $row2['foto_p_relawan']; ?>">
-                                    </a>
-                                    <div class="card-body">
-                                        <div class="nama-program">
-                                            <p>
-                                            <h5 class="max-length2"><?= $row2["nama_program_relawan"]; ?></h5>
-                                            </p>
-                                        </div>
-                                        <div class="d-flex justify-content-between dana-donatur-row-top mt-2">
-                                            <div class="float-left">Jumlah Relawan</div>
-                                            <div>Target Relawan</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                            <div class="float-left"><?= $row2['jumlah_relawan'] == 0 ? '0' : $row2['jumlah_relawan']; ?></div>
-                                            <div><?= $row2["target_relawan"]; ?></div>
-                                        </div>
-                                        <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" href="view-relawan.php?id=<?php echo $row2['id_program_relawan']; ?>">Lihat Program</a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+                    <p>
+                        Pada tanggal <?= date("d-m-Y", strtotime($result["tgl_kejadian"])); ?>, <?php echo $result['isi_berita'] ?>
+                    </p>
 
                 </div>
             </div>
-
-
-
-
-
 
 
 
@@ -190,10 +153,10 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                 <div class="ftaw text-light text-center">
-                    <a href="#" target="_blank"><i class="fa fa-phone-square-alt"></i></a>
-                    <a href="#" target="_blank"><i class="fas fa-envelope-square"></i></a>
-                    <a href="#" target="_blank"><i class="fa fa-facebook-square"></i></a>
-                    <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-phone-square-alt"></i></a>
+                    <a href="#"><i class="fas fa-envelope-square"></i></a>
+                    <a href="#"><i class="fa fa-facebook-square"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
                 </div>
             </div>
         </div>

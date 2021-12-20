@@ -1,36 +1,3 @@
-<?php
-
-include "config/connection.php";
-
-function rupiah($angka)
-{
-    $hasil_rupiah = "Rp. " . number_format($angka, 0, '.', '.');
-    return $hasil_rupiah;
-}
-
-
-//Relawan
-function queryRelawan($query)
-{
-    global $conn;
-    $result = mysqli_query($conn, $query);
-    $rows = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $rows[] = $row;
-    }
-    return $rows;
-}
-
-
-$programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_relawan 
-                    FROM t_relawan 
-                    RIGHT JOIN t_program_relawan 
-                    ON t_program_relawan.id_program_relawan = t_relawan.id_program_relawan  
-                    WHERE status_program_relawan = 'Berjalan'             
-                    GROUP BY t_program_relawan.id_program_relawan ORDER BY t_program_relawan.id_program_relawan DESC
-                    ");
-?>
-
 <html lang="en">
 
 <head>
@@ -39,9 +6,10 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Icon Title -->
     <link rel="icon" href="img/YST-title.png">
-    <title>YST - Relawan</title>
+    <title>YST - Tentang Kami</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/konten-yst.css">
     <!-- Google Fonts -->
@@ -52,7 +20,7 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
     <script src="https://kit.fontawesome.com/b41ecad032.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="background-color:#ebedf3;">
     <div class="informational">
         <div class="informational-container">
             <!-- Navbar Container-->
@@ -88,7 +56,7 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
                             <li class="nav-item ">
                                 <a class="nav-link " href="kontribusi.php">Informasi</a>
                             </li>
-                            <li class="nav-item dropdown active  teks-biru">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Program YST
                                 </a>
@@ -97,7 +65,7 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
                                     <a class="dropdown-item" href="relawan.php">Program Relawan</a>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown ">
+                            <li class="nav-item dropdown active  teks-biru">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Tentang YST
                                 </a>
@@ -133,36 +101,68 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
 
 
 
-            <div class="tkjb-card">
-                <div class="donasi-relawan-konten">
-                    <h2> Program Relawan </h2>
-                    <div class="row card-deck">
-                        <?php foreach ($programRelawan as $row2) : ?>
-                            <div class="col-md-4">
-                                <div class="card card-pilihan mb-4 shadow-sm">
-                                    <a href="">
-                                        <img class="card-img-top berita-img" width="100%" src="img/<?= $row2['foto_p_relawan']; ?>">
-                                    </a>
-                                    <div class="card-body">
-                                        <div class="nama-program">
-                                            <p>
-                                            <h5 class="max-length2"><?= $row2["nama_program_relawan"]; ?></h5>
-                                            </p>
-                                        </div>
-                                        <div class="d-flex justify-content-between dana-donatur-row-top mt-2">
-                                            <div class="float-left">Jumlah Relawan</div>
-                                            <div>Target Relawan</div>
-                                        </div>
-                                        <div class="d-flex justify-content-between dana-donatur-row-bottom mb-3">
-                                            <div class="float-left"><?= $row2['jumlah_relawan'] == 0 ? '0' : $row2['jumlah_relawan']; ?></div>
-                                            <div><?= $row2["target_relawan"]; ?></div>
-                                        </div>
-                                        <a class="btn btn-primary btn-lg btn-block mb-4 btn-kata-media" href="view-relawan.php?id=<?php echo $row2['id_program_relawan']; ?>">Lihat Program</a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+            <div class="halaman-about-top">
+                <!-- PROFIL -->
+                <div class="starter-template mt-5 py-5 " id="profil-yst">
+                    <h1 class="mb-2">Yayasan Sekar Telkom</h1><br>
+                    <img class="card-img-top visi-misi-img" width="100%" src="img/anggotayst.jpg"><br>
+
+
+                    <p class="teks-paragraf"> <b>Yayasan Sekar Telkom (YST)</b> merupakan lembaga Nirlaba yang telah berdiri sejak tahun 2007, Bermula dari bencana nasional yang terjadi di aceh dan sumatera utara yang menggerakan semua potensi dan kepedulian yang tinggi terhadap sesama anak bangsa yang terkena musibah, termasuk didalamnya insan TELKOM.
+
+                        Serikat Karyawan Telkom (SEKAR TELKOM) melalui program "SEKAR PEDULI" bersama managemen TELKOM menggerakan seluruh karyawan TELKOM untuk berpatisipasi dan berempati terhadap korban bencana nasional tersebut, dan karyawan telkom melalui program tersebut telah memperlihatkan kepedulian sosial yang begitu tinggi. Kepedulian tersebut kemudian dilanjutkan sampai sekarang dengan dibuatkan lembaga "Yayasan Sekar Telkom".
+                    </p>
+
+                </div>
+                <!-- END PROFIL-->
+            </div>
+            <div class="halaman-about ">
+                <!-- VISIMISI -->
+                <div class="starter-template" id="visimisi">
+                    <h1 class="mb-2">Visi Misi YST</h1><br>
+
+                    <ol class="teks-paragraf mb-5">
+                        <li>Melakukan identifikasi sasaran bantuan sosial kemanusiaan khususnya di Indonesia.</li>
+                        <li>Menggalang partisipasi masyarakat baik individu, kelompok maupun Lembaga, untuk ikut membantu.
+                            meringankan beban sosial masyarakat baik akibat berencana ataupun masyakarat tidak mampu.</li>
+                        <li>Menggalang aksi bantuan cepat untuk korban bencana alam dan sosial, khususnya korban di daerah pengungsian.</li>
+                        <li>Mengembankan pembangunan komunitas partisipatif untuk meningkatkan kemandirian korban bencana.
+                            alam dan sosial dan masyakarat tidak mampu sehingga tercipta komunitas responsif.</li>
+                    </ol>
+
+                </div>
+            </div>
+            <!-- END VISIMISI -->
+
+            <div class="halaman-about">
+                <!-- STRUKTUR ORGANISASI -->
+                <div class="starter-template">
+                    <h1 class="mb-2">Struktur Organisasi YST</h1><br>
+                    <!-- 1:1 aspect ratio -->
+
+                    <!-- 1:1 aspect ratio -->
+                    <img class="card-img-top struktur-organisasi-img edit-img popup" width="100%" src="img/struktur-yst.jpg"><br>
+                </div>
+                <!-- END STRUKTUR ORGANISASI-->
+            </div>
+
+            <div class="halaman-about">
+
+                <div class="starter-template">
+                    <h1 class="mt-3 mb-2 " id="kontak-yst">Kontak YST</h1><br>
+
+                    <ul class="teks-paragraf mb-3 mt-3">
+                        <li>Telp : +62 813-8940-0804</li>
+                        <li>Email : sek.yst@gmail.com</li>
+                        <li>Alamat : Jl. Wangsareja no.5 Paledang, Kec. Lengkong, Kota Bandung 40261</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="mb-5">
+
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7921.435187184181!2d107.6156629356318!3d-6.924322881932383!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e62bdf7b7a5f%3A0xd23e535bae5370ed!2sYayasan%20Sekar%20Telkom!5e0!3m2!1sid!2sid!4v1636639668574!5m2!1sid!2sid" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 
                 </div>
             </div>
@@ -173,6 +173,22 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
 
 
 
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Struktur Organisasi YST </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="" id="popup-img" alt="image" class="w-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -190,20 +206,30 @@ $programRelawan = queryRelawan("SELECT *, SUM(t_relawan.relawan_jadi) AS jumlah_
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                 <div class="ftaw text-light text-center">
-                    <a href="#" target="_blank"><i class="fa fa-phone-square-alt"></i></a>
-                    <a href="#" target="_blank"><i class="fas fa-envelope-square"></i></a>
-                    <a href="#" target="_blank"><i class="fa fa-facebook-square"></i></a>
-                    <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-phone-square-alt"></i></a>
+                    <a href="#"><i class="fas fa-envelope-square"></i></a>
+                    <a href="#"><i class="fa fa-facebook-square"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
                 </div>
             </div>
         </div>
     </section>
     <!-- End Footer -->
 
-    <!-- Bootstrap JS & JQuery -->
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <script>
+        $('.popup').click(function() {
+            var src = $(this).attr('src');
+
+            $('.modal').modal('show');
+            $('#popup-img').attr('src', src);
+        });
+    </script>
 </body>
 
 </html>
